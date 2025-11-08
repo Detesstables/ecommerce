@@ -42,6 +42,7 @@ model Producto {
   stock               Int
   fecha_creacion      DateTime @default(now())
   fecha_actualizacion DateTime @updatedAt
+  imagenUrl           String?  
 
   items        ItemPedido[]
   categoria_id Int

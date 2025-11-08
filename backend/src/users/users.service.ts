@@ -30,4 +30,12 @@ export class UsersService {
     const { contraseña_hash: _, ...userWithoutPassword } = newUser;
     return userWithoutPassword;
   }
+
+/*   Metodo que encuentra el email para luego validarlo en auth.service.ts */
+  async findByEmail(email: string) {
+  // Usamos 'findUnique' de Prisma para buscar por el email
+  return this.prisma.usuario.findUnique({
+    where: { email: email },
+  });
+}
 }

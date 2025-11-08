@@ -2,8 +2,21 @@ import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 
+import { UsersModule } from 'src/users/users.module';
+import { PassportModule } from '@nestjs/passport'; 
+import { JwtModule } from '@nestjs/jwt';
+import { JwtStrategy } from './jwt.strategy';
+
 @Module({
-  providers: [AuthService],
-  controllers: [AuthController]
+  imports: [
+    UsersModule,
+    PassportModule,
+    JwtModule.register({
+      secret: 'ESTO-ES-UN-SECRETO-TEMPORAL', // <-- ¡IMPORTANTE! (Cámbialo)
+      signOptions: { expiresIn: '1h' }, // El token expira en 1 hora
+    }),
+  ],
+  providers: [AuthService, JwtStrategy],
+  controllers: [AuthController],
 })
 export class AuthModule {}

@@ -97,6 +97,7 @@ export const ProductoScalarFieldEnum = {
   stock: 'stock',
   fecha_creacion: 'fecha_creacion',
   fecha_actualizacion: 'fecha_actualizacion',
+  imagenUrl: 'imagenUrl',
   categoria_id: 'categoria_id'
 } as const
 
@@ -129,4 +130,12 @@ export const SortOrder = {
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
