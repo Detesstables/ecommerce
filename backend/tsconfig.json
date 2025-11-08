@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    // --- CAMBIOS CLAVE ---
+    "module": "CommonJS",                 // <-- CAMBIO #1: De 'nodenext' a 'CommonJS'
+    "moduleResolution": "Node",           // <-- CAMBIO #2: De 'nodenext' a 'Node'
+    "target": "ES2021",                   // <-- CAMBIO #3: 'ES2021' es más estable que ES2023
+
+    // --- OPCIONES REQUERIDAS POR NESTJS (Las tenías bien) ---
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    
+    // --- OTRAS OPCIONES (Están bien) ---
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "declaration": true,
+    "removeComments": true,
+    "incremental": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "noFallthroughCasesInSwitch": false,
+    "isolatedModules": true
+  }
+}

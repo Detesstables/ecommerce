@@ -1,0 +1,70 @@
+// backend/prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/client"
+}
+
+// URL directa. Sin env()
+datasource db {
+  provider = "sqlite"
+  url = "file:./dev.db"
+}
+
+enum Role {
+  ADMIN
+  CLIENTE
+}
+
+model Usuario {
+  id              Int      @id @default(autoincrement())
+  nombre          String
+  email           String   @unique
+  contraseña_hash String
+  rol             Role     @default(CLIENTE)
+  fecha_creacion  DateTime @default(now())
+
+  pedidos Pedido[]
+}
+
+// --- PRODUCTOS ---
+model Categoria {
+  id        Int        @id @default(autoincrement())
+  nombre    String     @unique
+  productos Producto[]
+}
+
+model Producto {
+  id                  Int      @id @default(autoincrement())
+  nombre              String
+  descripcion         String
+  precio              Int // Guardado en centavos
+  stock               Int
+  fecha_creacion      DateTime @default(now())
+  fecha_actualizacion DateTime @updatedAt
+
+  items        ItemPedido[]
+  categoria_id Int
+  categoria    Categoria    @relation(fields: [categoria_id], references: [id])
+}
+
+// --- PEDIDOS ---
+model Pedido {
+  id           Int          @id @default(autoincrement())
+  fecha_pedido DateTime     @default(now())
+  usuario_id   Int
+  usuario      Usuario      @relation(fields: [usuario_id], references: [id])
+  items        ItemPedido[]
+}
+
+model ItemPedido {
+  id                       Int      @id @default(autoincrement())
+  cantidad                 Int
+  precio_unitario_al_comprar Int
+  pedido_id                Int
+  pedido                   Pedido   @relation(fields: [pedido_id], references: [id])
+  producto_id              Int
+  producto                 Producto @relation(fields: [producto_id], references: [id])
+
+  @@unique([pedido_id, producto_id])
+}
