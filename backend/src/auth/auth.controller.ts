@@ -3,6 +3,11 @@ import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { JwtAuthGuard } from './jwt-auth.guard';
 
+// --- GUARDIA LOCOO ---
+import { RolesGuard } from './roles.guard';
+import { Roles } from './decorators/roles.decorator';
+import { Role } from 'src/generated/client/enums';
+
 @Controller('auth') // Ruta base: /auth
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -16,7 +21,8 @@ export class AuthController {
 
   // --- ENDPOINT DE PRUEBA ---
   @Get('profile')
-  @UseGuards(JwtAuthGuard) // <-- ¡AQUÍ ESTÁ EL GUARDIA!
+  @UseGuards(JwtAuthGuard, RolesGuard) // <-- ¡AQUÍ ESTÁ EL GUARDIA!
+  @Roles(Role.ADMIN)                  // ¡Solo dejamos pasar a los ADMIN!
   getProfile(@Request() req) {
     // 'req.user' existe gracias al 'return payload' de nuestra JwtStrategy
     return req.user;
