@@ -13,7 +13,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('login') // Ruta completa: POST /auth/login
-  @HttpCode(HttpStatus.OK) // Por estándar, un login exitoso devuelve 200 OK
+  @HttpCode(HttpStatus.OK) // Por estándar, un login exitoso devuelve un 200 OK
   @UsePipes(new ValidationPipe({ whitelist: true }))
   login(@Body() loginDto: LoginDto) {
     return this.authService.login(loginDto);

@@ -1,4 +1,3 @@
-// backend/prisma/schema.prisma
 
 generator client {
   provider = "prisma-client"
@@ -38,7 +37,7 @@ model Producto {
   id                  Int      @id @default(autoincrement())
   nombre              String
   descripcion         String
-  precio              Int // Guardado en centavos
+  precio              Int 
   stock               Int
   fecha_creacion      DateTime @default(now())
   fecha_actualizacion DateTime @updatedAt
