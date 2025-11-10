@@ -1,9 +1,9 @@
-// backend/src/products/products.service.ts
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { QueryProductDto } from './dto/query-product.dto';
 import { Prisma } from 'src/generated/client/client';
+import { UpdateProductDto } from './dto/update-product.dto';
 
 @Injectable()
 export class ProductsService {
@@ -80,13 +80,44 @@ findAll(query: QueryProductDto) {
   }
 
   // --- Lógica para Actualizar Producto ---
-  async update(id: number, updateProductDto: any) {
-    // (La lógica de subida de imagen en 'update' es más compleja,
-    // la omitimos por simplicidad, pero aquí se haría)
-    return this.prisma.producto.update({
+async update(id: number, updateProductDto: UpdateProductDto) {
+    // Primero, verifica que el producto exista
+    const producto = await this.prisma.producto.findUnique({
       where: { id: id },
-      data: updateProductDto,
     });
+
+    if (!producto) {
+      throw new NotFoundException(`Producto con ID ${id} no encontrado`);
+    }
+
+    // Si se envía un 'categoria_id', verifica que exista
+    if (updateProductDto.categoria_id) {
+      const categoria = await this.prisma.categoria.findUnique({
+        where: { id: updateProductDto.categoria_id },
+      });
+      if (!categoria) {
+        throw new NotFoundException(
+          `La categoría con ID ${updateProductDto.categoria_id} no existe`,
+        );
+      }
+    }
+
+    try {
+      // Actualiza el producto
+      return await this.prisma.producto.update({
+        where: { id: id },
+        data: updateProductDto,
+      });
+    } catch (error) {
+      // Manejar otros errores (ej. si el 'nombre' nuevo ya existe)
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === 'P2002'
+      ) {
+        throw new ConflictException('Ya existe un producto con ese nombre');
+      }
+      throw error;
+    }
   }
 
   // --- Lógica para Eliminar Producto ---

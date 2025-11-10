@@ -23,3 +23,5 @@ export class QueryProductDto {
   @IsOptional()
   categoria_id?: number;
 }
+
+//Este DTO permite filtrar productos por nombre, rango de precio y categoría.

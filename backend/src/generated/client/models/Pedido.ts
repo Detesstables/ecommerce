@@ -39,18 +39,21 @@ export type PedidoSumAggregateOutputType = {
 export type PedidoMinAggregateOutputType = {
   id: number | null
   fecha_pedido: Date | null
+  estadoPago: $Enums.EstadoPago | null
   usuario_id: number | null
 }
 
 export type PedidoMaxAggregateOutputType = {
   id: number | null
   fecha_pedido: Date | null
+  estadoPago: $Enums.EstadoPago | null
   usuario_id: number | null
 }
 
 export type PedidoCountAggregateOutputType = {
   id: number
   fecha_pedido: number
+  estadoPago: number
   usuario_id: number
   _all: number
 }
@@ -69,18 +72,21 @@ export type PedidoSumAggregateInputType = {
 export type PedidoMinAggregateInputType = {
   id?: true
   fecha_pedido?: true
+  estadoPago?: true
   usuario_id?: true
 }
 
 export type PedidoMaxAggregateInputType = {
   id?: true
   fecha_pedido?: true
+  estadoPago?: true
   usuario_id?: true
 }
 
 export type PedidoCountAggregateInputType = {
   id?: true
   fecha_pedido?: true
+  estadoPago?: true
   usuario_id?: true
   _all?: true
 }
@@ -174,6 +180,7 @@ export type PedidoGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 export type PedidoGroupByOutputType = {
   id: number
   fecha_pedido: Date
+  estadoPago: $Enums.EstadoPago
   usuario_id: number
   _count: PedidoCountAggregateOutputType | null
   _avg: PedidoAvgAggregateOutputType | null
@@ -203,6 +210,7 @@ export type PedidoWhereInput = {
   NOT?: Prisma.PedidoWhereInput | Prisma.PedidoWhereInput[]
   id?: Prisma.IntFilter<"Pedido"> | number
   fecha_pedido?: Prisma.DateTimeFilter<"Pedido"> | Date | string
+  estadoPago?: Prisma.EnumEstadoPagoFilter<"Pedido"> | $Enums.EstadoPago
   usuario_id?: Prisma.IntFilter<"Pedido"> | number
   usuario?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>
   items?: Prisma.ItemPedidoListRelationFilter
@@ -211,6 +219,7 @@ export type PedidoWhereInput = {
 export type PedidoOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   fecha_pedido?: Prisma.SortOrder
+  estadoPago?: Prisma.SortOrder
   usuario_id?: Prisma.SortOrder
   usuario?: Prisma.UsuarioOrderByWithRelationInput
   items?: Prisma.ItemPedidoOrderByRelationAggregateInput
@@ -222,6 +231,7 @@ export type PedidoWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.PedidoWhereInput[]
   NOT?: Prisma.PedidoWhereInput | Prisma.PedidoWhereInput[]
   fecha_pedido?: Prisma.DateTimeFilter<"Pedido"> | Date | string
+  estadoPago?: Prisma.EnumEstadoPagoFilter<"Pedido"> | $Enums.EstadoPago
   usuario_id?: Prisma.IntFilter<"Pedido"> | number
   usuario?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>
   items?: Prisma.ItemPedidoListRelationFilter
@@ -230,6 +240,7 @@ export type PedidoWhereUniqueInput = Prisma.AtLeast<{
 export type PedidoOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   fecha_pedido?: Prisma.SortOrder
+  estadoPago?: Prisma.SortOrder
   usuario_id?: Prisma.SortOrder
   _count?: Prisma.PedidoCountOrderByAggregateInput
   _avg?: Prisma.PedidoAvgOrderByAggregateInput
@@ -244,11 +255,13 @@ export type PedidoScalarWhereWithAggregatesInput = {
   NOT?: Prisma.PedidoScalarWhereWithAggregatesInput | Prisma.PedidoScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Pedido"> | number
   fecha_pedido?: Prisma.DateTimeWithAggregatesFilter<"Pedido"> | Date | string
+  estadoPago?: Prisma.EnumEstadoPagoWithAggregatesFilter<"Pedido"> | $Enums.EstadoPago
   usuario_id?: Prisma.IntWithAggregatesFilter<"Pedido"> | number
 }
 
 export type PedidoCreateInput = {
   fecha_pedido?: Date | string
+  estadoPago?: $Enums.EstadoPago
   usuario: Prisma.UsuarioCreateNestedOneWithoutPedidosInput
   items?: Prisma.ItemPedidoCreateNestedManyWithoutPedidoInput
 }
@@ -256,12 +269,14 @@ export type PedidoCreateInput = {
 export type PedidoUncheckedCreateInput = {
   id?: number
   fecha_pedido?: Date | string
+  estadoPago?: $Enums.EstadoPago
   usuario_id: number
   items?: Prisma.ItemPedidoUncheckedCreateNestedManyWithoutPedidoInput
 }
 
 export type PedidoUpdateInput = {
   fecha_pedido?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  estadoPago?: Prisma.EnumEstadoPagoFieldUpdateOperationsInput | $Enums.EstadoPago
   usuario?: Prisma.UsuarioUpdateOneRequiredWithoutPedidosNestedInput
   items?: Prisma.ItemPedidoUpdateManyWithoutPedidoNestedInput
 }
@@ -269,6 +284,7 @@ export type PedidoUpdateInput = {
 export type PedidoUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   fecha_pedido?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  estadoPago?: Prisma.EnumEstadoPagoFieldUpdateOperationsInput | $Enums.EstadoPago
   usuario_id?: Prisma.IntFieldUpdateOperationsInput | number
   items?: Prisma.ItemPedidoUncheckedUpdateManyWithoutPedidoNestedInput
 }
@@ -276,16 +292,19 @@ export type PedidoUncheckedUpdateInput = {
 export type PedidoCreateManyInput = {
   id?: number
   fecha_pedido?: Date | string
+  estadoPago?: $Enums.EstadoPago
   usuario_id: number
 }
 
 export type PedidoUpdateManyMutationInput = {
   fecha_pedido?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  estadoPago?: Prisma.EnumEstadoPagoFieldUpdateOperationsInput | $Enums.EstadoPago
 }
 
 export type PedidoUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   fecha_pedido?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  estadoPago?: Prisma.EnumEstadoPagoFieldUpdateOperationsInput | $Enums.EstadoPago
   usuario_id?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
@@ -302,6 +321,7 @@ export type PedidoOrderByRelationAggregateInput = {
 export type PedidoCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   fecha_pedido?: Prisma.SortOrder
+  estadoPago?: Prisma.SortOrder
   usuario_id?: Prisma.SortOrder
 }
 
@@ -313,12 +333,14 @@ export type PedidoAvgOrderByAggregateInput = {
 export type PedidoMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   fecha_pedido?: Prisma.SortOrder
+  estadoPago?: Prisma.SortOrder
   usuario_id?: Prisma.SortOrder
 }
 
 export type PedidoMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   fecha_pedido?: Prisma.SortOrder
+  estadoPago?: Prisma.SortOrder
   usuario_id?: Prisma.SortOrder
 }
 
@@ -374,6 +396,10 @@ export type PedidoUncheckedUpdateManyWithoutUsuarioNestedInput = {
   deleteMany?: Prisma.PedidoScalarWhereInput | Prisma.PedidoScalarWhereInput[]
 }
 
+export type EnumEstadoPagoFieldUpdateOperationsInput = {
+  set?: $Enums.EstadoPago
+}
+
 export type PedidoCreateNestedOneWithoutItemsInput = {
   create?: Prisma.XOR<Prisma.PedidoCreateWithoutItemsInput, Prisma.PedidoUncheckedCreateWithoutItemsInput>
   connectOrCreate?: Prisma.PedidoCreateOrConnectWithoutItemsInput
@@ -390,12 +416,14 @@ export type PedidoUpdateOneRequiredWithoutItemsNestedInput = {
 
 export type PedidoCreateWithoutUsuarioInput = {
   fecha_pedido?: Date | string
+  estadoPago?: $Enums.EstadoPago
   items?: Prisma.ItemPedidoCreateNestedManyWithoutPedidoInput
 }
 
 export type PedidoUncheckedCreateWithoutUsuarioInput = {
   id?: number
   fecha_pedido?: Date | string
+  estadoPago?: $Enums.EstadoPago
   items?: Prisma.ItemPedidoUncheckedCreateNestedManyWithoutPedidoInput
 }
 
@@ -430,17 +458,20 @@ export type PedidoScalarWhereInput = {
   NOT?: Prisma.PedidoScalarWhereInput | Prisma.PedidoScalarWhereInput[]
   id?: Prisma.IntFilter<"Pedido"> | number
   fecha_pedido?: Prisma.DateTimeFilter<"Pedido"> | Date | string
+  estadoPago?: Prisma.EnumEstadoPagoFilter<"Pedido"> | $Enums.EstadoPago
   usuario_id?: Prisma.IntFilter<"Pedido"> | number
 }
 
 export type PedidoCreateWithoutItemsInput = {
   fecha_pedido?: Date | string
+  estadoPago?: $Enums.EstadoPago
   usuario: Prisma.UsuarioCreateNestedOneWithoutPedidosInput
 }
 
 export type PedidoUncheckedCreateWithoutItemsInput = {
   id?: number
   fecha_pedido?: Date | string
+  estadoPago?: $Enums.EstadoPago
   usuario_id: number
 }
 
@@ -462,34 +493,40 @@ export type PedidoUpdateToOneWithWhereWithoutItemsInput = {
 
 export type PedidoUpdateWithoutItemsInput = {
   fecha_pedido?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  estadoPago?: Prisma.EnumEstadoPagoFieldUpdateOperationsInput | $Enums.EstadoPago
   usuario?: Prisma.UsuarioUpdateOneRequiredWithoutPedidosNestedInput
 }
 
 export type PedidoUncheckedUpdateWithoutItemsInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   fecha_pedido?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  estadoPago?: Prisma.EnumEstadoPagoFieldUpdateOperationsInput | $Enums.EstadoPago
   usuario_id?: Prisma.IntFieldUpdateOperationsInput | number
 }
 
 export type PedidoCreateManyUsuarioInput = {
   id?: number
   fecha_pedido?: Date | string
+  estadoPago?: $Enums.EstadoPago
 }
 
 export type PedidoUpdateWithoutUsuarioInput = {
   fecha_pedido?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  estadoPago?: Prisma.EnumEstadoPagoFieldUpdateOperationsInput | $Enums.EstadoPago
   items?: Prisma.ItemPedidoUpdateManyWithoutPedidoNestedInput
 }
 
 export type PedidoUncheckedUpdateWithoutUsuarioInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   fecha_pedido?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  estadoPago?: Prisma.EnumEstadoPagoFieldUpdateOperationsInput | $Enums.EstadoPago
   items?: Prisma.ItemPedidoUncheckedUpdateManyWithoutPedidoNestedInput
 }
 
 export type PedidoUncheckedUpdateManyWithoutUsuarioInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   fecha_pedido?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  estadoPago?: Prisma.EnumEstadoPagoFieldUpdateOperationsInput | $Enums.EstadoPago
 }
 
 
@@ -526,6 +563,7 @@ export type PedidoCountOutputTypeCountItemsArgs<ExtArgs extends runtime.Types.Ex
 export type PedidoSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   fecha_pedido?: boolean
+  estadoPago?: boolean
   usuario_id?: boolean
   usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
   items?: boolean | Prisma.Pedido$itemsArgs<ExtArgs>
@@ -535,6 +573,7 @@ export type PedidoSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 export type PedidoSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   fecha_pedido?: boolean
+  estadoPago?: boolean
   usuario_id?: boolean
   usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["pedido"]>
@@ -542,6 +581,7 @@ export type PedidoSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type PedidoSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   fecha_pedido?: boolean
+  estadoPago?: boolean
   usuario_id?: boolean
   usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["pedido"]>
@@ -549,10 +589,11 @@ export type PedidoSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type PedidoSelectScalar = {
   id?: boolean
   fecha_pedido?: boolean
+  estadoPago?: boolean
   usuario_id?: boolean
 }
 
-export type PedidoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fecha_pedido" | "usuario_id", ExtArgs["result"]["pedido"]>
+export type PedidoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "fecha_pedido" | "estadoPago" | "usuario_id", ExtArgs["result"]["pedido"]>
 export type PedidoInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
   items?: boolean | Prisma.Pedido$itemsArgs<ExtArgs>
@@ -574,6 +615,7 @@ export type $PedidoPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     fecha_pedido: Date
+    estadoPago: $Enums.EstadoPago
     usuario_id: number
   }, ExtArgs["result"]["pedido"]>
   composites: {}
@@ -1002,6 +1044,7 @@ export interface Prisma__PedidoClient<T, Null = never, ExtArgs extends runtime.T
 export interface PedidoFieldRefs {
   readonly id: Prisma.FieldRef<"Pedido", 'Int'>
   readonly fecha_pedido: Prisma.FieldRef<"Pedido", 'DateTime'>
+  readonly estadoPago: Prisma.FieldRef<"Pedido", 'EstadoPago'>
   readonly usuario_id: Prisma.FieldRef<"Pedido", 'Int'>
 }
     

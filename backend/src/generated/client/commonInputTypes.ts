@@ -150,6 +150,23 @@ export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedStringNullableFilter<$PrismaModel>
 }
 
+export type EnumEstadoPagoFilter<$PrismaModel = never> = {
+  equals?: $Enums.EstadoPago | Prisma.EnumEstadoPagoFieldRefInput<$PrismaModel>
+  in?: $Enums.EstadoPago[]
+  notIn?: $Enums.EstadoPago[]
+  not?: Prisma.NestedEnumEstadoPagoFilter<$PrismaModel> | $Enums.EstadoPago
+}
+
+export type EnumEstadoPagoWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.EstadoPago | Prisma.EnumEstadoPagoFieldRefInput<$PrismaModel>
+  in?: $Enums.EstadoPago[]
+  notIn?: $Enums.EstadoPago[]
+  not?: Prisma.NestedEnumEstadoPagoWithAggregatesFilter<$PrismaModel> | $Enums.EstadoPago
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumEstadoPagoFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumEstadoPagoFilter<$PrismaModel>
+}
+
 export type NestedIntFilter<$PrismaModel = never> = {
   equals?: number | Prisma.IntFieldRefInput<$PrismaModel>
   in?: number[]
@@ -301,6 +318,23 @@ export type NestedIntNullableFilter<$PrismaModel = never> = {
   gt?: number | Prisma.IntFieldRefInput<$PrismaModel>
   gte?: number | Prisma.IntFieldRefInput<$PrismaModel>
   not?: Prisma.NestedIntNullableFilter<$PrismaModel> | number | null
+}
+
+export type NestedEnumEstadoPagoFilter<$PrismaModel = never> = {
+  equals?: $Enums.EstadoPago | Prisma.EnumEstadoPagoFieldRefInput<$PrismaModel>
+  in?: $Enums.EstadoPago[]
+  notIn?: $Enums.EstadoPago[]
+  not?: Prisma.NestedEnumEstadoPagoFilter<$PrismaModel> | $Enums.EstadoPago
+}
+
+export type NestedEnumEstadoPagoWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.EstadoPago | Prisma.EnumEstadoPagoFieldRefInput<$PrismaModel>
+  in?: $Enums.EstadoPago[]
+  notIn?: $Enums.EstadoPago[]
+  not?: Prisma.NestedEnumEstadoPagoWithAggregatesFilter<$PrismaModel> | $Enums.EstadoPago
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumEstadoPagoFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumEstadoPagoFilter<$PrismaModel>
 }
 
 

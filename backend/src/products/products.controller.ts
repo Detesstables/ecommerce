@@ -22,6 +22,7 @@ import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from 'src/generated/client/enums';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import { UpdateProductDto } from './dto/update-product.dto';
 
 @Controller('productos') // Ruta base: /productos
 export class ProductsController {
@@ -79,8 +80,10 @@ export class ProductsController {
   @Roles(Role.ADMIN)
   update(
     @Param('id', ParseIntPipe) id: number,
-    @Body() updateProductDto: any, // Debería ser un UpdateProductDto
+    @Body() updateProductDto: UpdateProductDto, // Debería ser un UpdateProductDto
   ) {
+    // (Por ahora, esta ruta no manejará la subida de una *nueva* imagen,
+    // solo la actualización de los campos de texto/números)
     return this.productsService.update(id, updateProductDto);
   }
 

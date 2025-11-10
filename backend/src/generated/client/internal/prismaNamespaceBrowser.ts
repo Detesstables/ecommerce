@@ -107,6 +107,7 @@ export type ProductoScalarFieldEnum = (typeof ProductoScalarFieldEnum)[keyof typ
 export const PedidoScalarFieldEnum = {
   id: 'id',
   fecha_pedido: 'fecha_pedido',
+  estadoPago: 'estadoPago',
   usuario_id: 'usuario_id'
 } as const
 

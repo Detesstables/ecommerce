@@ -49,12 +49,23 @@ model Producto {
 }
 
 // --- PEDIDOS ---
+enum EstadoPago {
+  PENDIENTE
+  APROBADO
+  RECHAZADO
+}
+
 model Pedido {
-  id           Int          @id @default(autoincrement())
-  fecha_pedido DateTime     @default(now())
-  usuario_id   Int
-  usuario      Usuario      @relation(fields: [usuario_id], references: [id])
-  items        ItemPedido[]
+  id           Int      @id @default(autoincrement())
+  fecha_pedido DateTime @default(now())
+
+  // --- LÍNEA NUEVA ---
+  estadoPago   EstadoPago @default(APROBADO) // Asumimos que el pago fue exitoso
+
+  usuario_id Int
+  usuario    Usuario @relation(fields: [usuario_id], references: [id])
+
+  items ItemPedido[] 
 }
 
 model ItemPedido {

@@ -858,6 +858,7 @@ export type ProductoScalarFieldEnum = (typeof ProductoScalarFieldEnum)[keyof typ
 export const PedidoScalarFieldEnum = {
   id: 'id',
   fecha_pedido: 'fecha_pedido',
+  estadoPago: 'estadoPago',
   usuario_id: 'usuario_id'
 } as const
 
@@ -922,6 +923,13 @@ export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel
  * Reference to a field of type 'DateTime'
  */
 export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+/**
+ * Reference to a field of type 'EstadoPago'
+ */
+export type EnumEstadoPagoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoPago'>
     
 
 
