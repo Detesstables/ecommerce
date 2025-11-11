@@ -10,6 +10,8 @@ async function bootstrap() {
   // ¡CAMBIO 3! Especifica el tipo <NestExpressApplication>
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
+  app.enableCors();
+
   // ¡CAMBIO 4! Añade esta línea para servir archivos estáticos
   // Esto hace que la carpeta 'public' sea accesible
   app.useStaticAssets(join(__dirname, '..', 'public'));

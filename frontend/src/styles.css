@@ -1,2 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
+
+@theme {
+
+/* rosa pastel */
+  --color-creativa-pink: #F5D0DF;
+
+  /* Amarillo de los destacados */
+  --color-creativa-yellow: #FACC15; 
+
+  /* Gris oscuro del texto/logo */
+  --color-creativa-dark: #2E2E2E;
+}
