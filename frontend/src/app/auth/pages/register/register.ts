@@ -7,6 +7,7 @@ import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { faArrowLeft, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'; // Iconos solid
 
 import { AuthService } from '../../services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -35,7 +36,8 @@ export class Register implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -52,36 +54,30 @@ export class Register implements OnInit {
     this.showPassword = !this.showPassword;
   }
 
-  onSubmit(): void {
+onSubmit(): void {
     if (this.registerForm.invalid) {
       this.registerForm.markAllAsTouched();
-      this.errorMessage = 'Por favor, completa todos los campos requeridos.';
+      this.toastr.error('Por favor, completa todos los campos requeridos.', 'Formulario Inválido');
       return; 
     }
+    
+    // this.errorMessage = null; // <-- Ya no se usa
+    this.isLoading = true; 
 
-    this.errorMessage = null;
-    this.isLoading = true; // Empieza a cargar
-
-    // Obtenemos los valores del formulario
     const formData = this.registerForm.value;
 
-    // Llamamos al servicio
     this.authService.register(formData).subscribe({
       next: (response) => {
-        // ¡ÉXITO!
         this.isLoading = false;
-        console.log('Registro exitoso:', response);
-        // Redirigimos al login con un mensaje (opcional)
-        this.router.navigate(['/auth/login'], { 
-          queryParams: { registered: 'true' } 
-        });
+        // ¡ÉXITO!
+        this.toastr.success('¡Tu cuenta ha sido creada! Ahora inicia sesión.', 'Registro Exitoso');
+        this.router.navigate(['/auth/login']); 
       },
       error: (err) => {
-        // ¡ERROR! (ej. 409 "El correo ya existe")
         this.isLoading = false;
-        console.error('Error en el registro:', err);
-        // Mostramos el mensaje de error del backend
-        this.errorMessage = err.error.message || 'Ocurrió un error. Inténtalo de nuevo.';
+        // ¡ERROR! (ej. 409 "El correo ya existe")
+        const mensaje = err.error.message || 'Ocurrió un error. Inténtalo de nuevo.';
+        this.toastr.error(mensaje, 'Error de Registro');
       }
     });
   }

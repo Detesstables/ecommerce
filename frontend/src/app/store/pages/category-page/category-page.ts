@@ -1,15 +1,16 @@
+// frontend/src/app/store/pages/category-page/category-page.ts
 import { Component, OnInit } from '@angular/core';
-import { CommonModule, LowerCasePipe } from '@angular/common'; // Ya no necesitamos NgClass/FormsModule
+import { CommonModule, LowerCasePipe } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators'; // <-- Ya no se usa debounceTime
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms'; 
+
 import { ProductService, Producto } from '../../services/product.service'; 
 import { CategoryService, Categoria } from '../../services/category.service'; 
 import { OrderService } from '../../services/order.service'; 
 import { AuthService } from '../../../auth/services/auth.service';
 import { ProductCard } from '../../../shared/components/product-card/product-card'; 
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
-import { faArrowLeft, faBook, faPenFancy, faStickyNote, faClipboardList } from '@fortawesome/free-solid-svg-icons'; 
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-category-page',
@@ -19,7 +20,7 @@ import { faArrowLeft, faBook, faPenFancy, faStickyNote, faClipboardList } from '
     RouterLink, 
     ProductCard,
     LowerCasePipe,
-    FontAwesomeModule
+    ReactiveFormsModule
   ],
   templateUrl: './category-page.html',
 })
@@ -31,74 +32,106 @@ export class CategoryPage implements OnInit {
   public errorMessage: string | null = null;
   public backendUrl = 'http://localhost:3000'; 
 
-  // Iconos
-  faArrowLeft = faArrowLeft;
-  
+  public filterForm: FormGroup;
+  private currentCategoryId!: number;
+
   constructor(
     private route: ActivatedRoute, 
     private router: Router,
     private productService: ProductService,
     private categoryService: CategoryService,
     private orderService: OrderService,
-    private authService: AuthService
-  ) {}
+    private authService: AuthService,
+    private toastr: ToastrService,
+    private fb: FormBuilder
+  ) {
+    this.filterForm = this.fb.group({
+      nombre: [''],
+      precioMin: [null],
+      precioMax: [null]
+    });
+  }
 
-ngOnInit(): void {
-  this.route.paramMap.pipe(
+  // --- 'ngOnInit' MÁS SIMPLE ---
+  ngOnInit(): void {
+    this.route.paramMap.pipe(
+      tap(params => {
+        this.currentCategoryId = Number(params.get('id'));
+        if (!this.currentCategoryId) {
+          throw new Error('ID de categoría no válido');
+        }
+        this.isLoading = true;
+        this.errorMessage = null;
+        this.loadCategoryInfo(); // Carga el banner
 
+        // Llama a la carga inicial de productos (sin filtros)
+        this.loadProducts(); 
+      })
+    ).subscribe(); // Solo necesitamos que se active
+  }
 
-    switchMap(params => {
-      const id = Number(params.get('id'));
-      if (!id) {
-        throw new Error('ID de categoría no válido');
+  // --- NUEVA FUNCIÓN 'loadProducts' ---
+  // Esta función carga los productos (con o sin filtros)
+  loadProducts(): void {
+    this.isLoading = true;
+    this.errorMessage = null;
+
+    const filters = this.filterForm.value;
+    const params: any = { 
+      ...filters,
+      categoria_id: this.currentCategoryId
+    };
+
+    // Limpia filtros vacíos
+    Object.keys(params).forEach(key => 
+      (params[key] === null || params[key] === '') && delete params[key]
+    );
+
+    this.productService.getProductos(params).subscribe({
+      next: (productos) => {
+        this.productos = productos;
+        this.isLoading = false;
+      },
+      error: (err) => {
+        this.errorMessage = 'Error al cargar los productos.';
+        this.isLoading = false;
       }
-      this.isLoading = true;
-      this.errorMessage = null;
-      return this.categoryService.getCategories(); 
-    }),
+    });
+  }
 
-    switchMap((categorias: Categoria[]) => {
-      const id = Number(this.route.snapshot.paramMap.get('id'));
-      this.categoria = categorias.find(c => c.id === id) || null;
-      return this.productService.getProductos({ categoria_id: id });
-    })
+  // --- ¡NUEVA FUNCIÓN PARA EL BOTÓN! ---
+  onFilterSubmit(): void {
+    // Simplemente vuelve a llamar a 'loadProducts',
+    // que leerá los valores actuales del formulario.
+    this.loadProducts();
+  }
 
-  ).subscribe({
-    next: (productos) => {
-      this.productos = productos;
-      this.isLoading = false;
-    },
-    error: (err) => {
-      this.errorMessage = 'Error al cargar los productos de esta categoría.';
-      this.isLoading = false;
-    }
-  });
-}
+  // Carga la info del banner
+  loadCategoryInfo(): void {
+    this.categoryService.getCategories().subscribe((categorias) => {
+      this.categoria = categorias.find(c => c.id === this.currentCategoryId) || null;
+    });
+  }
 
-  // Mapeo de iconos para dar un toque visual (Mantenemos esto del diseño anterior)
-
-  // Lógica de compra (se mantiene igual)
+  // onComprarProducto (se queda igual)
   onComprarProducto(productoId: number): void {
-    // ... (Tu lógica de compra actual) ...
     if (!this.authService.isAuthenticated()) {
-      alert('Debes iniciar sesión para comprar.');
+      this.toastr.warning('Debes iniciar sesión para comprar', 'Acción Requerida');
       this.router.navigate(['/auth/login']);
       return;
     }
     if (this.authService.getUserRole() !== 'CLIENTE') {
-      alert('Los administradores no pueden realizar compras.');
+      this.toastr.error('Los administradores no pueden realizar compras', 'Acción No Permitida');
       return;
     }
-
     this.orderService.comprarProducto(productoId).subscribe({
       next: (response) => {
-        alert('¡Producto comprado con éxito!');
-        // No deberías llamar a ngOnInit aquí, sino actualizar el estado local o usar un servicio de carrito.
-        // Por ahora, lo mantenemos como estaba en tu código original.
-        // this.ngOnInit(); 
+        this.toastr.success('¡Producto comprado con éxito!', 'Compra Realizada');
+        this.loadProducts(); // Recarga los productos con filtros
       },
       error: (err) => {
-        alert(`Error: ${err.error.message || 'No se pudo procesar la compra.'}`);
+        const mensaje = err.error.message || 'No se pudo procesar la compra.';
+        this.toastr.error(mensaje, 'Error en la Compra');
       }
     });
   }

@@ -7,6 +7,7 @@ import { faGoogle } from '@fortawesome/free-brands-svg-icons';
 import { faArrowLeft, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'; 
 
 import { AuthService } from '../../services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class Login implements OnInit {
   loginForm!: FormGroup;
-  errorMessage: string | null = null;
+ 
   showPassword = false; 
   isLoading = false;
 
@@ -35,7 +36,8 @@ export class Login implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -52,29 +54,29 @@ export class Login implements OnInit {
 onSubmit(): void {
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
-      this.errorMessage = 'Por favor, ingresa tus credenciales.';
+      // Mostramos un toast de error si el formulario es inválido
+      this.toastr.error('Por favor, ingresa tus credenciales.', 'Formulario Inválido');
       return;
     }
-
-    this.errorMessage = null;
-    this.isLoading = true; // <-- Empieza a cargar
-
-    // Obtenemos los valores
+    
+    // this.errorMessage = null; // <-- Ya no se usa
+    this.isLoading = true; 
+    
     const { email, contraseña } = this.loginForm.value;
 
-    // Llamamos al servicio
     this.authService.login(email, contraseña).subscribe({
       next: (response) => {
         this.isLoading = false;
-        console.log('Login exitoso:', response);
-        // ¡Redirigimos a la página principal!
+        // ¡ÉXITO! (El toast de bienvenida podría ir en el Navbar,
+        // pero por ahora lo ponemos aquí)
+        this.toastr.success('¡Bienvenido de vuelta!', 'Login Exitoso');
         this.router.navigate(['/']); 
       },
       error: (err) => {
         this.isLoading = false;
-        console.error('Error en el login:', err);
-        // Mostramos el error del backend (ej. "Credenciales inválidas")
-        this.errorMessage = 'Correo o contraseña incorrectos.';
+        // ¡ERROR! Usamos el toast
+        const mensaje = err.error.message || 'Correo o contraseña incorrectos.';
+        this.toastr.error(mensaje, 'Error de Login');
       }
     });
   }

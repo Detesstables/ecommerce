@@ -1,6 +1,5 @@
 <div class="bg-creativa-bg min-h-screen pb-20">
 
-
   @if (categoria) {
   <section
     class="relative py-32 md:py-48 text-creativa-text-white text-center bg-cover bg-center rounded-xl overflow-hidden shadow-2xl mb-12"
@@ -11,22 +10,15 @@
           background-position: center center; 
           background-size: cover; 
           background-repeat: no-repeat; 
-      ">
+        ">
     <div class="relative z-10 container mx-auto px-4 max-w-4xl">
-
-
-
-
       <h1 class="text-6xl lg:text-8xl font-extrabold mb-6 leading-tight tracking-tighter">
         {{ categoria.nombre }}
       </h1>
-
       <p class="text-xl lg:text-2xl leading-relaxed max-w-3xl mx-auto opacity-90">
         {{ categoria.descripcion || ('Explora nuestra exclusiva colección de ' + (categoria.nombre | lowercase) + ' y
         encuentra tu próxima inspiración.') }}
       </p>
-
-
     </div>
   </section>
   }
@@ -48,33 +40,78 @@
     }
 
     @if (!isLoading && !errorMessage) {
-    @if (productos.length === 0) {
-    <div class="text-center p-16 bg-creativa-card rounded-xl shadow-md border-t-8 border-creativa-accent">
-      <h3 class="text-4xl font-extrabold text-creativa-heading">¡Vaya! 😔</h3>
-      <p class="text-2xl text-creativa-text mt-4">
-        Aún no tenemos productos en la categoría **{{ categoria?.nombre }}**. ¡Estamos creando cosas maravillosas!
+
+<form [formGroup]="filterForm" (ngSubmit)="onFilterSubmit()" class="mb-10 p-6 bg-creativa-card rounded-lg shadow-lg">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+    <div>
+      <label for="nombre" class="block text-base font-semibold text-creativa-heading">Buscar por nombre</label>
+      <input 
+        type="text" 
+        id="nombre" 
+        formControlName="nombre"
+        placeholder="Ej: Cuaderno Killua..."
+        class="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-creativa-primary focus:border-transparent"
+      />
+    </div>
+
+    <div>
+      <label for="precioMin" class="block text-base font-semibold text-creativa-heading">Precio Mínimo</label>
+      <input 
+        type="number" 
+        id="precioMin" 
+        formControlName="precioMin"
+        placeholder="$1.000"
+        class="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-creativa-primary focus:border-transparent"
+      />
+    </div>
+
+    <div>
+      <label for="precioMax" class="block text-base font-semibold text-creativa-heading">Precio Máximo</label>
+      <input 
+        type="number" 
+        id="precioMax" 
+        formControlName="precioMax"
+        placeholder="$10.000"
+        class="w-full mt-2 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-creativa-primary focus:border-transparent"
+      />
+    </div>
+
+  </div>
+
+  <div class="flex justify-end mt-6">
+    <button 
+      type="submit"
+      class="bg-creativa-primary text-white font-bold py-2 px-8 rounded-lg shadow hover:bg-opacity-90 transition-colors">
+      Filtrar
+    </button>
+  </div>
+</form>
+      @if (productos.length === 0) {
+      <div class="text-center p-16 bg-creativa-card rounded-xl shadow-md border-t-8 border-creativa-accent">
+        <h3 class="text-4xl font-extrabold text-creativa-heading">¡Vaya! 😔</h3>
+        <p class="text-2xl text-creativa-text mt-4">
+          Aún no tenemos productos en la categoría <strong>{{ categoria?.nombre }}</strong>. ¡Estamos creando cosas maravillosas!
+        </p>
+        <a routerLink="/"
+           class="mt-6 inline-block bg-creativa-primary hover:bg-opacity-90 text-creativa-text-white font-bold py-3 px-8 rounded-lg text-lg transition-colors duration-300 shadow-md">
+          Ver otras Categorías
+        </a>
+      </div>
+      } @else {
+      <h2 id="productos-list" class="text-3xl font-bold text-creativa-heading mb-3 pt-4">
+        ¡Encontramos <span class="text-creativa-primary">{{ productos.length }}</span> productos en {{ categoria?.nombre
+        }}!
+      </h2>
+      <p class="text-lg text-creativa-text mb-10">
+        Explora nuestra mejor selección de la papelería más dulce.
       </p>
-      <a routerLink="/productos"
-        class="mt-6 inline-block bg-creativa-primary hover:bg-opacity-90 text-creativa-text-white font-bold py-3 px-8 rounded-lg text-lg transition-colors duration-300 shadow-md">
-        Ver otras Categorías
-      </a>
-    </div>
-    } @else {
-    <h2 id="productos-list" class="text-3xl font-bold text-creativa-heading mb-3 pt-4">
-      ¡Encontramos <span class="text-creativa-primary">{{ productos.length }}</span> productos en {{ categoria?.nombre
-      }}!
-    </h2>
-
-    <p class="text-lg text-creativa-text mb-10">
-      Explora nuestra mejor selección de la papelería más dulce.
-    </p>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-      @for (producto of productos; track producto.id) {
-      <app-product-card [producto]="producto" [backendUrl]="backendUrl" (comprarClick)="onComprarProducto($event)" />
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        @for (producto of productos; track producto.id) {
+        <app-product-card [producto]="producto" [backendUrl]="backendUrl" (comprarClick)="onComprarProducto($event)" />
+        }
+      </div>
       }
-    </div>
-    }
     }
   </div>
 
