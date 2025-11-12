@@ -1,0 +1,145 @@
+<div class="min-h-screen flex items-center justify-center bg-creativa-bg p-4 sm:p-6 lg:p-8">
+  <div class="flex flex-col md:flex-row bg-creativa-card rounded-2xl shadow-2xl overflow-hidden max-w-6xl w-full">
+
+    <div class="relative md:w-1/2 p-12 flex flex-col justify-between text-creativa-text-white"
+         style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/img/p-inuyasha.jpg'); 
+                background-size: cover; 
+                background-position: center;">
+      
+      <a routerLink="/" class="absolute top-8 left-10 text-creativa-text-white hover:text-creativa-primary transition-colors flex items-center z-10">
+        <fa-icon [icon]="faArrowLeft" class="w-5 h-5 mr-2"></fa-icon>
+        Volver a Inicio
+      </a>
+
+      <div class="flex flex-col justify-end h-full pt-20 relative z-10">
+        <h2 class="text-5xl sm:text-6xl font-extrabold leading-snug mb-4 text-creativa-text-white">
+          Comienza a crear <br>tu propia historia.
+        </h2>
+        <p class="text-creativa-text-white text-xl opacity-90">
+          Únete a nuestra comunidad y sé el primero en conocer las novedades de papelería.
+        </p>
+      </div>
+    </div>
+
+    <!-- Columna Derecha (Formulario) -->
+    <div class="md:w-1/2 p-14 flex flex-col justify-center">
+      <h2 class="text-4xl font-bold text-creativa-heading text-center mb-2">
+        Crea tu cuenta
+      </h2>
+      <p class="text-creativa-text text-center mb-10 text-lg">
+        Es rápido y fácil. Únete a CreativaMente hoy mismo.
+      </p>
+
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-6">
+        
+        <!-- Campo Nombre -->
+        <div>
+          <label for="nombre" class="sr-only">Nombre</label>
+          <input type="text" id="nombre" formControlName="nombre" placeholder="Nombre completo"
+                 class="w-full px-5 py-3.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-creativa-primary focus:border-transparent 
+                        placeholder-gray-400 text-creativa-text bg-creativa-secondary text-lg"
+                 [ngClass]="{'border-red-500': registerForm.get('nombre')?.invalid && (registerForm.get('nombre')?.dirty || registerForm.get('nombre')?.touched)}">
+          
+          <!-- SINTAXIS ACTUALIZADA: @if -->
+          <div class="text-red-500 text-sm mt-1 h-5"> 
+            @if (registerForm.get('nombre')?.invalid && (registerForm.get('nombre')?.dirty || registerForm.get('nombre')?.touched)) {
+              @if (registerForm.get('nombre')?.errors?.['required']) {
+                <span>El nombre es requerido.</span>
+              } @else if (registerForm.get('nombre')?.errors?.['minLength']) {
+                <span>Mínimo 3 caracteres.</span>
+              }
+            }
+          </div>
+        </div>
+        
+        <!-- Campo Email -->
+        <div>
+          <label for="email" class="sr-only">Correo Electrónico</label>
+          <input type="email" id="email" formControlName="email" placeholder="Correo electrónico"
+                 class="w-full px-5 py-3.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-creativa-primary focus:border-transparent 
+                        placeholder-gray-400 text-creativa-text bg-creativa-secondary text-lg"
+                 [ngClass]="{'border-red-500': registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)}">
+          
+          <div class="text-red-500 text-sm mt-1 h-5"> 
+            @if (registerForm.get('email')?.invalid && (registerForm.get('email')?.dirty || registerForm.get('email')?.touched)) {
+              @if (registerForm.get('email')?.errors?.['required']) {
+                <span>El email es requerido.</span>
+              } @else if (registerForm.get('email')?.errors?.['email']) {
+                <span>Ingresa un correo válido.</span>
+              }
+            }
+          </div>
+        </div>
+
+        <!-- Campo Contraseña -->
+        <div>
+          <label for="contraseña" class="sr-only">Contraseña</label>
+          <div class="relative">
+            <input [type]="showPassword ? 'text' : 'password'" id="contraseña" formControlName="contraseña" placeholder="Contraseña (Mínimo 8 caracteres)"
+                   class="w-full px-5 py-3.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-creativa-primary focus:border-transparent 
+                          placeholder-gray-400 text-creativa-text bg-creativa-secondary pr-12 text-lg"
+                   [ngClass]="{'border-red-500': registerForm.get('contraseña')?.invalid && (registerForm.get('contraseña')?.dirty || registerForm.get('contraseña')?.touched)}">
+            <button type="button" (click)="togglePasswordVisibility()" 
+                    class="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-500 hover:text-creativa-primary focus:outline-none">
+              <fa-icon [icon]="showPassword ? faEyeSlash : faEye" class="w-6 h-6"></fa-icon>
+            </button>
+          </div>
+          
+          <div class="text-red-500 text-sm mt-1 h-5">
+            @if (registerForm.get('contraseña')?.invalid && (registerForm.get('contraseña')?.dirty || registerForm.get('contraseña')?.touched)) {
+              @if (registerForm.get('contraseña')?.errors?.['required']) {
+                <span>La contraseña es requerida.</span>
+              } @else if (registerForm.get('contraseña')?.errors?.['minLength']) {
+                <span>Mínimo 8 caracteres.</span>
+              }
+            }
+          </div>
+        </div>
+        
+        <!-- Campo Dirección -->
+        <div>
+          <label for="direccion" class="sr-only">Dirección</label>
+          <input type="text" id="direccion" formControlName="direccion" placeholder="Dirección de envío"
+                 class="w-full px-5 py-3.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-creativa-primary focus:border-transparent 
+                        placeholder-gray-400 text-creativa-text bg-creativa-secondary text-lg"
+                 [ngClass]="{'border-red-500': registerForm.get('direccion')?.invalid && (registerForm.get('direccion')?.dirty || registerForm.get('direccion')?.touched)}">
+          
+          <div class="text-red-500 text-sm mt-1 h-5"> 
+            @if (registerForm.get('direccion')?.invalid && (registerForm.get('direccion')?.dirty || registerForm.get('direccion')?.touched)) {
+              @if (registerForm.get('direccion')?.errors?.['required']) {
+                <span>La dirección es requerida.</span>
+              } @else if (registerForm.get('direccion')?.errors?.['minLength']) {
+                <span>Mínimo 5 caracteres.</span>
+              }
+            }
+          </div>
+        </div>
+
+        <!-- Botón de Submit -->
+        <button type="submit" 
+                [disabled]="registerForm.invalid || isLoading" 
+                class="w-full bg-creativa-accent hover:bg-opacity-90 text-creativa-heading font-bold py-4 rounded-md text-xl 
+                       transition duration-300 shadow-md disabled:opacity-50 disabled:cursor-not-allowed mt-8">   
+          @if (isLoading) {
+            <span>Procesando...</span>
+          } @else {
+            <span>Crear Cuenta</span>
+          }
+        </button>
+      </form>
+
+
+      @if (errorMessage) {
+        <div class="p-3 text-sm text-center text-red-800 bg-red-100 rounded-md mt-6">
+          {{ errorMessage }}
+        </div>
+      }
+
+      <p class="mt-8 text-center text-creativa-text text-lg">
+        ¿Ya tienes una cuenta? 
+        <a routerLink="/auth/login" class="font-bold text-creativa-primary hover:underline">Inicia sesión aquí</a>
+      </p>
+
+    </div>
+  </div>
+</div>

@@ -1,13 +1,18 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { Home } from './pages/home/home'; 
+import { Home } from './pages/home/home';
+import { CategoryPage } from './pages/category-page/category-page'; 
 
 const routes: Routes = [
   {
-    path: '', // <-- Esta es la ruta raíz del módulo ('/')
-    component: Home // <-- Carga el componente Home
+    path: '', 
+    component: Home
+  },
+  {
+    path: 'categoria/:id', 
+    component: CategoryPage
   }
-  // Aquí pondremos la ruta de 'product-detail' más tarde y las otras vistas porsupuesto
+  
 ];
 
 @NgModule({

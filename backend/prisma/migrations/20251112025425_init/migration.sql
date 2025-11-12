@@ -5,13 +5,16 @@ CREATE TABLE "Usuario" (
     "email" TEXT NOT NULL,
     "contraseña_hash" TEXT NOT NULL,
     "rol" TEXT NOT NULL DEFAULT 'CLIENTE',
+    "direccion" TEXT NOT NULL,
     "fecha_creacion" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 -- CreateTable
 CREATE TABLE "Categoria" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "nombre" TEXT NOT NULL
+    "nombre" TEXT NOT NULL,
+    "imagenUrl" TEXT,
+    "descripcion" TEXT
 );
 
 -- CreateTable
@@ -23,6 +26,7 @@ CREATE TABLE "Producto" (
     "stock" INTEGER NOT NULL,
     "fecha_creacion" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "fecha_actualizacion" DATETIME NOT NULL,
+    "imagenUrl" TEXT,
     "categoria_id" INTEGER NOT NULL,
     CONSTRAINT "Producto_categoria_id_fkey" FOREIGN KEY ("categoria_id") REFERENCES "Categoria" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
@@ -31,6 +35,7 @@ CREATE TABLE "Producto" (
 CREATE TABLE "Pedido" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "fecha_pedido" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "estadoPago" TEXT NOT NULL DEFAULT 'APROBADO',
     "usuario_id" INTEGER NOT NULL,
     CONSTRAINT "Pedido_usuario_id_fkey" FOREIGN KEY ("usuario_id") REFERENCES "Usuario" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );

@@ -1,0 +1,22 @@
+@if (isOpen) {
+
+  <div 
+    (click)="onClose()"
+    class="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity">
+  </div>
+
+  <div class="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div class="bg-creativa-card rounded-lg shadow-2xl p-6 w-full max-w-2xl relative"
+         (click)="$event.stopPropagation()"> <button 
+        (click)="onClose()"
+        class="absolute top-4 right-4 text-gray-400 hover:text-gray-600">
+        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      <ng-content></ng-content>
+
+    </div>
+  </div>
+}

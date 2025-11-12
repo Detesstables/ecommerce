@@ -1,10 +1,10 @@
 
-<!-- --- Hero --- -->
+<!-- Hero -->
 <section
-  class="relative py-20 md:py-28 text-white text-center bg-cover bg-center"
+  class="relative py-20 md:py-28 text-creativa-text-white text-center bg-cover bg-center"
   [style.backgroundImage]="'url(' + image + ')'"
 >
-  <div class="absolute inset-0 bg-creativa-dark opacity-70"></div>
+  <div class="absolute inset-0 bg-creativa-heading opacity-70"></div>
 
   <div class="relative z-10 container mx-auto px-4 max-w-4xl">
 
@@ -18,12 +18,12 @@
     <div class="flex flex-col md:flex-row justify-center gap-4">
 
       <a href="#catalogo"
-         class="cursor-pointer bg-creativa-yellow hover:bg-opacity-80 text-creativa-dark font-bold py-3 px-8 rounded-lg text-lg transition-colors duration-300 shadow-lg">
+         class="cursor-pointer bg-creativa-accent hover:bg-opacity-80 text-creativa-heading font-bold py-3 px-8 rounded-lg text-lg transition-colors duration-300 shadow-lg">
         Ver Catálogo
       </a>
 
       <a routerLink="/sobre-nosotros"
-         class="cursor-pointer bg-transparent border-2 border-white hover:bg-white hover:text-creativa-dark text-white font-bold py-3 px-8 rounded-lg text-lg transition-colors duration-300 shadow-lg">
+         class="cursor-pointer bg-transparent border-2 border-white hover:bg-white hover:text-creativa-heading text-creativa-text-white font-bold py-3 px-8 rounded-lg text-lg transition-colors duration-300 shadow-lg">
         Sobre Nosotros
       </a>
     </div>
@@ -32,10 +32,9 @@
 
 
 
-
-<!-- --- Categorias --- -->
+<!-- Categorias -->
 <div id="catalogo" class="mt-16 mb-20">
-  <h2 class="text-3xl font-bold text-center text-creativa-dark mb-10">
+  <h2 class="text-3xl font-bold text-center text-creativa-heading mb-10">
     Explora Nuestras Categorías
   </h2>
   
@@ -49,44 +48,43 @@
         
         <div class="absolute inset-0 bg-black opacity-40 group-hover:opacity-50 transition-opacity duration-300"></div>
 
-        <div class="relative z-10 p-6 flex flex-col justify-end h-full text-white">
+        <div class="relative z-10 p-6 flex flex-col justify-end h-full text-creativa-text-white">
 
-  @if (categoria.promoText) {
-    <span class="text-xs font-bold uppercase tracking-wider mb-1 text-creativa-yellow">
-      {{ categoria.promoText }}
-    </span>
-  }
-  <h3 class="text-2xl md:text-3xl font-extrabold leading-tight">
-    {{ categoria.nombre }}
-  </h3>
-  <p class="mt-1 text-base md:text-lg font-medium opacity-90">
-    {{ categoria.tagline }}
-  </p>
+      @if (categoria.promoText) {
+        <span class="text-xs font-bold uppercase tracking-wider mb-1 text-creativa-accent">
+          {{ categoria.promoText }}
+        </span>
+      }
+      <h3 class="text-2xl md:text-3xl font-extrabold leading-tight">
+        {{ categoria.nombre }}
+      </h3>
+      <p class="mt-1 text-base md:text-lg font-medium opacity-90">
+        {{ categoria.tagline }}
+      </p>
 
-  <a [routerLink]="categoria.buttonLink"
-     class="mt-4 inline-flex items-center w-auto px-4 py-2 text-sm font-semibold rounded-lg shadow-md transition-all duration-300
-            bg-blue-600 hover:bg-blue-700 text-white hover:shadow-lg hover:-translate-y-0.5">
-    <span>{{ categoria.buttonText }}</span>
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 ml-2">
-      <path fill-rule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clip-rule="evenodd" />
-    </svg>
-  </a>
+      <a [routerLink]="categoria.buttonLink"
+         class="mt-4 inline-flex items-center w-auto px-4 py-2 text-sm font-semibold rounded-lg shadow-md transition-all duration-300
+                bg-blue-600 hover:bg-blue-700 text-creativa-text-white hover:shadow-lg hover:-translate-y-0.5">
+        <span>{{ categoria.buttonText }}</span>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5 ml-2">
+          <path fill-rule="evenodd" d="M3 10a.75.75 0 0 1 .75-.75h10.638L10.23 5.29a.75.75 0 1 1 1.04-1.08l5.5 5.25a.75.75 0 0 1 0 1.08l-5.5 5.25a.75.75 0 1 1-1.04-1.08l4.158-3.96H3.75A.75.75 0 0 1 3 10Z" clip-rule="evenodd" />
+        </svg>
+      </a>
 
-</div>
+    </div>
         
       </div>
-    } </div>
+    } 
+  </div>
 </div>
 
 
-
-
-
-<section class="mt-20 mb-20 py-16">
+<!-- Servicios -->
+<section class="mt-20 mb-20 py-16 bg-creativa-secondary">
 
   <div class="text-center mb-14">
     <h2 class="text-4xl font-bold text-center text-creativa-heading">
-      Tu Experiencia CreativaMente
+      Tu Experiencia Creativamente
     </h2>
     <div class="h-1 w-24 bg-creativa-accent mx-auto mt-3 rounded"></div>
   </div>
@@ -100,7 +98,7 @@
         </svg>
       </div>
       <h3 class="text-2xl font-bold text-creativa-heading mb-3">Diseños Únicos</h3>
-      <p class="text-lg text-creativa-text mb-5 flex-grow">Todo nuestro arte es exclusivo. Llévate un cuaderno o planner que nadie más tendrá.</p>
+      <p class="text-lg text-creativa-text mb-5 grow">Todo nuestro arte es exclusivo. Llévate un cuaderno o planner que nadie más tendrá.</p>
       <a routerLink="/sobre-nosotros" class="text-lg font-semibold text-creativa-primary hover:text-creativa-accent transition-colors duration-300 mt-auto">
         Ver diseños &rarr;
       </a>
@@ -113,7 +111,7 @@
         </svg>
       </div>
       <h3 class="text-2xl font-bold text-creativa-heading mb-3">Envíos a Todo Chile</h3>
-      <p class="text-lg text-creativa-text mb-5 flex-grow">Recibe tus productos en la puerta de tu casa, estés donde estés, vía Chilexpress y Starken.</p>
+      <p class="text-lg text-creativa-text mb-5 grow">Recibe tus productos en la puerta de tu casa, estés donde estés, vía Chilexpress y Starken.</p>
       <a routerLink="/sobre-nosotros" class="text-lg font-semibold text-creativa-primary hover:text-creativa-accent transition-colors duration-300 mt-auto">
         Conocer envíos &rarr;
       </a>
@@ -126,11 +124,84 @@
         </svg>
       </div>
       <h3 class="text-2xl font-bold text-creativa-heading mb-3">Calidad Premium</h3>
-      <p class="text-lg text-creativa-text mb-5 flex-grow">Usamos solo los mejores materiales: papel de 140gr, tapas duras y laminado profesional.</p>
+      <p class="text-lg text-creativa-text mb-5 grow">Usamos solo los mejores materiales: papel de 140gr, tapas duras y laminado profesional.</p>
       <a routerLink="/sobre-nosotros" class="text-lg font-semibold text-creativa-primary hover:text-creativa-accent transition-colors duration-300 mt-auto">
         Nuestra calidad &rarr;
       </a>
     </div>
+
+  </div>
+</section>
+
+
+<!-- Testimonios -->
+
+<section class="mt-20 mb-20 py-16 bg-creativa-card"> <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl text-center">
+
+    <h2 class="text-4xl font-bold text-creativa-heading">
+      Lo que dice nuestra comunidad
+    </h2>
+
+    <p class="text-lg text-creativa-text mt-4 max-w-2xl mx-auto">
+      Experiencias reales de quienes se unieron a nuestro mundo creativo.
+    </p>
+
+    <blockquote class="mt-12 min-h-48">
+      <p class="text-2xl lg:text-3xl font-medium italic text-creativa-heading">
+        "{{ testimonios[currentTestimonialIndex].texto }}"
+      </p>
+
+      <footer class="mt-8">
+        <div class="font-bold text-xl text-creativa-heading">
+          {{ testimonios[currentTestimonialIndex].autor }}
+        </div>
+        <div class="text-base text-creativa-text">
+          {{ testimonios[currentTestimonialIndex].cargo }}
+        </div>
+      </footer>
+    </blockquote>
+
+    <div class="flex justify-center items-center gap-6 mt-10">
+
+      <button 
+        (click)="prevTestimonial()" class="w-10 h-10 flex items-center justify-center rounded-full text-gray-300 hover:text-creativa-primary transition-colors duration-300">
+        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+        </svg>
+      </button>
+
+      <button 
+        (click)="nextTestimonial()" class="w-10 h-10 flex items-center justify-center rounded-full text-creativa-primary transition-colors duration-300"> <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+        </svg>
+      </button>
+    </div>
+
+  </div>
+</section>
+
+
+
+
+<section 
+  class="relative py-20 md:py-28 text-creativa-text-white text-center bg-cover bg-center" 
+  style="background-image: url('/assets/img/c.hinata.jpg');"
+>
+  <div class="absolute inset-0 bg-creativa-heading opacity-70"></div> 
+
+  <div class="relative z-10 container mx-auto px-4 max-w-4xl">
+
+    <h2 class="text-4xl lg:text-5xl font-bold mb-6 leading-tight tracking-tight">
+      ¿Listo para despertar tu creatividad?
+    </h2>
+    <p class="text-lg lg:text-xl mb-8 leading-relaxed max-w-3xl mx-auto">
+      Descubre nuestra colección, inspírate y encuentra lo que necesitas para tus proyectos.
+    </p>
+
+    <a routerLink="/login" 
+       class="inline-block bg-creativa-accent hover:bg-opacity-80 text-creativa-heading font-bold py-4 px-10 rounded-lg text-xl transition-colors duration-300 shadow-lg transform hover:scale-105">
+      Explora la Tienda
+    </a>
 
   </div>
 </section>

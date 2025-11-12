@@ -826,6 +826,7 @@ export const UsuarioScalarFieldEnum = {
   email: 'email',
   contraseña_hash: 'contraseña_hash',
   rol: 'rol',
+  direccion: 'direccion',
   fecha_creacion: 'fecha_creacion'
 } as const
 
@@ -834,7 +835,9 @@ export type UsuarioScalarFieldEnum = (typeof UsuarioScalarFieldEnum)[keyof typeo
 
 export const CategoriaScalarFieldEnum = {
   id: 'id',
-  nombre: 'nombre'
+  nombre: 'nombre',
+  imagenUrl: 'imagenUrl',
+  descripcion: 'descripcion'
 } as const
 
 export type CategoriaScalarFieldEnum = (typeof CategoriaScalarFieldEnum)[keyof typeof CategoriaScalarFieldEnum]

@@ -1,11 +1,22 @@
+// frontend/src/app/auth/auth-routing.module.ts
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Login } from './pages/login/login';
+import { Register } from './pages/register/register';
 
 const routes: Routes = [
   {
-    path: '', // <-- Esta es la ruta raíz del módulo ('/login')
-    component: Login // <-- Carga el componente de login
+    path: 'login', // <-- CAMBIO AQUÍ (de '' a 'login')
+    component: Login 
+  },
+  {
+    path: 'registro', 
+    component: Register
+  },
+  {
+    path: '', // <-- CAMBIO AQUÍ
+    redirectTo: 'login', // Si alguien va a /auth, redirige a /auth/login
+    pathMatch: 'full'
   }
 ];
 

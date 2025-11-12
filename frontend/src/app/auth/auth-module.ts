@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { AuthRoutingModule } from './auth-routing-module';
 
-import { AuthService } from './services/auth.service';
+
 
 @NgModule({
   declarations: [],
@@ -13,6 +13,6 @@ import { AuthService } from './services/auth.service';
     AuthRoutingModule,
     ReactiveFormsModule
   ],
-  providers: [AuthService]
+
 })
 export class AuthModule { }

@@ -1,1 +1,94 @@
-<p>dashboard works!</p>
+<div class="p-4 sm:p-6 lg:p-8">
+  
+  <div class="flex items-center justify-between mb-8"> <h1 class="text-3xl font-bold text-creativa-heading">
+      Panel de Administración
+    </h1>
+    <button 
+      (click)="onCreate()"
+      class="bg-creativa-primary text-white font-bold py-2 px-5 text-base rounded-lg shadow hover:bg-opacity-90 transition-colors"> + Crear Nuevo Producto
+    </button>
+  </div>
+
+  @if (isLoading) {
+    <div class="text-center p-12">
+      <p class="text-creativa-text text-lg">Cargando productos...</p>
+    </div>
+  }
+
+  @if (errorMessage) {
+    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4" role="alert">
+      <p class="font-bold">Error</p>
+      <p>{{ errorMessage }}</p>
+    </div>
+  }
+
+  @if (!isLoading && !errorMessage) {
+    
+    <div class="bg-creativa-card shadow-md rounded-lg overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        
+        <thead class="bg-gray-50">
+          <tr>
+            <th scope="col" class="px-6 py-4 text-left text-sm font-semibold text-creativa-heading uppercase tracking-wider">Imagen</th>
+            <th scope="col" class="px-6 py-4 text-left text-sm font-semibold text-creativa-heading uppercase tracking-wider">Nombre</th>
+            <th scope="col" class="px-6 py-4 text-left text-sm font-semibold text-creativa-heading uppercase tracking-wider">Precio</th>
+            <th scope="col" class="px-6 py-4 text-left text-sm font-semibold text-creativa-heading uppercase tracking-wider">Stock</th>
+            <th scope="col" class="px-6 py-4 text-left text-sm font-semibold text-creativa-heading uppercase tracking-wider">Acciones</th>
+          </tr>
+        </thead>
+        
+        <tbody class="bg-white divide-y divide-gray-200">
+          
+          @for (producto of productos; track producto.id) {
+            <tr class="hover:bg-creativa-secondary/50 align-middle">
+              
+              <td class="px-6 py-4 whitespace-nowrap">
+                <img 
+                  class="h-12 w-12 rounded-md object-cover" 
+                  [src]="producto.imagenUrl ? (backendUrl + producto.imagenUrl) : 'https://placehold.co/100x100/F5D0DF/2E2E2E?text=Img'" 
+                  [alt]="producto.nombre">
+              </td>
+              
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-base font-medium text-creativa-heading">{{ producto.nombre }}</div>
+                <div class="text-sm text-creativa-text">{{ producto.categoria.nombre }}</div>
+              </td>
+              
+              <td class="px-6 py-4 whitespace-nowrap">
+                <div class="text-base text-gray-900">{{ formatPrice(producto.precio) }}</div>
+              </td>
+              
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span class="px-3 py-1 inline-flex text-sm leading-5 font-semibold rounded-full"
+                      [ngClass]="producto.stock > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'">
+                  {{ producto.stock }}
+                </span>
+              </td>
+              
+              <td class="px-6 py-4 whitespace-nowrap text-base font-medium space-x-4">
+                <button (click)="onEdit(producto)" class="text-creativa-primary hover:text-creativa-accent">Editar</button>
+                <button (click)="onDelete(producto.id)" class="text-red-600 hover:text-red-900">Eliminar</button>
+              </td>
+            </tr>
+          }
+
+          @if (productos.length === 0) {
+            <tr>
+              <td colspan="5" class="px-6 py-12 text-center text-creativa-text text-lg">
+                Aún no has creado ningún producto.
+              </td>
+            </tr>
+          }
+
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
+
+<app-modal [isOpen]="isModalOpen" (close)="onCloseModal()">
+  <app-product-form 
+    [data]="dataToEdit"
+    (save)="onSave($event)">
+  </app-product-form>
+</app-modal>

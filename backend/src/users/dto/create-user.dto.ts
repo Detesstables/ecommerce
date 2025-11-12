@@ -18,4 +18,8 @@ export class CreateUserDto {
   @IsEnum(Role) // Validamos que sea 'ADMIN' o 'CLIENTE'
   @IsNotEmpty()
   rol: Role;
+
+  @IsString()
+  @IsNotEmpty()
+  direccion: string;
 }

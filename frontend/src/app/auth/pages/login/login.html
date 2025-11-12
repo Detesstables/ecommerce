@@ -1,56 +1,108 @@
-<div class="flex items-center justify-center min-h-screen bg-gray-100">
-  <div class="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
+<div class="min-h-screen flex items-center justify-center bg-creativa-bg p-4 sm:p-6 lg:p-8">
+  <div class="flex flex-col md:flex-row bg-creativa-card rounded-2xl shadow-2xl overflow-hidden max-w-6xl w-full">
 
-    <h2 class="text-2xl font-bold text-center text-gray-900">
-      Iniciar Sesión
-    </h2>
+    <div class="relative md:w-1/2 p-12 flex flex-col justify-between bg-creativa-heading text-creativa-text-white"
+      style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/img/c.hinata.jpg'); 
+             background-size: cover; 
+             background-position: center;">
 
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6">
+      <a routerLink="/"
+        class="absolute top-8 left-10 text-creativa-text-white hover:text-creativa-primary transition-colors flex items-center z-10">
+        <fa-icon [icon]="faArrowLeft" class="w-5 h-5 mr-2"></fa-icon>
+        Volver a Inicio
+      </a>
 
-      <div>
-        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-        <input 
-          id="email" 
-          formControlName="email"
-          type="email" 
-          required
-          class="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-        />
-        <div *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)"
-             class="mt-1 text-sm text-red-600">
-          <span *ngIf="loginForm.get('email')?.errors?.['required']">El email es requerido.</span>
-          <span *ngIf="loginForm.get('email')?.errors?.['email']">Debe ser un email válido.</span>
-        </div>
+      <div class="flex flex-col justify-end h-full pt-20 relative z-10">
+        <h2 class="text-5xl sm:text-6xl font-extrabold leading-snug mb-4 text-creativa-text-white"> Organiza, Crea.
+          <br>Inspira tu Día.
+        </h2>
+        <p class="text-creativa-text-white text-xl opacity-90"> Descubre un mundo de posibilidades con nuestros
+          productos de papelería.
+        </p>
       </div>
+    </div>
 
-      <div>
-        <label for="password" class="block text-sm font-medium text-gray-700">Contraseña</label>
-        <input 
-          id="password" 
-          formControlName="password"
-          type="password" 
-          required
-          class="w-full px-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-        />
-        <div *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)"
-             class="mt-1 text-sm text-red-600">
-          <span *ngIf="loginForm.get('password')?.errors?.['required']">La contraseña es requerida.</span>
-          <span *ngIf="loginForm.get('password')?.errors?.['minLength']">Mínimo 8 caracteres.</span>
+    <div class="md:w-1/2 p-14 flex flex-col justify-center">
+      <h2 class="text-4xl font-bold text-creativa-heading text-center mb-2"> ¡Bienvenido de Nuevo!
+      </h2>
+      <p class="text-creativa-text text-center mb-10 text-lg"> Inicia sesión para empezar a crear y organizar tu mundo.
+      </p>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-8">
+        <div>
+          <label for="email" class="sr-only">Correo Electrónico</label>
+          <input type="email" id="email" formControlName="email" placeholder="Ingresa tu email" class="w-full px-5 py-3.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-creativa-primary focus:border-transparent 
+                        placeholder-gray-400 text-creativa-text bg-creativa-secondary text-lg"
+            [ngClass]="{'border-red-500': loginForm.get('email')?.invalid && loginForm.get('email')?.touched}">
+
+          <div class="text-red-500 text-sm mt-1 h-5">
+
+            @if (loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched))
+            {
+
+            @if (loginForm.get('email')?.errors?.['required']) {
+            <span>El email es requerido.</span>
+            }
+            @else if (loginForm.get('email')?.errors?.['email']) {
+            <span>Ingresa un correo válido.</span>
+            }
+
+            }
+          </div>
         </div>
-      </div>
 
-      <button 
-        type="submit" 
-        [disabled]="loginForm.invalid"
-        class="w-full px-4 py-2 font-medium text-white bg-blue-600 rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        Entrar
-      </button>
+        <div>
+          <label for="contraseña" class="sr-only">Contraseña</label>
+          <div class="relative">
+            <input [type]="showPassword ? 'text' : 'password'" id="contraseña" formControlName="contraseña"
+              placeholder="Ingresa tu contraseña" class="w-full px-5 py-3.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-creativa-primary focus:border-transparent 
+                          placeholder-gray-400 text-creativa-text bg-creativa-secondary pr-12 text-lg"
+              [ngClass]="{'border-red-500': loginForm.get('password')?.invalid && loginForm.get('password')?.touched}">
+            <button type="button" (click)="togglePasswordVisibility()"
+              class="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-500 hover:text-creativa-primary focus:outline-none">
+              <fa-icon [icon]="showPassword ? faEyeSlash : faEye" class="w-6 h-6"></fa-icon> </button>
+          </div>
 
-      <div *ngIf="errorMessage" class="p-3 text-sm text-center text-red-800 bg-red-100 rounded-md">
+          <div class="text-red-500 text-sm mt-1 h-5">
+            @if (loginForm.get('contraseña')?.invalid && (loginForm.get('contraseña')?.dirty ||
+            loginForm.get('contraseña')?.touched)) {
+            <span>La contraseña es requerida.</span>
+            }
+          </div>
+        </div>
+
+
+        <button type="submit" [disabled]="loginForm.invalid || isLoading" class="w-full bg-creativa-accent hover:bg-opacity-90 text-creativa-heading font-bold py-4 rounded-md text-xl 
+                       transition duration-300 shadow-md disabled:opacity-50 disabled:cursor-not-allowed mt-8">
+
+          @if (isLoading) {
+          <span>Procesando...</span>
+          } @else {
+          <span>Iniciar Sesión</span>
+          }
+        </button>
+      </form>
+      @if (errorMessage) {
+      <div class="p-3 text-sm text-center text-red-800 bg-red-100 rounded-md mt-6">
         {{ errorMessage }}
       </div>
+      }
 
-    </form>
+      <!--       <div class="relative flex justify-center text-lg mt-8 mb-8"> <span class="absolute px-2 bg-creativa-card text-creativa-text z-10">o</span>
+        <div class="flex-grow border-t border-gray-300 self-center"></div>
+      </div>
+
+
+      <button type="button"
+              class="w-full flex items-center justify-center px-4 py-3.5 border border-gray-300 rounded-md text-lg 
+                     text-creativa-text hover:bg-creativa-secondary transition duration-300 shadow-sm">
+        <fa-icon [icon]="faGoogle" class="w-6 h-6 mr-3"></fa-icon> Continuar con Google
+      </button>
+ -->
+      <p class="mt-8 text-center text-creativa-text text-lg"> ¿No tienes una cuenta?
+        <a routerLink="/auth/registro" class="font-bold text-creativa-primary hover:underline">Regístrate aquí</a>
+      </p>
+
+    </div>
   </div>
 </div>

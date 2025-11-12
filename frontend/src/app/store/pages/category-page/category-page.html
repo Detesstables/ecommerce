@@ -1,0 +1,81 @@
+<div class="bg-creativa-bg min-h-screen pb-20">
+
+
+  @if (categoria) {
+  <section
+    class="relative py-32 md:py-48 text-creativa-text-white text-center bg-cover bg-center rounded-xl overflow-hidden shadow-2xl mb-12"
+    [style.backgroundImage]="'linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(' + (categoria.imagenUrl || '/assets/img/hero-bg.jpg') + ')'"
+    style="
+          /* Estilos para mejor visualización de la imagen */
+          background-attachment: fixed; 
+          background-position: center center; 
+          background-size: cover; 
+          background-repeat: no-repeat; 
+      ">
+    <div class="relative z-10 container mx-auto px-4 max-w-4xl">
+
+
+
+
+      <h1 class="text-6xl lg:text-8xl font-extrabold mb-6 leading-tight tracking-tighter">
+        {{ categoria.nombre }}
+      </h1>
+
+      <p class="text-xl lg:text-2xl leading-relaxed max-w-3xl mx-auto opacity-90">
+        {{ categoria.descripcion || ('Explora nuestra exclusiva colección de ' + (categoria.nombre | lowercase) + ' y
+        encuentra tu próxima inspiración.') }}
+      </p>
+
+
+    </div>
+  </section>
+  }
+
+  <div class="mx-auto max-w-7xl">
+
+    @if (isLoading) {
+    <div class="p-16 text-center bg-creativa-card rounded-xl shadow-md">
+      <h1 class="text-3xl font-semibold text-creativa-heading">Cargando productos...</h1>
+      <p class="text-creativa-text mt-2">Un momento, la inspiración está en camino...</p>
+    </div>
+    }
+
+    @if (errorMessage) {
+    <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-6 rounded-md shadow-md">
+      <p class="font-bold text-xl">{{ errorMessage }}</p>
+      <p class="text-lg">Parece que hubo un problema de conexión con el servidor. Por favor, inténtalo de nuevo.</p>
+    </div>
+    }
+
+    @if (!isLoading && !errorMessage) {
+    @if (productos.length === 0) {
+    <div class="text-center p-16 bg-creativa-card rounded-xl shadow-md border-t-8 border-creativa-accent">
+      <h3 class="text-4xl font-extrabold text-creativa-heading">¡Vaya! 😔</h3>
+      <p class="text-2xl text-creativa-text mt-4">
+        Aún no tenemos productos en la categoría **{{ categoria?.nombre }}**. ¡Estamos creando cosas maravillosas!
+      </p>
+      <a routerLink="/productos"
+        class="mt-6 inline-block bg-creativa-primary hover:bg-opacity-90 text-creativa-text-white font-bold py-3 px-8 rounded-lg text-lg transition-colors duration-300 shadow-md">
+        Ver otras Categorías
+      </a>
+    </div>
+    } @else {
+    <h2 id="productos-list" class="text-3xl font-bold text-creativa-heading mb-3 pt-4">
+      ¡Encontramos <span class="text-creativa-primary">{{ productos.length }}</span> productos en {{ categoria?.nombre
+      }}!
+    </h2>
+
+    <p class="text-lg text-creativa-text mb-10">
+      Explora nuestra mejor selección de la papelería más dulce.
+    </p>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      @for (producto of productos; track producto.id) {
+      <app-product-card [producto]="producto" [backendUrl]="backendUrl" (comprarClick)="onComprarProducto($event)" />
+      }
+    </div>
+    }
+    }
+  </div>
+
+</div>

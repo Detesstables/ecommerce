@@ -1,4 +1,3 @@
-// backend/src/auth/auth.service.ts
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
@@ -37,6 +36,7 @@ export class AuthService {
       sub: user.id, // 'sub' (subject) es el estándar para el ID
       email: user.email,
       rol: user.rol,
+      nombre: user.nombre,
     };
 
     // 4. Firmar y devolver el token
@@ -51,6 +51,7 @@ export interface JwtPayload {
   sub: number;
   email: string;
   rol: Role;
+  nombre: string;
 }
 
 /* Esa interface JwtPayload es nuestra "etiqueta de contrato" que le dice a TypeScript: "Oye, un JwtPayload debe tener exactamente estas 

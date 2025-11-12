@@ -3,12 +3,17 @@
 
 @theme {
 
-/* rosa pastel */
-  --color-creativa-pink: #F5D0DF;
+/* Colores de Marca */
+  --color-creativa-primary: #F4A2C4;    /* Un rosa más fuerte que el pastel */
+  --color-creativa-secondary: #FDF2F8;  /* Un rosa MUY claro (para fondos sutiles) */
+  --color-creativa-accent: #FACC15;     /* Tu amarillo (para botones/links) */
 
-  /* Amarillo de los destacados */
-  --color-creativa-yellow: #FACC15; 
+  /* Fondos */
+  --color-creativa-bg: #E0E2E5;        /* Fondo de página (Gris claro, de tu ejemplo) */
+  --color-creativa-card: #FFFFFF;      /* Fondo de tarjetas (Blanco) */
 
-  /* Gris oscuro del texto/logo */
-  --color-creativa-dark: #2E2E2E;
+  /* Texto */
+  --color-creativa-heading: #2E2E2E;   /* Tu gris oscuro (para títulos) */
+  --color-creativa-text: #4B5563;      /* Gris neutral (de tu ejemplo, para texto) */
+  --color-creativa-text-white: #FFFFFF;
 }

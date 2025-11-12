@@ -1,47 +1,79 @@
-// frontend/src/app/auth/pages/login/login.ts
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth.service'; // <-- ¡RUTA ACTUALIZADA!
-import { Router } from '@angular/router';
-import { NgIf } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { CommonModule } from '@angular/common'; 
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faGoogle } from '@fortawesome/free-brands-svg-icons';
+import { faArrowLeft, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'; 
+
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterLink,
+    FontAwesomeModule
+],
   templateUrl: './login.html',
-  styleUrls: ['./login.css'],
-  imports: [NgIf, ReactiveFormsModule]
+  styleUrls: ['./login.css']
 })
-export class Login {
-  loginForm: FormGroup;
+export class Login implements OnInit {
+  loginForm!: FormGroup;
   errorMessage: string | null = null;
+  showPassword = false; 
+  isLoading = false;
+
+  // Iconos de Font Awesome
+  faGoogle = faGoogle;
+  faArrowLeft = faArrowLeft;
+  faEye = faEye;
+  faEyeSlash = faEyeSlash;
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthService, // Inyectamos el servicio
-    private router: Router
-  ) {
+    private router: Router,
+    private authService: AuthService
+  ) {}
+
+  ngOnInit(): void {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]]
+      contraseña: ['', [Validators.required]],
     });
   }
 
-  onSubmit(): void {
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
+
+onSubmit(): void {
     if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
+      this.errorMessage = 'Por favor, ingresa tus credenciales.';
       return;
     }
 
     this.errorMessage = null;
-    const { email, password } = this.loginForm.value;
+    this.isLoading = true; // <-- Empieza a cargar
 
-    this.authService.login(email, password).subscribe({
+    // Obtenemos los valores
+    const { email, contraseña } = this.loginForm.value;
+
+    // Llamamos al servicio
+    this.authService.login(email, contraseña).subscribe({
       next: (response) => {
+        this.isLoading = false;
         console.log('Login exitoso:', response);
+        // ¡Redirigimos a la página principal!
         this.router.navigate(['/']); 
       },
       error: (err) => {
+        this.isLoading = false;
         console.error('Error en el login:', err);
+        // Mostramos el error del backend (ej. "Credenciales inválidas")
         this.errorMessage = 'Correo o contraseña incorrectos.';
       }
     });

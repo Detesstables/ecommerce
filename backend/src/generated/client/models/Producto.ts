@@ -518,10 +518,6 @@ export type ProductoUncheckedUpdateManyWithoutCategoriaNestedInput = {
   deleteMany?: Prisma.ProductoScalarWhereInput | Prisma.ProductoScalarWhereInput[]
 }
 
-export type NullableStringFieldUpdateOperationsInput = {
-  set?: string | null
-}
-
 export type ProductoCreateNestedOneWithoutItemsInput = {
   create?: Prisma.XOR<Prisma.ProductoCreateWithoutItemsInput, Prisma.ProductoUncheckedCreateWithoutItemsInput>
   connectOrCreate?: Prisma.ProductoCreateOrConnectWithoutItemsInput

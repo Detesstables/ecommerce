@@ -1,4 +1,4 @@
-<nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
+<nav class="bg-creativa-card border-b border-gray-200 sticky top-0 z-50">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-20">
 
@@ -10,28 +10,27 @@
 
       <div class="hidden md:flex md:items-center md:space-x-6">
         <a routerLink="/"
-           class="text-gray-600 hover:text-creativa-pink px-3 py-2 rounded-md text-lg font-medium transition-colors duration-200"
-           routerLinkActive="text-creativa-pink"
+           class="text-creativa-text hover:text-creativa-primary px-3 py-2 rounded-md text-lg font-medium transition-colors duration-200"
+           routerLinkActive="text-creativa-primary"
            [routerLinkActiveOptions]="{exact: true}"> Home
         </a>
-
+        
         <div class="relative">
           <button (click)="toggleProductosDropdown()" (blur)="closeProductosDropdown()" type="button" 
-                  class="text-gray-600 hover:text-creativa-pink px-3 py-2 rounded-md text-lg font-medium flex items-center transition-colors duration-200">
+                  class="text-creativa-text hover:text-creativa-primary px-3 py-2 rounded-md text-lg font-medium flex items-center transition-colors duration-200">
             <span>Productos</span>
             <svg class="ml-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
           </button>
 
           @if (isProductosDropdownOpen) {
-            <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg z-50 ring-1 ring-black ring-opacity-5">
+            <div class="absolute left-0 mt-2 w-48 bg-creativa-card rounded-md shadow-lg z-50 ring-1 ring-black ring-opacity-5">
               <div class="py-1">
-                @for (cat of categoriasMock; track cat.id) {
-                  <a [routerLink]="['/productos/categoria', cat.id]" 
-                     (click)="closeAllMenus()"
-                     class="block px-4 py-2 text-lg text-gray-700 hover:bg-gray-100 hover:text-creativa-dark">
-                    {{ cat.nombre }}
-                  </a>
-                }
+                @for (cat of (categories$ | async); track cat.id) {
+  <a [routerLink]="['/categoria', cat.id]" (click)="closeAllMenus()"
+     class="block px-4 py-2 text-lg text-gray-700 hover:bg-gray-100 hover:text-creativa-heading">
+    {{ cat.nombre }}
+  </a>
+}
               </div>
             </div>
           }
@@ -39,35 +38,36 @@
 
         <a routerLink="/sobre-nosotros"
            (click)="closeAllMenus()"
-           class="text-gray-600 hover:text-creativa-pink px-3 py-2 rounded-md text-lg font-medium transition-colors duration-200"
-           routerLinkActive="text-creativa-pink">
+           class="text-creativa-text hover:text-creativa-primary px-3 py-2 rounded-md text-lg font-medium transition-colors duration-200"
+           routerLinkActive="text-creativa-primary">
           Sobre Nosotros
         </a>
       </div>
 
       <div class="hidden md:flex items-center space-x-4">
-        @if (isLoggedIn) {
-          @if (isAdmin) {
-            <a routerLink="/admin" (click)="closeAllMenus()" class="text-gray-600 hover:text-creativa-pink text-lg font-bold">Dashboard</a>
+        @if (currentUser$ | async; as user) {
+          <span class="text-creativa-text text-lg font-medium">
+            Hola, {{ user.nombre.split(' ')[0] }}
+          </span>
+
+          @if (user.rol === 'ADMIN') {
+            <a routerLink="/admin" (click)="closeAllMenus()" class="text-creativa-text hover:text-creativa-primary text-lg font-bold">Dashboard</a>
           }
-          <button (click)="onLogout()" class="text-gray-600 hover:text-creativa-pink font-medium text-lg">Cerrar Sesión</button>
+          <button (click)="onLogout()" class="text-creativa-text hover:text-creativa-primary font-medium text-lg">Cerrar Sesión</button>
+        
         } @else {
-          <a routerLink="/login" (click)="closeAllMenus()" class="text-creativa-dark hover:text-creativa-yellow font-semibold text-lg">Inicio de Sesión</a>
-          <a routerLink="/login" (click)="closeAllMenus()" class="bg-creativa-yellow hover:bg-opacity-80 text-creativa-dark font-semibold px-4 py-2 rounded-md text-lg shadow transition-colors duration-200">Registro</a>
+          <a routerLink="/auth/login" (click)="closeAllMenus()" class="text-creativa-heading hover:text-creativa-accent font-semibold text-lg">Inicio de Sesión</a>
+          <a routerLink="/auth/registro" (click)="closeAllMenus()" class="bg-creativa-accent hover:bg-opacity-80 text-creativa-heading font-semibold px-4 py-2 rounded-md text-lg shadow transition-colors duration-200">Registro</a>
         }
       </div>
 
       <div class="-mr-2 flex md:hidden">
-        <button (click)="toggleMobileMenu()" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-creativa-pink hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-creativa-pink transition duration-150 ease-in-out">
+        <button (click)="toggleMobileMenu()" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-creativa-primary hover:bg-creativa-secondary focus:outline-none focus:bg-creativa-secondary focus:text-creativa-primary transition duration-150 ease-in-out">
           @if (!isMobileMenuOpen) {
-            <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
+            <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
           }
           @if (isMobileMenuOpen) {
-            <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
+            <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
           }
         </button>
       </div>
@@ -78,41 +78,35 @@
   @if (isMobileMenuOpen) {
     <div class="md:hidden border-t border-gray-200">
       <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-        <a routerLink="/" (click)="closeAllMenus()" class="text-gray-600 hover:text-creativa-pink block px-3 py-2 rounded-md text-base font-medium" routerLinkActive="text-creativa-pink" [routerLinkActiveOptions]="{exact: true}">Home</a>
-        <a routerLink="/sobre-nosotros" (click)="closeAllMenus()" class="text-gray-600 hover:text-creativa-pink block px-3 py-2 rounded-md text-base font-medium" routerLinkActive="text-creativa-pink">Sobre Nosotros</a>
+        <a routerLink="/" (click)="closeAllMenus()" class="text-creativa-text hover:text-creativa-primary block px-3 py-2 rounded-md text-base font-medium" routerLinkActive="text-creativa-primary" [routerLinkActiveOptions]="{exact: true}">Home</a>
+        <a routerLink="/sobre-nosotros" (click)="closeAllMenus()" class="text-creativa-text hover:text-creativa-primary block px-3 py-2 rounded-md text-base font-medium" routerLinkActive="text-creativa-primary">Sobre Nosotros</a>
 
         <div class="border-t border-gray-200 mt-3! pt-3!"></div>
 
-        @if (isLoggedIn) {
-          @if (isAdmin) {
-            <a routerLink="/admin" (click)="closeAllMenus()" class="text-gray-600 hover:text-creativa-pink block px-3 py-2 rounded-md text-base font-bold">Dashboard</a>
+        @if (currentUser$ | async; as user) {
+          <span class="text-creativa-text block px-3 py-2 rounded-md text-base font-medium">
+            Hola, {{ user.nombre.split(' ')[0] }}
+          </span>
+          @if (user.rol === 'ADMIN') {
+            <a routerLink="/admin" (click)="closeAllMenus()" class="text-creativa-text hover:text-creativa-primary block px-3 py-2 rounded-md text-base font-bold">Dashboard</a>
           }
-          <button (click)="onLogout()" class="w-full text-left text-gray-600 hover:text-creativa-pink block px-3 py-2 rounded-md text-base font-medium">Cerrar Sesión</button>
+          <button (click)="onLogout()" class="w-full text-left text-creativa-text hover:text-creativa-primary block px-3 py-2 rounded-md text-base font-medium">Cerrar Sesión</button>
         } @else {
-
-          <a routerLink="/login"
-            class="text-creativa-dark hover:text-creativa-yellow font-semibold text-lg">
-            Inicio de Sesión
-          </a>
-
-          <a routerLink="/login" 
-            class="bg-creativa-yellow hover:bg-opacity-80 text-creativa-dark font-semibold px-4 py-2 rounded-md text-lg shadow transition-colors duration-200">
-            Registro
-          </a>
-
+          <a routerLink="/auth/login" (click)="closeAllMenus()" class="text-creativa-heading hover:text-creativa-accent block px-3 py-2 rounded-md text-base font-semibold">Inicio de Sesión</a>
+          
+          <a routerLink="/auth/registro" (click)="closeAllMenus()" class="bg-creativa-accent hover:bg-opacity-80 text-creativa-heading font-semibold block w-full px-3 py-2 rounded-md text-base shadow transition-colors duration-200">Registro</a>
         }
 
         <div class="border-t border-gray-200 mt-3! pt-3!">
           <h3 class="px-3 text-sm font-semibold text-gray-500 uppercase tracking-wider">Categorías</h3>
-          <div class="mt-2 space-y-1">
-            @for (cat of categoriasMock; track cat.id) {
-              <a [routerLink]="['/productos/categoria', cat.id]" 
-                 (click)="closeAllMenus()"
-                 class="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-creativa-dark hover:bg-gray-50">
-                {{ cat.nombre }}
-              </a>
-            }
-          </div>
+<div class="mt-2 space-y-1">
+  @for (cat of (categories$ | async); track cat.id) {
+    <a [routerLink]="['/categoria', cat.id]" (click)="closeAllMenus()"
+       class="block px-3 py-2 rounded-md text-base font-medium text-creativa-text hover:text-creativa-heading hover:bg-creativa-secondary">
+      {{ cat.nombre }}
+    </a>
+  }
+</div>
         </div>
       </div>
     </div>
@@ -126,9 +120,77 @@
 </main>
 
 
+<footer class="bg-creativa-card border-t border-gray-200 py-12 md:py-16">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12 pb-8">
 
-<!-- <main class="bg-gray-50 min-h-screen">
-  <div class="container mx-auto p-4 sm:p-6 lg:p-8">
-    <router-outlet />
+      <div class="col-span-2 md:col-span-2"> 
+        <h3 class="text-xl font-bold tracking-tight text-creativa-primary mb-4">
+          Creativamente
+        </h3>
+        <p class="text-creativa-text text-sm mb-4">
+          Tu rincón de papelería más dulce. Creamos inspiración para tu día a día.
+        </p>
+        <h4 class="text-base font-semibold text-creativa-heading mb-3 uppercase tracking-wider">
+          Síguenos en Instagram
+        </h4>
+        <a href="https://www.instagram.com/creativamente.papeleria" 
+           target="_blank" 
+           rel="noopener noreferrer" 
+           class="inline-flex items-center justify-center space-x-3 text-creativa-primary hover:text-creativa-accent 
+                  transition-colors duration-200 py-2 px-4 rounded-full 
+                  border-2 border-creativa-primary hover:border-creativa-accent 
+                  focus:outline-none focus:ring-2 focus:ring-creativa-accent focus:ring-opacity-50">
+          <fa-icon [icon]="faInstagram" class="w-6 h-6"></fa-icon> 
+          <span class="text-lg font-extrabold leading-none">@creativamentepapeleria</span> 
+        </a>
+        <p class="text-sm text-creativa-text mt-3">
+          ¡No te pierdas nuestros nuevos productos y contenido creativo!
+        </p>
+      </div>
+
+      <div>
+        <h4 class="text-base font-semibold text-creativa-heading mb-4 uppercase tracking-wider">Navegación</h4>
+        <ul class="space-y-2">
+          <li><a routerLink="/" class="text-creativa-text hover:text-creativa-primary transition-colors">Home</a></li>
+          <li><a routerLink="/sobre-nosotros" class="text-creativa-text hover:text-creativa-primary transition-colors">Sobre Nosotros</a></li>
+          <li><a routerLink="/ayuda" class="text-creativa-text hover:text-creativa-primary transition-colors">Preguntas Frecuentes</a></li>
+          
+          @if (!(currentUser$ | async)) {
+            <li><a routerLink="/auth/login" class="text-creativa-text hover:text-creativa-primary transition-colors">Mi Cuenta / Login</a></li>
+          }
+          @if (currentUser$ | async; as user) {
+            @if (user.rol === 'ADMIN') {
+              <li><a routerLink="/admin" class="text-creativa-text hover:text-creativa-primary transition-colors">Dashboard</a></li>
+            }
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-base font-semibold text-creativa-heading mb-4 uppercase tracking-wider">Categorías Top</h4>
+<ul class="space-y-2">
+  @for (cat of (categories$ | async); track cat.id) {
+    <li>
+      <a [routerLink]="['/categoria', cat.id]" class="text-creativa-text hover:text-creativa-primary transition-colors"> {{ cat.nombre }}
+      </a>
+    </li>
+  }
+</ul>
+      </div>
+
+    </div>
+
+    <div class="pt-8 mt-8 border-t border-gray-100 text-center text-sm text-creativa-text">
+      <p>&copy; {{ currentYear }} Creativamente Papelería. Todos los derechos reservados.</p>
+      
+      <div class="mt-2 space-x-4">
+        <a routerLink="/politica-privacidad" class="text-xs text-creativa-text hover:text-creativa-primary transition-colors">Política de Privacidad</a>
+        <span class="text-creativa-text">|</span>
+        <a routerLink="/terminos-condiciones" class="text-xs text-creativa-text hover:text-creativa-primary transition-colors">Términos y Condiciones</a>
+      </div>
+      
+    </div>
   </div>
-</main> -->
+</footer>

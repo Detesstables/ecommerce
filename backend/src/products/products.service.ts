@@ -80,17 +80,18 @@ findAll(query: QueryProductDto) {
   }
 
   // --- Lógica para Actualizar Producto ---
-async update(id: number, updateProductDto: UpdateProductDto) {
-    // Primero, verifica que el producto exista
-    const producto = await this.prisma.producto.findUnique({
-      where: { id: id },
-    });
+async update(id: number, updateProductDto: UpdateProductDto, imagenUrl: string | undefined) {
 
-    if (!producto) {
-      throw new NotFoundException(`Producto con ID ${id} no encontrado`);
+
+    const dataToUpdate: Prisma.ProductoUpdateInput = {
+      ...updateProductDto, 
+    };
+
+
+    if (imagenUrl) {
+      dataToUpdate.imagenUrl = imagenUrl;
     }
 
-    // Si se envía un 'categoria_id', verifica que exista
     if (updateProductDto.categoria_id) {
       const categoria = await this.prisma.categoria.findUnique({
         where: { id: updateProductDto.categoria_id },
@@ -103,13 +104,11 @@ async update(id: number, updateProductDto: UpdateProductDto) {
     }
 
     try {
-      // Actualiza el producto
       return await this.prisma.producto.update({
         where: { id: id },
-        data: updateProductDto,
+        data: dataToUpdate, 
       });
     } catch (error) {
-      // Manejar otros errores (ej. si el 'nombre' nuevo ya existe)
       if (
         error instanceof Prisma.PrismaClientKnownRequestError &&
         error.code === 'P2002'
@@ -127,8 +126,6 @@ async update(id: number, updateProductDto: UpdateProductDto) {
         where: { id: id },
       });
     } catch (e) {
-      // Esto fallará si el producto está en un Pedido (constraint)
-      // En un proyecto real, se haría un 'borrado lógico'
       throw new NotFoundException(`Producto con ID ${id} no se pudo eliminar o no existe`);
     }
   }

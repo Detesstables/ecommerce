@@ -21,8 +21,9 @@ model Usuario {
   email           String   @unique
   contraseña_hash String
   rol             Role     @default(CLIENTE)
+  direccion       String 
   fecha_creacion  DateTime @default(now())
-
+  
   pedidos Pedido[]
 }
 
@@ -30,7 +31,9 @@ model Usuario {
 model Categoria {
   id        Int        @id @default(autoincrement())
   nombre    String     @unique
+  imagenUrl String? 
   productos Producto[]
+  descripcion String?
 }
 
 model Producto {
