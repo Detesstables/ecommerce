@@ -1,8 +1,7 @@
-// frontend/src/app/store/pages/category-page/category-page.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, LowerCasePipe } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { switchMap, tap } from 'rxjs/operators'; // <-- Ya no se usa debounceTime
+import { switchMap, tap } from 'rxjs/operators'; 
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms'; 
 
 import { ProductService, Producto } from '../../services/product.service'; 
@@ -52,7 +51,7 @@ export class CategoryPage implements OnInit {
     });
   }
 
-  // --- 'ngOnInit' MÁS SIMPLE ---
+  // --- 'ngOnInit'  ---
   ngOnInit(): void {
     this.route.paramMap.pipe(
       tap(params => {
@@ -99,10 +98,8 @@ export class CategoryPage implements OnInit {
     });
   }
 
-  // --- ¡NUEVA FUNCIÓN PARA EL BOTÓN! ---
+
   onFilterSubmit(): void {
-    // Simplemente vuelve a llamar a 'loadProducts',
-    // que leerá los valores actuales del formulario.
     this.loadProducts();
   }
 
