@@ -1,0 +1,36 @@
+# Archivos de Sistema
+.DS_Store
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =================
+# === BACKEND ===
+# =================
+
+# Dependencias del Backend
+/backend/node_modules
+
+# Archivos compilados del Backend
+/backend/dist
+
+# ¡IMPORTANTE! Base de Datos SQLite
+/backend/dev.db
+
+# Archivos de entorno (Contienen contraseñas y secretos)
+/backend/.env
+
+
+# =================
+# === FRONTEND ===
+# =================
+
+# Dependencias del Frontend
+/frontend/node_modules
+
+# Archivos de caché y build de Angular
+/frontend/dist
+/frontend/.angular/cache
+/frontend/coverage
