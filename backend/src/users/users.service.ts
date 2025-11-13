@@ -9,7 +9,7 @@ export class UsersService {
   constructor(private prisma: PrismaService) {}
 
 async create(createUserDto: CreateUserDto) {
-  // 1. Hashear la contraseña (esto queda igual)
+  // 1. Hashear la contraseña 
   const salt = await bcrypt.genSalt(10);
   const contraseña_hash = await bcrypt.hash(
     createUserDto.contraseña,

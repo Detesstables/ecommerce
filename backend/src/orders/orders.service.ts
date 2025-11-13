@@ -1,7 +1,7 @@
 import {
   Injectable,
   NotFoundException,
-  ConflictException, // Importa el 409 Conflict
+  ConflictException, 
 } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Role } from 'src/generated/client/enums';

@@ -28,7 +28,6 @@ export class ProductsService {
   }
 
   // --- Lógica para Listar Productos (con filtros) ---
-// --- Lógica para Listar Productos (con filtros) ---
 findAll(query: QueryProductDto) {
     const { nombre, precioMin, precioMax, categoria_id } = query;
 
