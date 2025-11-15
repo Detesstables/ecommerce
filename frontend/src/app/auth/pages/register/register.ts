@@ -47,6 +47,7 @@ export class Register implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       contraseña: ['', [Validators.required, Validators.minLength(8)]], // Usando 'contraseña'
       direccion: ['', [Validators.required]],
+      numero: ['', [Validators.required, Validators.pattern(/^[0-9]{9}$/)]]
     });
   }
 
@@ -56,28 +57,24 @@ export class Register implements OnInit {
 
 onSubmit(): void {
     if (this.registerForm.invalid) {
+      this.toastr.error('Por favor, completa todos los campos correctamente.', 'Error de Formulario');
       this.registerForm.markAllAsTouched();
-      this.toastr.error('Por favor, completa todos los campos requeridos.', 'Formulario Inválido');
-      return; 
+      return;
     }
-    
-    // this.errorMessage = null; // <-- Ya no se usa
-    this.isLoading = true; 
 
-    const formData = this.registerForm.value;
+    this.isLoading = true; // Activa el spinner
 
-    this.authService.register(formData).subscribe({
-      next: (response) => {
-        this.isLoading = false;
-        // ¡ÉXITO!
-        this.toastr.success('¡Tu cuenta ha sido creada! Ahora inicia sesión.', 'Registro Exitoso');
-        this.router.navigate(['/auth/login']); 
+    const { nombre, email, contraseña, direccion, numero } = this.registerForm.value; // <-- ¡Asegúrate que 'numero' esté aquí!
+
+    this.authService.register({ nombre, email, contraseña, rol: 'CLIENTE', direccion, numero }).subscribe({ // <-- ¡Asegúrate que 'numero' esté aquí!
+      next: () => {
+        this.toastr.success('¡Registro exitoso! Inicia sesión para continuar.', 'Bienvenido');
+        this.router.navigate(['/auth/login']);
       },
-      error: (err) => {
-        this.isLoading = false;
-        // ¡ERROR! (ej. 409 "El correo ya existe")
-        const mensaje = err.error.message || 'Ocurrió un error. Inténtalo de nuevo.';
-        this.toastr.error(mensaje, 'Error de Registro');
+      error: (error) => {
+        this.isLoading = false; // Desactiva el spinner
+        const errorMessage = error.error?.message || 'Ocurrió un error inesperado durante el registro.';
+        this.toastr.error(errorMessage, 'Error de Registro');
       }
     });
   }

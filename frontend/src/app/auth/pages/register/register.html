@@ -115,6 +115,24 @@
           </div>
         </div>
 
+        <div>
+          <label for="numero" class="sr-only">Número de Teléfono</label>
+          <input type="tel" id="numero" formControlName="numero" placeholder="Número de Teléfono (9 dígitos)"
+                 class="w-full px-5 py-3.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-creativa-primary focus:border-transparent 
+                        placeholder-gray-400 text-creativa-text bg-creativa-secondary text-lg"
+                 [ngClass]="{'border-red-500': registerForm.get('numero')?.invalid && registerForm.get('numero')?.touched}">
+          
+          <div class="text-red-500 text-sm mt-1 h-5"> 
+            @if (registerForm.get('numero')?.invalid && (registerForm.get('numero')?.dirty || registerForm.get('numero')?.touched)) {
+              @if (registerForm.get('numero')?.errors?.['required']) {
+                <span>El número de teléfono es requerido.</span>
+              } @else if (registerForm.get('numero')?.errors?.['pattern']) {
+                <span>Debe ser un número válido (9 dígitos).</span>
+              }
+            }
+          </div>
+        </div>
+
         <!-- Botón de Submit -->
         <button type="submit" 
                 [disabled]="registerForm.invalid || isLoading" 

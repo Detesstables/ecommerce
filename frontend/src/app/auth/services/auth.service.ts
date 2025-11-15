@@ -51,7 +51,8 @@ export class AuthService {
       email: data.email,
       contraseña: data.contraseña,
       direccion: data.direccion,
-      rol: 'CLIENTE'
+      rol: 'CLIENTE',
+      numero: data.numero
     };
     return this.http.post<any>(`${API_URL}/users/register`, body);
   }

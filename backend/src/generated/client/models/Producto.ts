@@ -562,6 +562,7 @@ export type ProductoCreateOrConnectWithoutCategoriaInput = {
 
 export type ProductoCreateManyCategoriaInputEnvelope = {
   data: Prisma.ProductoCreateManyCategoriaInput | Prisma.ProductoCreateManyCategoriaInput[]
+  skipDuplicates?: boolean
 }
 
 export type ProductoUpsertWithWhereUniqueWithoutCategoriaInput = {
@@ -1478,6 +1479,7 @@ export type ProductoCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * The data used to create many Productos.
    */
   data: Prisma.ProductoCreateManyInput | Prisma.ProductoCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1496,6 +1498,7 @@ export type ProductoCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extens
    * The data used to create many Productos.
    */
   data: Prisma.ProductoCreateManyInput | Prisma.ProductoCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

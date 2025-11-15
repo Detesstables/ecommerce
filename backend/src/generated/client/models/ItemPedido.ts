@@ -494,6 +494,7 @@ export type ItemPedidoCreateOrConnectWithoutProductoInput = {
 
 export type ItemPedidoCreateManyProductoInputEnvelope = {
   data: Prisma.ItemPedidoCreateManyProductoInput | Prisma.ItemPedidoCreateManyProductoInput[]
+  skipDuplicates?: boolean
 }
 
 export type ItemPedidoUpsertWithWhereUniqueWithoutProductoInput = {
@@ -543,6 +544,7 @@ export type ItemPedidoCreateOrConnectWithoutPedidoInput = {
 
 export type ItemPedidoCreateManyPedidoInputEnvelope = {
   data: Prisma.ItemPedidoCreateManyPedidoInput | Prisma.ItemPedidoCreateManyPedidoInput[]
+  skipDuplicates?: boolean
 }
 
 export type ItemPedidoUpsertWithWhereUniqueWithoutPedidoInput = {
@@ -1340,6 +1342,7 @@ export type ItemPedidoCreateManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * The data used to create many ItemPedidos.
    */
   data: Prisma.ItemPedidoCreateManyInput | Prisma.ItemPedidoCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1358,6 +1361,7 @@ export type ItemPedidoCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Exte
    * The data used to create many ItemPedidos.
    */
   data: Prisma.ItemPedidoCreateManyInput | Prisma.ItemPedidoCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */

@@ -434,6 +434,7 @@ export type PedidoCreateOrConnectWithoutUsuarioInput = {
 
 export type PedidoCreateManyUsuarioInputEnvelope = {
   data: Prisma.PedidoCreateManyUsuarioInput | Prisma.PedidoCreateManyUsuarioInput[]
+  skipDuplicates?: boolean
 }
 
 export type PedidoUpsertWithWhereUniqueWithoutUsuarioInput = {
@@ -1275,6 +1276,7 @@ export type PedidoCreateManyArgs<ExtArgs extends runtime.Types.Extensions.Intern
    * The data used to create many Pedidos.
    */
   data: Prisma.PedidoCreateManyInput | Prisma.PedidoCreateManyInput[]
+  skipDuplicates?: boolean
 }
 
 /**
@@ -1293,6 +1295,7 @@ export type PedidoCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensio
    * The data used to create many Pedidos.
    */
   data: Prisma.PedidoCreateManyInput | Prisma.PedidoCreateManyInput[]
+  skipDuplicates?: boolean
   /**
    * Choose, which related nodes to fetch as well
    */
