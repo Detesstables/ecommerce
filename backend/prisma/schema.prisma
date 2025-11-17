@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/client"
@@ -6,7 +5,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url = env("DATABASE_URL")
+  url      = env("DATABASE_URL")
 }
 
 enum Role {
@@ -20,19 +19,25 @@ model Usuario {
   email           String   @unique
   contraseña_hash String
   rol             Role     @default(CLIENTE)
-  direccion       String 
-  fecha_creacion  DateTime @default(now())
-  numero String 
-  
-  pedidos Pedido[]
+  numero          String
+
+  // --- ¡CAMPOS DE DIRECCIÓN ACTUALIZADOS! ---
+  direccion_detalle String
+  region_id       Int
+  region          Region   @relation(fields: [region_id], references: [id])
+
+  fecha_creacion DateTime @default(now())
+
+  pedidos                  Pedido[]
+  pedidos_personalizados   PedidoPersonalizado[]
 }
 
 // --- PRODUCTOS ---
 model Categoria {
-  id        Int        @id @default(autoincrement())
-  nombre    String     @unique
-  imagenUrl String? 
-  productos Producto[]
+  id          Int        @id @default(autoincrement())
+  nombre      String     @unique
+  imagenUrl   String?
+  productos   Producto[]
   descripcion String?
 }
 
@@ -40,11 +45,11 @@ model Producto {
   id                  Int      @id @default(autoincrement())
   nombre              String
   descripcion         String
-  precio              Int 
+  precio              Int
   stock               Int
   fecha_creacion      DateTime @default(now())
   fecha_actualizacion DateTime @updatedAt
-  imagenUrl           String?  
+  imagenUrl           String?
 
   items        ItemPedido[]
   categoria_id Int
@@ -52,34 +57,64 @@ model Producto {
 }
 
 // --- PEDIDOS ---
-enum EstadoPago {
-  PENDIENTE
-  APROBADO
-  RECHAZADO
+enum EstadoPedido {
+  PENDIENTE        // Pago no confirmado (para el flujo Transbank)
+  PAGO_APROBADO    // Pago confirmado (para pedidos normales)
+  EN_PREPARACION   // El pedido está siendo empacado
+  ENVIADO          // El pedido salió a reparto
+  ENTREGADO        // El pedido fue recibido (reemplaza 'COMPLETADO')
+  RECHAZADO        // Pedido rechazado/cancelado
 }
 
 model Pedido {
-  id           Int      @id @default(autoincrement())
-  fecha_pedido DateTime @default(now())
+  id           Int          @id @default(autoincrement())
+  fecha_pedido DateTime     @default(now())
+  estado       EstadoPedido @default(PAGO_APROBADO)
+  usuario_id   Int
+  usuario      Usuario      @relation(fields: [usuario_id], references: [id])
 
-  // --- LÍNEA NUEVA ---
-  estadoPago   EstadoPago @default(APROBADO) // Asumimos que el pago fue exitoso
-
-  usuario_id Int
-  usuario    Usuario @relation(fields: [usuario_id], references: [id])
-
-  items ItemPedido[] 
+  items ItemPedido[]
 }
 
 model ItemPedido {
-  id                       Int      @id @default(autoincrement())
-  cantidad                 Int
+  id                         Int      @id @default(autoincrement())
+  cantidad                   Int
   precio_unitario_al_comprar Int
-  pedido_id                Int
-  pedido                   Pedido   @relation(fields: [pedido_id], references: [id])
-  producto_id              Int
-  producto                 Producto @relation(fields: [producto_id], references: [id])
+  pedido_id                  Int
+  pedido                     Pedido   @relation(fields: [pedido_id], references: [id])
+  producto_id                Int
+  producto                   Producto @relation(fields: [producto_id], references: [id])
 
   @@unique([pedido_id, producto_id])
 }
 
+model Region {
+  id       Int       @id @default(autoincrement())
+  nombre   String    @unique // Ej. "Región Metropolitana", "Valparaíso", etc.
+  usuarios Usuario[] // Un usuario pertenece a una región (FK en Usuario)
+}
+
+// Enum para el estado de los pedidos personalizados
+enum EstadoPersonalizado {
+  PENDIENTE   // Recibida la idea del cliente
+  REVISION    // Administrador está presupuestando
+  APROBADO    // Cliente aceptó presupuesto
+  RECHAZADO
+  COMPLETADO
+}
+
+model PedidoPersonalizado {
+  id                   Int       @id @default(autoincrement())
+  usuario_id           Int
+  usuario              Usuario   @relation(fields: [usuario_id], references: [id])
+  
+  titulo               String // Breve resumen de la solicitud
+  descripcion_cliente  String // La descripción detallada
+  referencia_img_url   String? // Imagen de referencia (opcional)
+  presupuesto_estimado Int? 
+  
+  // --- ¡AQUÍ ESTÁ LA CORRECCIÓN! ---
+  estado               EstadoPersonalizado @default(PENDIENTE)
+
+  fecha_creacion       DateTime @default(now())
+}

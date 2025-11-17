@@ -45,17 +45,9 @@ export class AuthService {
     }
   }
 
-  register(data: any): Observable<any> {
-    const body = {
-      nombre: data.nombre,
-      email: data.email,
-      contraseña: data.contraseña,
-      direccion: data.direccion,
-      rol: 'CLIENTE',
-      numero: data.numero
-    };
-    return this.http.post<any>(`${API_URL}/users/register`, body);
-  }
+   register(data: any): Observable<any> {
+  return this.http.post<any>(`${API_URL}/users/register`, data);
+ }
 
   login(email: string, contrasena: string): Observable<{ accessToken: string }> {
     return this.http.post<{ accessToken: string }>(`${API_URL}/auth/login`, {

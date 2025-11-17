@@ -17,10 +17,24 @@ export const Role = {
 export type Role = (typeof Role)[keyof typeof Role]
 
 
-export const EstadoPago = {
+export const EstadoPedido = {
   PENDIENTE: 'PENDIENTE',
-  APROBADO: 'APROBADO',
+  PAGO_APROBADO: 'PAGO_APROBADO',
+  EN_PREPARACION: 'EN_PREPARACION',
+  ENVIADO: 'ENVIADO',
+  ENTREGADO: 'ENTREGADO',
   RECHAZADO: 'RECHAZADO'
 } as const
 
-export type EstadoPago = (typeof EstadoPago)[keyof typeof EstadoPago]
+export type EstadoPedido = (typeof EstadoPedido)[keyof typeof EstadoPedido]
+
+
+export const EstadoPersonalizado = {
+  PENDIENTE: 'PENDIENTE',
+  REVISION: 'REVISION',
+  APROBADO: 'APROBADO',
+  RECHAZADO: 'RECHAZADO',
+  COMPLETADO: 'COMPLETADO'
+} as const
+
+export type EstadoPersonalizado = (typeof EstadoPersonalizado)[keyof typeof EstadoPersonalizado]

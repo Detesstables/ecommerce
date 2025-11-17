@@ -53,7 +53,9 @@ export const ModelName = {
   Categoria: 'Categoria',
   Producto: 'Producto',
   Pedido: 'Pedido',
-  ItemPedido: 'ItemPedido'
+  ItemPedido: 'ItemPedido',
+  Region: 'Region',
+  PedidoPersonalizado: 'PedidoPersonalizado'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -78,9 +80,10 @@ export const UsuarioScalarFieldEnum = {
   email: 'email',
   contraseña_hash: 'contraseña_hash',
   rol: 'rol',
-  direccion: 'direccion',
-  fecha_creacion: 'fecha_creacion',
-  numero: 'numero'
+  numero: 'numero',
+  direccion_detalle: 'direccion_detalle',
+  region_id: 'region_id',
+  fecha_creacion: 'fecha_creacion'
 } as const
 
 export type UsuarioScalarFieldEnum = (typeof UsuarioScalarFieldEnum)[keyof typeof UsuarioScalarFieldEnum]
@@ -114,7 +117,7 @@ export type ProductoScalarFieldEnum = (typeof ProductoScalarFieldEnum)[keyof typ
 export const PedidoScalarFieldEnum = {
   id: 'id',
   fecha_pedido: 'fecha_pedido',
-  estadoPago: 'estadoPago',
+  estado: 'estado',
   usuario_id: 'usuario_id'
 } as const
 
@@ -130,6 +133,28 @@ export const ItemPedidoScalarFieldEnum = {
 } as const
 
 export type ItemPedidoScalarFieldEnum = (typeof ItemPedidoScalarFieldEnum)[keyof typeof ItemPedidoScalarFieldEnum]
+
+
+export const RegionScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre'
+} as const
+
+export type RegionScalarFieldEnum = (typeof RegionScalarFieldEnum)[keyof typeof RegionScalarFieldEnum]
+
+
+export const PedidoPersonalizadoScalarFieldEnum = {
+  id: 'id',
+  usuario_id: 'usuario_id',
+  titulo: 'titulo',
+  descripcion_cliente: 'descripcion_cliente',
+  referencia_img_url: 'referencia_img_url',
+  presupuesto_estimado: 'presupuesto_estimado',
+  estado: 'estado',
+  fecha_creacion: 'fecha_creacion'
+} as const
+
+export type PedidoPersonalizadoScalarFieldEnum = (typeof PedidoPersonalizadoScalarFieldEnum)[keyof typeof PedidoPersonalizadoScalarFieldEnum]
 
 
 export const SortOrder = {

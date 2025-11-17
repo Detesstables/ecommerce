@@ -24,8 +24,9 @@ async create(createUserDto: CreateUserDto) {
         email: createUserDto.email,
         rol: createUserDto.rol,
         contraseña_hash: contraseña_hash,
-        direccion: createUserDto.direccion,
         numero: createUserDto.numero,
+        direccion_detalle: createUserDto.direccion_detalle, // Nuevo nombre
+        region_id: createUserDto.region_id, // Nuevo campo FK
       },
     });
 

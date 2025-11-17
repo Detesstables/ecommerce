@@ -394,7 +394,9 @@ export const ModelName = {
   Categoria: 'Categoria',
   Producto: 'Producto',
   Pedido: 'Pedido',
-  ItemPedido: 'ItemPedido'
+  ItemPedido: 'ItemPedido',
+  Region: 'Region',
+  PedidoPersonalizado: 'PedidoPersonalizado'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -410,7 +412,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "usuario" | "categoria" | "producto" | "pedido" | "itemPedido"
+    modelProps: "usuario" | "categoria" | "producto" | "pedido" | "itemPedido" | "region" | "pedidoPersonalizado"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -784,6 +786,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Region: {
+      payload: Prisma.$RegionPayload<ExtArgs>
+      fields: Prisma.RegionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RegionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RegionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegionPayload>
+        }
+        findFirst: {
+          args: Prisma.RegionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RegionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegionPayload>
+        }
+        findMany: {
+          args: Prisma.RegionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegionPayload>[]
+        }
+        create: {
+          args: Prisma.RegionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegionPayload>
+        }
+        createMany: {
+          args: Prisma.RegionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RegionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegionPayload>[]
+        }
+        delete: {
+          args: Prisma.RegionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegionPayload>
+        }
+        update: {
+          args: Prisma.RegionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegionPayload>
+        }
+        deleteMany: {
+          args: Prisma.RegionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RegionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RegionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegionPayload>[]
+        }
+        upsert: {
+          args: Prisma.RegionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RegionPayload>
+        }
+        aggregate: {
+          args: Prisma.RegionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRegion>
+        }
+        groupBy: {
+          args: Prisma.RegionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RegionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RegionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RegionCountAggregateOutputType> | number
+        }
+      }
+    }
+    PedidoPersonalizado: {
+      payload: Prisma.$PedidoPersonalizadoPayload<ExtArgs>
+      fields: Prisma.PedidoPersonalizadoFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PedidoPersonalizadoFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PedidoPersonalizadoPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PedidoPersonalizadoFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PedidoPersonalizadoPayload>
+        }
+        findFirst: {
+          args: Prisma.PedidoPersonalizadoFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PedidoPersonalizadoPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PedidoPersonalizadoFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PedidoPersonalizadoPayload>
+        }
+        findMany: {
+          args: Prisma.PedidoPersonalizadoFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PedidoPersonalizadoPayload>[]
+        }
+        create: {
+          args: Prisma.PedidoPersonalizadoCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PedidoPersonalizadoPayload>
+        }
+        createMany: {
+          args: Prisma.PedidoPersonalizadoCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PedidoPersonalizadoCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PedidoPersonalizadoPayload>[]
+        }
+        delete: {
+          args: Prisma.PedidoPersonalizadoDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PedidoPersonalizadoPayload>
+        }
+        update: {
+          args: Prisma.PedidoPersonalizadoUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PedidoPersonalizadoPayload>
+        }
+        deleteMany: {
+          args: Prisma.PedidoPersonalizadoDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PedidoPersonalizadoUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PedidoPersonalizadoUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PedidoPersonalizadoPayload>[]
+        }
+        upsert: {
+          args: Prisma.PedidoPersonalizadoUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PedidoPersonalizadoPayload>
+        }
+        aggregate: {
+          args: Prisma.PedidoPersonalizadoAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePedidoPersonalizado>
+        }
+        groupBy: {
+          args: Prisma.PedidoPersonalizadoGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PedidoPersonalizadoGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PedidoPersonalizadoCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PedidoPersonalizadoCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -829,9 +979,10 @@ export const UsuarioScalarFieldEnum = {
   email: 'email',
   contraseña_hash: 'contraseña_hash',
   rol: 'rol',
-  direccion: 'direccion',
-  fecha_creacion: 'fecha_creacion',
-  numero: 'numero'
+  numero: 'numero',
+  direccion_detalle: 'direccion_detalle',
+  region_id: 'region_id',
+  fecha_creacion: 'fecha_creacion'
 } as const
 
 export type UsuarioScalarFieldEnum = (typeof UsuarioScalarFieldEnum)[keyof typeof UsuarioScalarFieldEnum]
@@ -865,7 +1016,7 @@ export type ProductoScalarFieldEnum = (typeof ProductoScalarFieldEnum)[keyof typ
 export const PedidoScalarFieldEnum = {
   id: 'id',
   fecha_pedido: 'fecha_pedido',
-  estadoPago: 'estadoPago',
+  estado: 'estado',
   usuario_id: 'usuario_id'
 } as const
 
@@ -881,6 +1032,28 @@ export const ItemPedidoScalarFieldEnum = {
 } as const
 
 export type ItemPedidoScalarFieldEnum = (typeof ItemPedidoScalarFieldEnum)[keyof typeof ItemPedidoScalarFieldEnum]
+
+
+export const RegionScalarFieldEnum = {
+  id: 'id',
+  nombre: 'nombre'
+} as const
+
+export type RegionScalarFieldEnum = (typeof RegionScalarFieldEnum)[keyof typeof RegionScalarFieldEnum]
+
+
+export const PedidoPersonalizadoScalarFieldEnum = {
+  id: 'id',
+  usuario_id: 'usuario_id',
+  titulo: 'titulo',
+  descripcion_cliente: 'descripcion_cliente',
+  referencia_img_url: 'referencia_img_url',
+  presupuesto_estimado: 'presupuesto_estimado',
+  estado: 'estado',
+  fecha_creacion: 'fecha_creacion'
+} as const
+
+export type PedidoPersonalizadoScalarFieldEnum = (typeof PedidoPersonalizadoScalarFieldEnum)[keyof typeof PedidoPersonalizadoScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -970,16 +1143,16 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
 
 
 /**
- * Reference to a field of type 'EstadoPago'
+ * Reference to a field of type 'EstadoPedido'
  */
-export type EnumEstadoPagoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoPago'>
+export type EnumEstadoPedidoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoPedido'>
     
 
 
 /**
- * Reference to a field of type 'EstadoPago[]'
+ * Reference to a field of type 'EstadoPedido[]'
  */
-export type ListEnumEstadoPagoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoPago[]'>
+export type ListEnumEstadoPedidoFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EstadoPedido[]'>
     
 
 
@@ -1088,6 +1261,8 @@ export type GlobalOmitConfig = {
   producto?: Prisma.ProductoOmit
   pedido?: Prisma.PedidoOmit
   itemPedido?: Prisma.ItemPedidoOmit
+  region?: Prisma.RegionOmit
+  pedidoPersonalizado?: Prisma.PedidoPersonalizadoOmit
 }
 
 /* Types for Logging */

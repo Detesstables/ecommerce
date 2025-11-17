@@ -2,12 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'; 
-import { faGoogle } from '@fortawesome/free-brands-svg-icons'; 
-import { faArrowLeft, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'; // Iconos solid
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { faArrowLeft, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { AuthService } from '../../services/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { Region, RegionsService } from '../../../shared/services/regions.service';
 
 @Component({
   selector: 'app-register',
@@ -15,20 +14,18 @@ import { ToastrService } from 'ngx-toastr';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    RouterLink, 
-    FontAwesomeModule 
+    RouterLink,
+    FontAwesomeModule,
   ],
   templateUrl: './register.html',
-  styleUrls: ['./register.css']
+  styleUrls: ['./register.css'],
 })
-export class Register implements OnInit { 
+export class Register implements OnInit {
   registerForm!: FormGroup;
   errorMessage: string | null = null;
   showPassword = false;
-  isLoading = false; // Para deshabilitar el botón mientras carga
-
-  // Declaración de iconos de Font Awesome
-  faGoogle = faGoogle;
+  isLoading = false;
+  regiones: Region[] = [];
   faArrowLeft = faArrowLeft;
   faEye = faEye;
   faEyeSlash = faEyeSlash;
@@ -37,17 +34,47 @@ export class Register implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private regionsService: RegionsService
   ) {}
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
-      // Campos ajustados a tu DTO (contraseña y dirección)
-      nombre: ['', [Validators.required]], 
+      nombre: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
-      contraseña: ['', [Validators.required, Validators.minLength(8)]], // Usando 'contraseña'
-      direccion: ['', [Validators.required]],
-      numero: ['', [Validators.required, Validators.pattern(/^[0-9]{9}$/)]]
+      
+      // --- CAMBIO AQUÍ ---
+      contraseña: ['', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(20) // 1. Límite máximo actualizado a 20
+      ]],
+      
+      region_id: ['', [Validators.required]],
+      direccion_detalle: ['', [Validators.required, Validators.minLength(5)]],
+      
+      numero: ['', [
+        Validators.required,
+        Validators.pattern(/^[0-9]{9}$/), 
+        Validators.maxLength(9) 
+      ]],
+    });
+
+    this.loadRegiones();
+  }
+
+  loadRegiones(): void {
+    this.regionsService.getRegions().subscribe({
+      next: (data) => {
+        this.regiones = data;
+      },
+      error: (err) => {
+        console.error('Error cargando regiones:', err);
+        this.toastr.error(
+          'No se pudieron cargar las regiones. Inténtalo más tarde.',
+          'Error de Conexión'
+        );
+      },
     });
   }
 
@@ -55,27 +82,46 @@ export class Register implements OnInit {
     this.showPassword = !this.showPassword;
   }
 
-onSubmit(): void {
+  onSubmit(): void {
     if (this.registerForm.invalid) {
-      this.toastr.error('Por favor, completa todos los campos correctamente.', 'Error de Formulario');
+      this.toastr.error(
+        'Por favor, completa todos los campos correctamente.',
+        'Error de Formulario'
+      );
       this.registerForm.markAllAsTouched();
       return;
     }
 
-    this.isLoading = true; // Activa el spinner
+    this.isLoading = true;
 
-    const { nombre, email, contraseña, direccion, numero } = this.registerForm.value; // <-- ¡Asegúrate que 'numero' esté aquí!
+    const { nombre, email, contraseña, region_id, direccion_detalle, numero } =
+      this.registerForm.value;
 
-    this.authService.register({ nombre, email, contraseña, rol: 'CLIENTE', direccion, numero }).subscribe({ // <-- ¡Asegúrate que 'numero' esté aquí!
+    const payload = {
+      nombre,
+      email,
+      contraseña,
+      rol: 'CLIENTE',
+      region_id: +region_id,
+      direccion_detalle,
+      numero,
+    };
+
+    this.authService.register(payload).subscribe({
       next: () => {
-        this.toastr.success('¡Registro exitoso! Inicia sesión para continuar.', 'Bienvenido');
+        this.toastr.success(
+          '¡Registro exitoso! Inicia sesión para continuar.',
+          'Bienvenido'
+        );
         this.router.navigate(['/auth/login']);
       },
       error: (error) => {
-        this.isLoading = false; // Desactiva el spinner
-        const errorMessage = error.error?.message || 'Ocurrió un error inesperado durante el registro.';
+        this.isLoading = false;
+        const errorMessage =
+          error.error?.message ||
+          'Ocurrió un error inesperado durante el registro.';
         this.toastr.error(errorMessage, 'Error de Registro');
-      }
+      },
     });
   }
 }

@@ -2,9 +2,12 @@ import {
   Injectable,
   NotFoundException,
   ConflictException, 
+  InternalServerErrorException
 } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Role } from 'src/generated/client/enums';
+import { Prisma } from '@prisma/client'; 
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
 
 // Re-importamos la interfaz del payload para saber quién es el usuario
 export interface JwtPayload {
@@ -20,56 +23,37 @@ export class OrdersService {
   // Asumimos que la cantidad es 1, basado en el endpoint POST /comprar/:id
   private readonly CANTIDAD_A_COMPRAR = 1;
 
-  async createOrder(productId: number, user: JwtPayload) {
-    // Usamos una transacción para asegurar la integridad de los datos
-    // Si algo falla aquí (ej. no hay stock), NADA se guarda en la BD.
-    
-    return this.prisma.$transaction(async (tx) => {
-      // 1. Buscar el producto y bloquearlo para la transacción
-      const producto = await tx.producto.findUnique({
-        where: { id: productId },
-      });
+async createOrder(productId: number, user: JwtPayload) {
+    const quantity = 1;
 
-      if (!producto) {
-        throw new NotFoundException('Producto no encontrado');
+    try {
+      // Llamamos a la función SQL (Procedimiento Almacenado) que hace TODO
+      const result = await this.prisma.$queryRawUnsafe<{ pedido_id: number; stock_restante: number }[]>(
+        `SELECT * FROM fn_process_order($1, $2, $3)`, 
+        user.sub,         
+        productId,        
+        quantity          
+      );
+      
+      return {
+        message: "Venta registrada exitosamente mediante Procedimiento Almacenado.",
+        orderId: result[0]?.pedido_id,
+        newStock: result[0]?.stock_restante,
+      };
+
+    } catch (error) {
+      const errorMessage = error.message as string;
+      
+      if (errorMessage.includes('409:')) {
+        throw new ConflictException(errorMessage.replace('409: ', ''));
+      }
+      
+      // Manejamos el error 404
+      if (error instanceof PrismaClientKnownRequestError && error.code === 'P2025') {
+        throw new NotFoundException('Producto no encontrado en el sistema.');
       }
 
-      // 2. Comprobar si hay suficiente stock
-      if (producto.stock < this.CANTIDAD_A_COMPRAR) {
-        // ¡Cumple con el requisito! Error 409 Conflict
-        throw new ConflictException('No hay stock suficiente');
-      }
-
-      // 3. Crear la cabecera del Pedido
-      // (Aquí usamos el estado de pago simulado)
-      const pedido = await tx.pedido.create({
-        data: {
-          usuario_id: user.sub, // ID del cliente desde el token
-          estadoPago: 'APROBADO', // Simulación de pago exitoso
-        },
-      });
-
-      // 4. Crear el detalle del Pedido (el Item)
-      const itemPedido = await tx.itemPedido.create({
-        data: {
-          pedido_id: pedido.id,
-          producto_id: producto.id,
-          cantidad: this.CANTIDAD_A_COMPRAR,
-          // Guardamos el precio en el momento de la compra
-          precio_unitario_al_comprar: producto.precio, 
-        },
-      });
-
-      // 5. Reducir el stock del producto
-      await tx.producto.update({
-        where: { id: productId },
-        data: {
-          stock: producto.stock - this.CANTIDAD_A_COMPRAR,
-        },
-      });
-
-      // 6. Devolver el item creado
-      return itemPedido;
-    });
+      throw new InternalServerErrorException('Error desconocido en la base de datos.');
+    }
   }
 }

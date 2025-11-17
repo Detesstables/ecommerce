@@ -67,3 +67,13 @@ export type Pedido = Prisma.PedidoModel
  * 
  */
 export type ItemPedido = Prisma.ItemPedidoModel
+/**
+ * Model Region
+ * 
+ */
+export type Region = Prisma.RegionModel
+/**
+ * Model PedidoPersonalizado
+ * 
+ */
+export type PedidoPersonalizado = Prisma.PedidoPersonalizadoModel

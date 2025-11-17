@@ -8,10 +8,12 @@ import { CategoriesModule } from './categories/categories.module';
 import { ProductsModule } from './products/products.module';
 import { OrdersModule } from './orders/orders.module';
 import { ConfigModule } from '@nestjs/config';
+import { RegionsModule } from './regions/regions.module';
 
 @Module({
   imports: [PrismaModule, UsersModule, AuthModule, CategoriesModule, ProductsModule, OrdersModule,
     ConfigModule.forRoot({ isGlobal: true }),
+    RegionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
