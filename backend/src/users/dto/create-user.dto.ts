@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString, MinLength, IsEnum, IsPhoneNumber, IsNumber, Min, MaxLength } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, MinLength, IsEnum, IsNumber, Min, MaxLength, IsMobilePhone } from 'class-validator';
 import { Role } from 'src/generated/client/enums'; 
 
 export class CreateUserDto {
@@ -23,7 +23,7 @@ export class CreateUserDto {
 
   @IsString()
   @IsNotEmpty()
-  @IsPhoneNumber('CL', { message: 'El número de teléfono no es válido.' }) 
+  @IsMobilePhone('es-CL', {}, { message: 'El número de teléfono no es válido.' })
   numero: string;
 
   // --- CAMPOS CORRECTOS (se quedan) ---

@@ -96,6 +96,8 @@ export class Register implements OnInit {
 
     const { nombre, email, contraseña, region_id, direccion_detalle, numero } =
       this.registerForm.value;
+      
+      const numero_completo = `+56${numero}`; // Resultado: '+56912345678'
 
     const payload = {
       nombre,
@@ -104,7 +106,7 @@ export class Register implements OnInit {
       rol: 'CLIENTE',
       region_id: +region_id,
       direccion_detalle,
-      numero,
+      numero: numero_completo,
     };
 
     this.authService.register(payload).subscribe({
