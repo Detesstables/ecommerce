@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { Home } from './pages/home/home';
 import { CategoryPage } from './pages/category-page/category-page'; 
 import { AboutPage } from './pages/about-page/about-page';
+import { CartPage } from './pages/cart-page/cart-page';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: 'sobre-nosotros',
     component: AboutPage
+  },
+  {
+    path: 'cart',
+    component: CartPage
   }
   
 ];

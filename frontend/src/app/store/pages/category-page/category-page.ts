@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, LowerCasePipe } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { switchMap, tap } from 'rxjs/operators'; 
+import { tap } from 'rxjs/operators'; 
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms'; 
 
 import { ProductService, Producto } from '../../services/product.service'; 
 import { CategoryService, Categoria } from '../../services/category.service'; 
-import { OrderService } from '../../services/order.service'; 
+import { OrdersService } from '../../services/orders.service';
 import { AuthService } from '../../../auth/services/auth.service';
 import { ProductCard } from '../../../shared/components/product-card/product-card'; 
 import { ToastrService } from 'ngx-toastr';
+import { CartService } from '../../../shared/services/cart.service'; 
 
 @Component({
   selector: 'app-category-page',
@@ -39,10 +40,11 @@ export class CategoryPage implements OnInit {
     private router: Router,
     private productService: ProductService,
     private categoryService: CategoryService,
-    private orderService: OrderService,
+    private ordersService: OrdersService, 
     private authService: AuthService,
     private toastr: ToastrService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cartService: CartService // <-- INYECCIÓN DEL CART SERVICE
   ) {
     this.filterForm = this.fb.group({
       nombre: [''],
@@ -51,7 +53,6 @@ export class CategoryPage implements OnInit {
     });
   }
 
-  // --- 'ngOnInit'  ---
   ngOnInit(): void {
     this.route.paramMap.pipe(
       tap(params => {
@@ -61,16 +62,12 @@ export class CategoryPage implements OnInit {
         }
         this.isLoading = true;
         this.errorMessage = null;
-        this.loadCategoryInfo(); // Carga el banner
-
-        // Llama a la carga inicial de productos (sin filtros)
+        this.loadCategoryInfo(); 
         this.loadProducts(); 
       })
-    ).subscribe(); // Solo necesitamos que se active
+    ).subscribe(); 
   }
 
-  // --- NUEVA FUNCIÓN 'loadProducts' ---
-  // Esta función carga los productos (con o sin filtros)
   loadProducts(): void {
     this.isLoading = true;
     this.errorMessage = null;
@@ -81,7 +78,6 @@ export class CategoryPage implements OnInit {
       categoria_id: this.currentCategoryId
     };
 
-    // Limpia filtros vacíos
     Object.keys(params).forEach(key => 
       (params[key] === null || params[key] === '') && delete params[key]
     );
@@ -98,38 +94,32 @@ export class CategoryPage implements OnInit {
     });
   }
 
-
   onFilterSubmit(): void {
     this.loadProducts();
   }
 
-  // Carga la info del banner
   loadCategoryInfo(): void {
     this.categoryService.getCategories().subscribe((categorias) => {
       this.categoria = categorias.find(c => c.id === this.currentCategoryId) || null;
     });
   }
 
-  // onComprarProducto (se queda igual)
-  onComprarProducto(productoId: number): void {
+  /**
+   * FUNCIÓN ACTUALIZADA: Añade el producto al CartService.
+   */
+  onAddToCart(producto: Producto): void { 
     if (!this.authService.isAuthenticated()) {
-      this.toastr.warning('Debes iniciar sesión para comprar', 'Acción Requerida');
+      this.toastr.warning('Debes iniciar sesión para añadir al carrito.', 'Acción Requerida');
       this.router.navigate(['/auth/login']);
       return;
     }
     if (this.authService.getUserRole() !== 'CLIENTE') {
-      this.toastr.error('Los administradores no pueden realizar compras', 'Acción No Permitida');
+      this.toastr.error('Solo los clientes pueden comprar.', 'Acción No Permitida');
       return;
     }
-    this.orderService.comprarProducto(productoId).subscribe({
-      next: (response) => {
-        this.toastr.success('¡Producto comprado con éxito!', 'Compra Realizada');
-        this.loadProducts(); // Recarga los productos con filtros
-      },
-      error: (err) => {
-        const mensaje = err.error.message || 'No se pudo procesar la compra.';
-        this.toastr.error(mensaje, 'Error en la Compra');
-      }
-    });
+    
+    // Llama al CartService para añadir el producto y gestionar la cantidad
+    this.cartService.addItem(producto);
+    this.toastr.success(`¡"${producto.nombre}" añadido al carrito!`, 'Producto Añadido');
   }
 }

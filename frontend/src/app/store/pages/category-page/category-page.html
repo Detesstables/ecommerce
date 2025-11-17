@@ -122,7 +122,7 @@
       </p>
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         @for (producto of productos; track producto.id) {
-        <app-product-card [producto]="producto" [backendUrl]="backendUrl" (comprarClick)="onComprarProducto($event)" />
+        <app-product-card [producto]="producto" [backendUrl]="backendUrl" (comprarClick)="onAddToCart(producto)" />
         }
       </div>
       }

@@ -3,7 +3,7 @@ import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/rou
 import { CommonModule } from '@angular/common'; 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faInstagram } from '@fortawesome/free-brands-svg-icons';
-
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
 import { AuthService } from './auth/services/auth.service';
 import { Observable } from 'rxjs';
@@ -38,6 +38,7 @@ export class App implements OnInit{
 
   currentYear: number = new Date().getFullYear();
   faInstagram = faInstagram;
+  faShoppingCart = faShoppingCart
   isProductosDropdownOpen: boolean = false;
   isMobileMenuOpen: boolean = false;
 
