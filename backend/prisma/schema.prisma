@@ -95,14 +95,14 @@ model Region {
 }
 
 // Enum para el estado de los pedidos personalizados
-enum EstadoPersonalizado {
-  PENDIENTE   // Recibida la idea del cliente
-  REVISION    // Administrador está presupuestando
-  APROBADO    // Cliente aceptó presupuesto
+/* enum EstadoPersonalizado {
+  PENDIENTE   
+  REVISION    
+  APROBADO   
   RECHAZADO
   COMPLETADO
 }
-
+ */
 model PedidoPersonalizado {
   id                   Int       @id @default(autoincrement())
   usuario_id           Int
@@ -114,7 +114,7 @@ model PedidoPersonalizado {
   presupuesto_estimado Int? 
   
   // --- ¡AQUÍ ESTÁ LA CORRECCIÓN! ---
-  estado               EstadoPersonalizado @default(PENDIENTE)
+  estado              EstadoPedido @default(PENDIENTE)
 
   fecha_creacion       DateTime @default(now())
 }

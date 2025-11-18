@@ -4,6 +4,7 @@ import { Home } from './pages/home/home';
 import { CategoryPage } from './pages/category-page/category-page'; 
 import { AboutPage } from './pages/about-page/about-page';
 import { CartPage } from './pages/cart-page/cart-page';
+import { CustomRequestPage } from './pages/custom-request-page/custom-request-page';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: 'cart',
     component: CartPage
+  },
+  {
+    path: 'pesonalizado/solicitar',
+    component: CustomRequestPage
   }
   
 ];

@@ -27,14 +27,3 @@ export const EstadoPedido = {
 } as const
 
 export type EstadoPedido = (typeof EstadoPedido)[keyof typeof EstadoPedido]
-
-
-export const EstadoPersonalizado = {
-  PENDIENTE: 'PENDIENTE',
-  REVISION: 'REVISION',
-  APROBADO: 'APROBADO',
-  RECHAZADO: 'RECHAZADO',
-  COMPLETADO: 'COMPLETADO'
-} as const
-
-export type EstadoPersonalizado = (typeof EstadoPersonalizado)[keyof typeof EstadoPersonalizado]

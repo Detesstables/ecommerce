@@ -1,0 +1,108 @@
+<div class="min-h-screen flex items-center justify-center bg-creativa-bg p-4 sm:p-6 lg:p-8">
+    <div class="flex flex-col md:flex-row bg-creativa-card rounded-2xl shadow-2xl overflow-hidden max-w-4xl w-full">
+
+        <div class="relative md:w-1/2 p-12 flex flex-col justify-between text-creativa-text-white"
+            style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/img/p-inuyasha.jpg'); 
+                   background-size: cover; 
+                   background-position: center;">
+            
+            <a routerLink="/" class="absolute top-8 left-10 text-creativa-text-white hover:text-creativa-primary transition-colors flex items-center z-10">
+                <!-- <fa-icon [icon]="faArrowLeft" class="w-5 h-5 mr-2"></fa-icon> -->
+                Volver a Inicio
+            </a>
+
+            <div class="flex flex-col justify-end h-full pt-20 relative z-10">
+                <h2 class="text-5xl sm:text-6xl font-extrabold leading-snug mb-4 text-creativa-text-white">
+                    Tu Idea Única, <br>Nuestra Creación.
+                </h2>
+                <p class="text-creativa-text-white text-xl opacity-90">
+                    Trabajemos juntos en el diseño de esa papelería que solo tú puedes imaginar.
+                </p>
+            </div>
+        </div>
+
+        <div class="md:w-1/2 p-8 md:p-14 flex flex-col justify-center">
+            <h2 class="text-4xl font-bold text-creativa-heading text-center mb-2">
+                Solicitud Personalizada
+            </h2>
+            <p class="text-creativa-text text-center mb-8 text-lg">
+                Cuéntanos tu proyecto en detalle.
+            </p>
+
+            <form [formGroup]="customRequestForm" (ngSubmit)="onSubmit()" class="space-y-6">
+                
+                <div>
+                    <label for="titulo" class="block text-base font-medium text-creativa-heading">Título de tu Idea</label>
+                    <input type="text" id="titulo" formControlName="titulo" placeholder="Ej: Planner 2026 estilo acuarela"
+                           class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-creativa-primary focus:border-transparent bg-creativa-secondary text-lg">
+                    
+                    <div class="text-red-500 text-sm mt-1 h-5"> 
+                        @if (formControls['titulo']?.invalid && formControls['titulo']?.touched) {
+                            <span *ngIf="formControls['titulo']?.errors?.['required']">El título es requerido.</span>
+                            <span *ngIf="formControls['titulo']?.errors?.['minlength']">Mínimo 5 caracteres.</span>
+                        }
+                    </div>
+                </div>
+
+                <div>
+                    <label for="presupuesto_estimado" class="block text-base font-medium text-creativa-heading">
+                        Presupuesto Sugerido (CLP)
+                    </label>
+                    <input type="number" id="presupuesto_estimado" formControlName="presupuesto_estimado" placeholder="Ej: 15000 (Opcional)"
+                           class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-creativa-primary focus:border-transparent bg-creativa-secondary text-lg">
+                </div>
+
+<div>
+    <label for="descripcion_cliente" class="block text-base font-semibold text-creativa-heading">
+        Descripción Detallada (Material, Colores, Tamaño)
+    </label>
+    
+    <textarea id="descripcion_cliente" formControlName="descripcion_cliente" rows="5" placeholder="Necesito 80 hojas de 140g, anillado dorado y una ilustración de un gato astronauta en la portada."
+           class="w-full mt-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-creativa-primary focus:border-transparent bg-creativa-secondary text-lg"></textarea>
+    
+    <div class="text-red-500 text-sm mt-1 h-5"> 
+        @if (customRequestForm.get('descripcion_cliente')?.invalid && customRequestForm.get('descripcion_cliente')?.touched) {
+             <span *ngIf="customRequestForm.get('descripcion_cliente')?.errors?.['required']">La descripción es requerida.</span>
+            <span *ngIf="customRequestForm.get('descripcion_cliente')?.errors?.['minlength']">Mínimo 20 caracteres.</span>
+        }
+    </div>
+</div>
+                
+                <div>
+                    <label for="referencia_img" class="block text-base font-medium text-creativa-heading">
+                        Adjuntar Imagen de Idea
+                    </label>
+                    <input type="file" id="referencia_img" (change)="onFileSelected($event)"
+                           class="w-full mt-1 p-2 text-sm text-creativa-text file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-creativa-primary/20 file:text-creativa-heading hover:file:bg-creativa-primary/30">
+                    
+                    @if (selectedFile) {
+                        <p class="text-sm text-creativa-primary mt-1">Archivo listo: {{ selectedFile.name }}</p>
+                    }
+                </div>
+
+                <div class="pt-6">
+                    <button type="submit" 
+                            [disabled]="customRequestForm.invalid || isLoading || !selectedFile"
+                            class="w-full bg-creativa-primary hover:bg-opacity-90 text-creativa-text-white font-bold py-4 rounded-md text-xl shadow-lg transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                        @if (isLoading) {
+                            <span>Enviando Solicitud...</span>
+                        } @else {
+                            <span>Enviar Solicitud Personalizada</span>
+                        }
+                    </button>
+                </div>
+
+                @if (submissionError) {
+                    <div class="alert alert-danger text-center p-3 text-red-800 bg-red-100 rounded-lg" role="alert">
+                        {{ submissionError }}
+                    </div>
+                }
+                
+                <p class="mt-4 text-center text-creativa-text text-base">
+                    <a routerLink="/" class="font-medium text-creativa-primary hover:underline">&larr; Volver a la Tienda</a>
+                </p>
+
+            </form>
+        </div>
+    </div>
+</div>

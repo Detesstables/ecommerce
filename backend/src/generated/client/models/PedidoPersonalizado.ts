@@ -14,7 +14,13 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model PedidoPersonalizado
- * 
+ * enum EstadoPersonalizado {
+ *   PENDIENTE   
+ *   REVISION    
+ *   APROBADO   
+ *   RECHAZADO
+ *   COMPLETADO
+ * }
  */
 export type PedidoPersonalizadoModel = runtime.Types.Result.DefaultSelection<Prisma.$PedidoPersonalizadoPayload>
 
