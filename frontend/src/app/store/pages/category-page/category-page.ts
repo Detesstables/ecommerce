@@ -11,6 +11,7 @@ import { AuthService } from '../../../auth/services/auth.service';
 import { ProductCard } from '../../../shared/components/product-card/product-card'; 
 import { ToastrService } from 'ngx-toastr';
 import { CartService } from '../../../shared/services/cart.service'; 
+// Asume que la interfaz Producto en product.service.ts ya incluye imageUrl: string;
 
 @Component({
   selector: 'app-category-page',
@@ -30,6 +31,7 @@ export class CategoryPage implements OnInit {
   public categoria: Categoria | null = null;
   public isLoading: boolean = true;
   public errorMessage: string | null = null;
+  // Mantener el backendUrl para la lógica de la imagen en el carrito
   public backendUrl = 'http://localhost:3000'; 
 
   public filterForm: FormGroup;
@@ -44,7 +46,7 @@ export class CategoryPage implements OnInit {
     private authService: AuthService,
     private toastr: ToastrService,
     private fb: FormBuilder,
-    private cartService: CartService // <-- INYECCIÓN DEL CART SERVICE
+    private cartService: CartService 
   ) {
     this.filterForm = this.fb.group({
       nombre: [''],
@@ -105,7 +107,8 @@ export class CategoryPage implements OnInit {
   }
 
   /**
-   * FUNCIÓN ACTUALIZADA: Añade el producto al CartService.
+   * FUNCIÓN FINAL DE AÑADIR AL CARRITO (onAddToCart).
+   * Se llama desde el ProductCard con el objeto Producto completo.
    */
   onAddToCart(producto: Producto): void { 
     if (!this.authService.isAuthenticated()) {
@@ -118,7 +121,7 @@ export class CategoryPage implements OnInit {
       return;
     }
     
-    // Llama al CartService para añadir el producto y gestionar la cantidad
+    // El CartService ya está listo para recibir el objeto Producto (con imageUrl)
     this.cartService.addItem(producto);
     this.toastr.success(`¡"${producto.nombre}" añadido al carrito!`, 'Producto Añadido');
   }

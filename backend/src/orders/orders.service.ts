@@ -1,15 +1,16 @@
 import {
   Injectable,
   NotFoundException,
-  ConflictException, 
-  InternalServerErrorException
+  ConflictException,
+  InternalServerErrorException,
+  BadRequestException
 } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Role } from 'src/generated/client/enums';
 import { Prisma } from '@prisma/client'; 
-import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
+// Usamos KnownError para el tipado de errores
+import { PrismaClientKnownRequestError as KnownError } from '@prisma/client/runtime/library'; 
 
-// Re-importamos la interfaz del payload para saber quién es el usuario
 export interface JwtPayload {
   sub: number;
   email: string;
@@ -20,40 +21,45 @@ export interface JwtPayload {
 export class OrdersService {
   constructor(private prisma: PrismaService) {}
 
-  // Asumimos que la cantidad es 1, basado en el endpoint POST /comprar/:id
-  private readonly CANTIDAD_A_COMPRAR = 1;
-
-async createOrder(productId: number, user: JwtPayload) {
-    const quantity = 1;
+  /**
+   * Ejecuta el Procedimiento Almacenado sp_registrar_pedido_y_descontar_stock.
+   */
+  async createOrder(productId: number, user: JwtPayload, quantity: number) { 
+    
+    // 1. Prepara el payload con el ID y la CANTIDAD que viene del frontend
+    const productsJson = JSON.stringify([
+        { id: productId, cantidad: quantity } 
+    ]);
 
     try {
-      // Llamamos a la función SQL (Procedimiento Almacenado) que hace TODO
-      const result = await this.prisma.$queryRawUnsafe<{ pedido_id: number; stock_restante: number }[]>(
-        `SELECT * FROM fn_process_order($1, $2, $3)`, 
-        user.sub,         
-        productId,        
-        quantity          
+      // --- ¡SOLUCIÓN 3: USAR $executeRawUnsafe! ---
+      // Esto evita el error de tipado de `sql` (TS2724)
+      // Usamos $1 (usuario) and $2 (json) como parámetros.
+      await this.prisma.$executeRawUnsafe(
+        'CALL sp_registrar_pedido_y_descontar_stock($1, $2::jsonb)',
+        user.sub,
+        productsJson 
       );
       
       return {
-        message: "Venta registrada exitosamente mediante Procedimiento Almacenado.",
-        orderId: result[0]?.pedido_id,
-        newStock: result[0]?.stock_restante,
+        message: "Venta registrada exitosamente. Transacción completada y Stock actualizado.",
+        success: true
       };
 
     } catch (error) {
       const errorMessage = error.message as string;
       
-      if (errorMessage.includes('409:')) {
-        throw new ConflictException(errorMessage.replace('409: ', ''));
+      // Manejo de errores desde el SP (RAISE EXCEPTION por falta de stock)
+      if (errorMessage.includes('Stock insuficiente')) {
+        throw new BadRequestException('Fallo la compra: Stock insuficiente para uno o más productos.');
       }
       
-      // Manejamos el error 404
-      if (error instanceof PrismaClientKnownRequestError && error.code === 'P2025') {
+      if (error instanceof KnownError && error.code === 'P2025') {
         throw new NotFoundException('Producto no encontrado en el sistema.');
       }
 
-      throw new InternalServerErrorException('Error desconocido en la base de datos.');
+      // Si es otro error de la base de datos (Ej: tabla no existe, columna mal tipada)
+      throw new InternalServerErrorException(`Error de la base de datos: ${errorMessage}`);
     }
   }
 }

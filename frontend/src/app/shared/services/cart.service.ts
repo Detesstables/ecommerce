@@ -8,6 +8,8 @@ export interface CartItem {
   price: number;
   quantity: number;
   stock: number;
+  // --- ¡CAMBIO CLAVE 1: Añadir imageUrl! ---
+  imageUrl?: string; 
 }
 
 @Injectable({
@@ -15,18 +17,11 @@ export interface CartItem {
 })
 export class CartService {
   
-  // Usamos BehaviorSubject para que cualquier componente pueda suscribirse y
-  // obtener el estado actual del carrito (reactividad).
   private cartItemsSubject = new BehaviorSubject<CartItem[]>([]);
-  
-  // Observable público para que los componentes se suscriban
   public cartItems$: Observable<CartItem[]> = this.cartItemsSubject.asObservable();
 
   constructor() { }
 
-  /**
-   * Obtiene la lista actual de ítems del carrito.
-   */
   getCartItems(): CartItem[] {
     return this.cartItemsSubject.getValue();
   }
@@ -34,28 +29,27 @@ export class CartService {
   /**
    * Añade un producto al carrito o incrementa su cantidad.
    */
-  addItem(product: { id: number, nombre: string, precio: number, stock: number }): void {
+  addItem(product: { id: number, nombre: string, precio: number, stock: number, imageUrl?: string }): void {
     const currentItems = this.getCartItems();
     const existingItem = currentItems.find(item => item.id === product.id);
 
     if (existingItem) {
-      // Si ya existe, incrementa la cantidad (si hay stock)
       if (existingItem.quantity < product.stock) {
         existingItem.quantity += 1;
       }
     } else {
-      // Si es un producto nuevo, añádelo
       const newItem: CartItem = {
         id: product.id,
         name: product.nombre,
         price: product.precio,
         quantity: 1,
-        stock: product.stock
+        stock: product.stock,
+        // --- ¡CAMBIO CLAVE 2: Guardar la URL! ---
+        imageUrl: product.imageUrl 
       };
       currentItems.push(newItem);
     }
     
-    // Emite el nuevo estado del carrito
     this.cartItemsSubject.next(currentItems);
   }
 

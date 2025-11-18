@@ -12,17 +12,18 @@ import { CartService, CartItem } from '../../../shared/services/cart.service';
 @Component({
   selector: 'app-cart-page',
   standalone: true,
-  // Agregamos CurrencyPipe ya que tu HTML lo usa
   imports: [CommonModule, RouterLink, FontAwesomeModule], 
-  templateUrl: './cart-page.html', // Renombrado de .component.html a .html
+  templateUrl: './cart-page.html', 
   styleUrls: ['./cart-page.css'] 
 })
-// --- CLASE RENOMBRADA A LA CONVENCIÓN CORTA ---
 export class CartPage implements OnInit { 
   faShoppingCart = faShoppingCart;
   isLoading = false;
   
   public cartItems$: Observable<CartItem[]>; 
+  
+  // --- CORRECCIÓN 1: Añadir propiedad backendUrl ---
+  public backendUrl = 'http://localhost:3000'; 
   
   constructor(
     private ordersService: OrdersService,
@@ -31,7 +32,6 @@ export class CartPage implements OnInit {
   ) { 
     this.cartItems$ = this.cartService.cartItems$;
   }
-
   ngOnInit(): void {
     // Initialization code if needed
   }

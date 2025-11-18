@@ -1,61 +1,69 @@
-<div class="min-h-screen bg-gray-50 p-6 sm:p-10 font-sans">
-  <div class="max-w-4xl mx-auto">
-    <h1 class="text-4xl font-extrabold text-creativa-heading mb-8 flex items-center">
-      <fa-icon [icon]="faShoppingCart" class="w-8 h-8 text-creativa-primary mr-3"></fa-icon>
+<div class="min-h-screen bg-gray-50 p-4 sm:p-6 font-sans">
+  <div class="max-w-6xl mx-auto">
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-creativa-heading mb-6 flex items-center">
+      <fa-icon [icon]="faShoppingCart" class="w-7 h-7 text-creativa-primary mr-3"></fa-icon>
       Tu Carrito de CreativaMente
     </h1>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
       
-      <!-- Columna Izquierda: Detalle de Productos -->
       <div class="lg:col-span-2 space-y-4">
         
-        <!-- CORRECCIÓN 1: Usar (cartItems$ | async) para reactividad -->
         @if ((cartItems$ | async)?.length === 0) {
           <div class="bg-white p-6 rounded-xl shadow-lg text-center text-gray-500">
             <p class="text-lg">Tu carrito está vacío. ¡Añade productos para empezar a crear!</p>
             <a routerLink="/store/products" class="mt-4 inline-block text-creativa-primary font-semibold hover:underline">Ver productos</a>
           </div>
         } @else {
-          <!-- CORRECCIÓN 2: Usar (cartItems$ | async) en el @for -->
           @for (item of (cartItems$ | async); track item.id) {
-            <div class="bg-white p-5 rounded-xl shadow-lg flex items-center justify-between border border-gray-100">
-              <div class="flex items-center space-x-4">
-                <div class="w-12 h-12 bg-creativa-secondary rounded-lg flex items-center justify-center text-creativa-primary text-xl font-bold">
-                  {{ item.name.charAt(0) }}
+            <div class="bg-white p-4 sm:p-5 rounded-xl shadow-lg flex flex-col sm:flex-row items-center justify-between border border-gray-100">
+              
+              <div class="flex items-center space-x-4 w-full sm:w-auto">
+                
+                <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center border border-gray-200 shrink-0">
+                  <img [src]="backendUrl + item.imageUrl" 
+                       [alt]="item.name"
+                       class="w-full h-full object-cover"
+                       onerror="this.onerror=null; this.src='https://placehold.co/80x80/EEEEEE/581C87?text=' + this.alt.charAt(0)">
                 </div>
-                <div>
-                  <h3 class="font-semibold text-creativa-heading">{{ item.name }}</h3>
-                  <p class="text-gray-500 text-sm">Stock: {{ item.stock }}</p>
+                
+                <div class="grow min-w-0">
+                  <h3 class="font-semibold text-creativa-heading truncate">{{ item.name }}</h3>
+                  <p class="text-gray-500 text-sm">Stock: {{ item.stock }} disponibles</p>
                 </div>
               </div>
 
-              <div class="flex items-center space-x-6">
-                <!-- Botón de eliminar ítem (usando función removeItem del TS) -->
-                <button (click)="removeItem(item.id)" class="text-red-500 hover:text-red-700 transition duration-150 text-sm">Eliminar</button>
+              <div class="flex items-center justify-between sm:justify-end w-full sm:w-auto mt-3 sm:mt-0 space-x-4 sm:space-x-6">
                 
-                <!-- CORRECCIÓN 3: Formato de CurrencyPipe para eliminar warning NG8113 -->
-                <span class="text-lg font-bold text-creativa-text">{{ item.quantity }} x ${{ item.price | number:'1.0-0' }}</span>
-                <span class="text-lg font-extrabold text-creativa-primary">${{ item.price * item.quantity | number:'1.0-0' }}</span>
+                <span class="text-sm sm:text-lg font-bold text-creativa-text whitespace-nowrap">
+                  {{ item.quantity }} x ${{ item.price | number:'1.0-0' }}
+                </span>
+                
+                <span class="text-lg sm:text-xl font-extrabold text-creativa-primary whitespace-nowrap">
+                  ${{ item.price * item.quantity | number:'1.0-0' }}
+                </span>
+                
+                <button (click)="removeItem(item.id)" 
+                        class="text-red-500 hover:text-red-700 transition duration-150 text-sm font-semibold p-1">
+                  Eliminar
+                </button>
               </div>
             </div>
           }
         }
       </div>
 
-      <!-- Columna Derecha: Resumen y Transacción -->
       <div class="lg:col-span-1">
-        <div class="bg-white p-6 rounded-xl shadow-2xl border-t-4 border-creativa-primary sticky top-10">
+        <div class="bg-white p-6 rounded-xl shadow-2xl border-t-4 border-creativa-primary sticky top-24">
           <h2 class="text-2xl font-bold text-creativa-heading mb-4">Resumen del Pedido</h2>
           
           <div class="flex justify-between items-center border-t pt-4 mt-4">
             <span class="text-xl font-extrabold text-creativa-heading">Total a Pagar</span>
-            <!-- cartTotal usa getCartItems() del servicio, que es un valor directo, no necesita async -->
             <span class="text-2xl font-extrabold text-creativa-accent">${{ cartTotal | number:'1.0-0' }}</span> 
           </div>
           
           <p class="text-sm text-gray-500 mt-2">
-            Este botón disparará la Transacción Atómica en el Backend (Procedimiento Almacenado).
+            Este botón disparará la **Transacción Atómica (PPJ)** en el Backend.
           </p>
 
           <button (click)="processTransaction()" 
@@ -64,7 +72,6 @@
                          bg-creativa-accent text-white shadow-lg hover:bg-creativa-accent/90 
                          disabled:bg-gray-400 disabled:cursor-not-allowed flex items-center justify-center">
             @if (isLoading) {
-              <!-- CORRECCIÓN 5: Cierre de etiqueta del botón -->
               <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>

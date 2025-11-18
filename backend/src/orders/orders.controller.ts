@@ -5,6 +5,7 @@ import {
   UseGuards,
   Request,
   ParseIntPipe,
+  Body
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -12,18 +13,21 @@ import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { Role } from 'src/generated/client/enums';
 
-@Controller('comprar') // Ruta base: /comprar
+@Controller('orders') // La ruta base del frontend
 export class OrdersController {
   constructor(private readonly ordersService: OrdersService) {}
 
-  @Post(':id') // Ruta completa: POST /comprar/1 (para el producto ID 1)
-  @UseGuards(JwtAuthGuard, RolesGuard) // Guardia de Token y Guardia de Rol
-  @Roles(Role.CLIENTE)                 // ¡SOLO CLIENTES!
+  @Post(':id') // POST /orders/:id
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(Role.CLIENTE) 
   createOrder(
-    @Param('id', ParseIntPipe) id: number, // El ID del producto
-    @Request() req, // Para obtener el 'user' del token
+    @Param('id', ParseIntPipe) productId: number, // ID del producto (del URL)
+    @Request() req, 
+    @Body() body: { quantity: number } // Cantidad del producto (del body)
   ) {
-    const user = req.user; // { sub: 2, email: 'cliente@...', rol: 'CLIENTE' }
-    return this.ordersService.createOrder(id, user);
+    const user = req.user; 
+    
+    // Enviamos el ID del producto, el usuario logueado, y la cantidad.
+    return this.ordersService.createOrder(productId, user, body.quantity); 
   }
 }
