@@ -2,8 +2,8 @@
   <div class="container mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-20">
 
-      <div class="shrink-0">
-        <a routerLink="/" (click)="closeAllMenus()" class="shrink-0 flex items-center space-x-3">
+      <div class="flex-shrink-0">
+        <a routerLink="/" (click)="closeAllMenus()" class="flex-shrink-0 flex items-center space-x-3">
           <img class="h-14 w-auto" src="/assets/img/logo.jpg" alt="CreativaMente Logo">
         </a>
       </div>
@@ -42,7 +42,8 @@
            routerLinkActive="text-creativa-primary">
           Sobre Nosotros
         </a>
-                <a routerLink="/pesonalizado/solicitar"
+        
+        <a routerLink="/pesonalizado/solicitar"
            (click)="closeAllMenus()"
            class="text-creativa-text hover:text-creativa-primary px-3 py-2 rounded-md text-lg font-medium transition-colors duration-200"
            routerLinkActive="text-creativa-primary">
@@ -65,6 +66,8 @@
           @if (user.rol === 'ADMIN') {
             <a routerLink="/admin" (click)="closeAllMenus()" class="text-creativa-text hover:text-creativa-primary text-lg font-bold">Dashboard</a>
           }
+          <a routerLink="/mi-cuenta" (click)="closeAllMenus()" class="text-creativa-text hover:text-creativa-primary text-lg font-medium">Mi Cuenta</a>
+          
           <button (click)="onLogout()" class="text-creativa-text hover:text-creativa-primary font-medium text-lg">Cerrar Sesión</button>
         
         } @else {
@@ -72,6 +75,7 @@
           <a routerLink="/auth/registro" (click)="closeAllMenus()" class="bg-creativa-accent hover:bg-opacity-80 text-creativa-heading font-semibold px-4 py-2 rounded-md text-lg shadow transition-colors duration-200">Registro</a>
         }
       </div>
+
       <div class="-mr-2 flex md:hidden">
         <button (click)="toggleMobileMenu()" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-creativa-primary hover:bg-creativa-secondary focus:outline-none focus:bg-creativa-secondary focus:text-creativa-primary transition duration-150 ease-in-out">
           @if (!isMobileMenuOpen) {
@@ -82,7 +86,7 @@
           }
         </button>
       </div>
-      
+
     </div>
   </div>
 
@@ -91,14 +95,13 @@
       <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
         <a routerLink="/" (click)="closeAllMenus()" class="text-creativa-text hover:text-creativa-primary block px-3 py-2 rounded-md text-base font-medium" routerLinkActive="text-creativa-primary" [routerLinkActiveOptions]="{exact: true}">Home</a>
         <a routerLink="/sobre-nosotros" (click)="closeAllMenus()" class="text-creativa-text hover:text-creativa-primary block px-3 py-2 rounded-md text-base font-medium" routerLinkActive="text-creativa-primary">Sobre Nosotros</a>
+        <a routerLink="/pesonalizado/solicitar" (click)="closeAllMenus()" class="text-creativa-text hover:text-creativa-primary block px-3 py-2 rounded-md text-base font-medium" routerLinkActive="text-creativa-primary">Pedido Personalizado</a>
 
-        <div class="border-t border-gray-200 mt-3! pt-3!"></div>
+
+        <div class="border-t border-gray-200 !mt-3 !pt-3"></div>
 
         @if (currentUser$ | async; as user) {
-          <a routerLink="/cart" (click)="closeAllMenus()" 
-             class="text-creativa-text hover:text-creativa-primary block px-3 py-2 rounded-md text-base font-medium" routerLinkActive="text-creativa-primary">
-             Carrito de Compras
-          </a>
+          <a routerLink="/mi-cuenta" (click)="closeAllMenus()" class="text-creativa-text hover:text-creativa-primary block px-3 py-2 rounded-md text-base font-medium">Mi Cuenta</a>
           
           <span class="text-creativa-text block px-3 py-2 rounded-md text-base font-medium">
             Hola, {{ user.nombre.split(' ')[0] }}

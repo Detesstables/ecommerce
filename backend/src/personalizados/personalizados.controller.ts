@@ -88,14 +88,22 @@ export class PersonalizadosController {
     return this.personalizadosService.updateStatus(id, updatePersonalizadoDto);
   }
 
-  @Get(':id')
-  async getQuotationDetails(@Param('id', ParseIntPipe) id: number) {
-      return this.personalizadosService.getQuotationDetails(id);
-  }
+@Get('me')
+findAllMyRequests(@Request() req) {
+    const user = req.user as JwtPayload; 
+    return this.personalizadosService.findAllByUserId(user.sub);
+}
+
 
   @Post('comprar/:id')
 async comprar(@Param('id', ParseIntPipe) id: number) {
   return this.personalizadosService.comprarProductoPersonalizado(id);
 }
 
+
+
+@Get(':id')
+async getQuotationDetails(@Param('id', ParseIntPipe) id: number) {
+    return this.personalizadosService.getQuotationDetails(id);
+}
 }

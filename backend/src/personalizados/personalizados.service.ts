@@ -231,4 +231,11 @@ async comprarProductoPersonalizado(id: number) {
   };
 }
 
+
+async findAllByUserId(userId: number): Promise<PedidoPersonalizado[]> {
+    return this.prisma.pedidoPersonalizado.findMany({
+        where: { usuario_id: userId },
+        orderBy: { fecha_creacion: 'desc' },
+    });
+}
 }

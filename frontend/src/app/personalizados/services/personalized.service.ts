@@ -81,4 +81,13 @@ comprarPedido(id: number) {
   return this.http.post(`${API_URL}/personalizados/comprar/${id}`, {}, { headers });
 }
 
+
+
+findAllMyRequests(): Observable<any[]> {
+        const token = this.authService.getToken();
+        const headers = { 'Authorization': `Bearer ${token}` };
+
+        // Llama al endpoint GET /personalizados/me
+        return this.http.get<any[]>(`${API_URL}/personalizados/me`, { headers: headers });
+    }
 }
