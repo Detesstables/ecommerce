@@ -64,6 +64,8 @@ enum EstadoPedido {
   ENVIADO          // El pedido salió a reparto
   ENTREGADO        // El pedido fue recibido (reemplaza 'COMPLETADO')
   RECHAZADO        // Pedido rechazado/cancelado
+  COTIZADO 
+  CANCELADO 
 }
 
 model Pedido {

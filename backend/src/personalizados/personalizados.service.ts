@@ -4,6 +4,8 @@ import { CreatePersonalizadoDto } from './dto/create-personalizado.dto';
 import { EstadoPedido } from 'src/generated/client/enums'; 
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'; 
 import { Prisma } from '@prisma/client'; 
+import { UpdatePersonalizadoDto } from './dto/update-personalizado.dto';
+import { PedidoPersonalizado } from 'src/generated/client/client';
 
 @Injectable()
 export class PersonalizadosService {
@@ -106,5 +108,47 @@ export class PersonalizadosService {
       message: `Presupuesto de $${totalEstimate} CLP generado y solicitud actualizada a REVISION.`,
       total: totalEstimate,
     };
+  }
+
+
+  // METODO 1: Listar solo PENDIENTES y COTIZADOS para la vista de Admin (DML: SELECT)
+  async findAllPending(): Promise<PedidoPersonalizado[]> {
+    return this.prisma.pedidoPersonalizado.findMany({
+      where: {
+        estado: {
+          in: [EstadoPedido.PENDIENTE, EstadoPedido.COTIZADO],
+        },
+      },
+      include: {
+        usuario: { // Incluye el usuario para que el admin sepa quién lo pidió
+          select: { nombre: true, email: true },
+        },
+      },
+      orderBy: {
+        fecha_creacion: 'asc',
+      },
+    });
+  }
+
+  // METODO 2: Actualizar el estado y cotizar (DML: UPDATE)
+  async updateStatus(id: number, updateDto: UpdatePersonalizadoDto): Promise<PedidoPersonalizado> {
+    
+    // Si no lo encuentra, lanza una excepción que NestJS maneja como 404
+    const existingOrder = await this.prisma.pedidoPersonalizado.findUnique({ where: { id } });
+    if (!existingOrder) {
+      throw new NotFoundException(`Pedido personalizado con ID ${id} no encontrado.`);
+    }
+
+    // EJECUCIÓN DEL DML
+    const updatedOrder = await this.prisma.pedidoPersonalizado.update({
+      where: { id },
+      data: {
+        estado: updateDto.estado,
+        presupuesto_final: updateDto.presupuesto_final,
+        observacion_admin: updateDto.observacion_admin,
+      } as any,
+    });
+
+    return updatedOrder;
   }
 }

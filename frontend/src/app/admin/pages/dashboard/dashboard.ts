@@ -6,6 +6,7 @@ import { ProductService, Producto } from '../../../store/services/product.servic
 // Importamos los componentes que usaremos
 import { Modal } from '../../../shared/components/modal/modal';
 import { ProductForm } from '../../components/product-form/product-form';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,7 +14,8 @@ import { ProductForm } from '../../components/product-form/product-form';
   imports: [
     CommonModule,
     Modal, // Modal (la cáscara)
-    ProductForm // Formulario (el contenido)
+    ProductForm, // Formulario (el contenido)
+    RouterModule
   ],
   templateUrl: './dashboard.html',
   styleUrls: ['./dashboard.css']

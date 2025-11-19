@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards, Request, Get, ParseIntPipe, Param, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Request, Get, ParseIntPipe, Param, UseInterceptors, UploadedFile, Patch } from '@nestjs/common';
 import { PersonalizadosService } from './personalizados.service';
 import { CreatePersonalizadoDto } from './dto/create-personalizado.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -8,6 +8,7 @@ import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from 'src/generated/client/enums';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import { UpdatePersonalizadoDto } from './dto/update-personalizado.dto';
 
 @Controller('personalizados') // Ruta base: /personalizados
 @UseGuards(JwtAuthGuard) // Solo usuarios logueados pueden enviar solicitudes
@@ -65,5 +66,25 @@ export class PersonalizadosController {
       body.costoSugerido,
       body.costoDiseno
     );
+  }
+
+  // NUEVO ENDPOINT 1: Ver pedidos pendientes (ADMIN ONLY)
+  @Roles(Role.ADMIN) 
+  @UseGuards(RolesGuard)
+  @Get('admin/pending')
+  findAllPending() {
+    return this.personalizadosService.findAllPending();
+  }
+
+  // NUEVO ENDPOINT 2: Actualizar estado y cotizar (ADMIN ONLY)
+  @Roles(Role.ADMIN)
+  @UseGuards(RolesGuard)
+  @Patch('admin/:id')
+  updateStatus(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updatePersonalizadoDto: UpdatePersonalizadoDto,
+  ) {
+    // LLAMA A LA FUNCIÓN DML UPDATE EN EL SERVICIO
+    return this.personalizadosService.updateStatus(id, updatePersonalizadoDto);
   }
 }

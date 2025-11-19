@@ -23,7 +23,9 @@ export const EstadoPedido = {
   EN_PREPARACION: 'EN_PREPARACION',
   ENVIADO: 'ENVIADO',
   ENTREGADO: 'ENTREGADO',
-  RECHAZADO: 'RECHAZADO'
+  RECHAZADO: 'RECHAZADO',
+  COTIZADO: 'COTIZADO',
+  CANCELADO: 'CANCELADO'
 } as const
 
 export type EstadoPedido = (typeof EstadoPedido)[keyof typeof EstadoPedido]

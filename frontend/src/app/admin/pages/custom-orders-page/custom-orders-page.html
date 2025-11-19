@@ -1,0 +1,54 @@
+<div class="p-6 md:p-10">
+  <h1 class="text-3xl font-bold text-creativa-heading mb-8">
+    Solicitudes de Pedidos Personalizados
+  </h1>
+
+  @if (isLoading) {
+    <p class="text-creativa-text">Cargando solicitudes...</p>
+  }
+  @if (errorMessage) {
+    <div class="text-red-500">{{ errorMessage }}</div>
+  }
+
+  @if (!isLoading && pedidos.length > 0) {
+    <div class="bg-creativa-card shadow-md rounded-lg overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-sm font-semibold text-creativa-heading">ID Pedido</th>
+            <th class="px-6 py-3 text-left text-sm font-semibold text-creativa-heading">Título</th>
+            <th class="px-6 py-3 text-left text-sm font-semibold text-creativa-heading">Cliente</th>
+            <th class="px-6 py-3 text-left text-sm font-semibold text-creativa-heading">Estado</th>
+            <th class="px-6 py-3 text-left text-sm font-semibold text-creativa-heading">Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody class="bg-white divide-y divide-gray-200">
+          @for (pedido of pedidos; track pedido.id) {
+            <tr class="hover:bg-creativa-secondary/50">
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">{{ pedido.id }}</td>
+              <td class="px-6 py-4">
+                <div class="text-sm font-medium text-creativa-heading">{{ pedido.titulo }}</div>
+                <div class="text-xs text-creativa-text truncate w-64">{{ pedido.descripcion_cliente }}</div>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-creativa-text">{{ pedido.usuario.nombre }} ({{ pedido.usuario.email }})</td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span [ngClass]="{'bg-yellow-100 text-yellow-800': pedido.estado === 'PENDIENTE', 'bg-blue-100 text-blue-800': pedido.estado === 'COTIZADO'}"
+                      class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full">
+                  {{ pedido.estado }}
+                </span>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                <button (click)="onProcessRequest(pedido.id)" class="text-creativa-primary hover:text-blue-700">Cotizar / Revisar</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  } @else if (!isLoading && pedidos.length === 0) {
+    <div class="p-12 text-center bg-creativa-card rounded-lg shadow-md">
+      <p class="text-lg text-creativa-text">No hay solicitudes pendientes en este momento.</p>
+    </div>
+  }
+</div>

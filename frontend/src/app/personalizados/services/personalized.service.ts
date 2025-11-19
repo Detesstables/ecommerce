@@ -28,4 +28,12 @@ export class PersonalizedService {
       headers: headers 
     });
   }
+
+  getPendingRequests(): Observable<any[]> {
+    const token = this.authService.getToken();
+    const headers = { 'Authorization': `Bearer ${token}` };
+    return this.http.get<any[]>(`${API_URL}/personalizados/admin/pending`, {
+      headers: headers
+    });
+  }
 }
