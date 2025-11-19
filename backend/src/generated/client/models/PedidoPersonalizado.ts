@@ -36,12 +36,14 @@ export type PedidoPersonalizadoAvgAggregateOutputType = {
   id: number | null
   usuario_id: number | null
   presupuesto_estimado: number | null
+  presupuesto_final: number | null
 }
 
 export type PedidoPersonalizadoSumAggregateOutputType = {
   id: number | null
   usuario_id: number | null
   presupuesto_estimado: number | null
+  presupuesto_final: number | null
 }
 
 export type PedidoPersonalizadoMinAggregateOutputType = {
@@ -51,6 +53,8 @@ export type PedidoPersonalizadoMinAggregateOutputType = {
   descripcion_cliente: string | null
   referencia_img_url: string | null
   presupuesto_estimado: number | null
+  presupuesto_final: number | null
+  observacion_admin: string | null
   estado: $Enums.EstadoPedido | null
   fecha_creacion: Date | null
 }
@@ -62,6 +66,8 @@ export type PedidoPersonalizadoMaxAggregateOutputType = {
   descripcion_cliente: string | null
   referencia_img_url: string | null
   presupuesto_estimado: number | null
+  presupuesto_final: number | null
+  observacion_admin: string | null
   estado: $Enums.EstadoPedido | null
   fecha_creacion: Date | null
 }
@@ -73,6 +79,8 @@ export type PedidoPersonalizadoCountAggregateOutputType = {
   descripcion_cliente: number
   referencia_img_url: number
   presupuesto_estimado: number
+  presupuesto_final: number
+  observacion_admin: number
   estado: number
   fecha_creacion: number
   _all: number
@@ -83,12 +91,14 @@ export type PedidoPersonalizadoAvgAggregateInputType = {
   id?: true
   usuario_id?: true
   presupuesto_estimado?: true
+  presupuesto_final?: true
 }
 
 export type PedidoPersonalizadoSumAggregateInputType = {
   id?: true
   usuario_id?: true
   presupuesto_estimado?: true
+  presupuesto_final?: true
 }
 
 export type PedidoPersonalizadoMinAggregateInputType = {
@@ -98,6 +108,8 @@ export type PedidoPersonalizadoMinAggregateInputType = {
   descripcion_cliente?: true
   referencia_img_url?: true
   presupuesto_estimado?: true
+  presupuesto_final?: true
+  observacion_admin?: true
   estado?: true
   fecha_creacion?: true
 }
@@ -109,6 +121,8 @@ export type PedidoPersonalizadoMaxAggregateInputType = {
   descripcion_cliente?: true
   referencia_img_url?: true
   presupuesto_estimado?: true
+  presupuesto_final?: true
+  observacion_admin?: true
   estado?: true
   fecha_creacion?: true
 }
@@ -120,6 +134,8 @@ export type PedidoPersonalizadoCountAggregateInputType = {
   descripcion_cliente?: true
   referencia_img_url?: true
   presupuesto_estimado?: true
+  presupuesto_final?: true
+  observacion_admin?: true
   estado?: true
   fecha_creacion?: true
   _all?: true
@@ -218,6 +234,8 @@ export type PedidoPersonalizadoGroupByOutputType = {
   descripcion_cliente: string
   referencia_img_url: string | null
   presupuesto_estimado: number | null
+  presupuesto_final: number | null
+  observacion_admin: string | null
   estado: $Enums.EstadoPedido
   fecha_creacion: Date
   _count: PedidoPersonalizadoCountAggregateOutputType | null
@@ -252,6 +270,8 @@ export type PedidoPersonalizadoWhereInput = {
   descripcion_cliente?: Prisma.StringFilter<"PedidoPersonalizado"> | string
   referencia_img_url?: Prisma.StringNullableFilter<"PedidoPersonalizado"> | string | null
   presupuesto_estimado?: Prisma.IntNullableFilter<"PedidoPersonalizado"> | number | null
+  presupuesto_final?: Prisma.IntNullableFilter<"PedidoPersonalizado"> | number | null
+  observacion_admin?: Prisma.StringNullableFilter<"PedidoPersonalizado"> | string | null
   estado?: Prisma.EnumEstadoPedidoFilter<"PedidoPersonalizado"> | $Enums.EstadoPedido
   fecha_creacion?: Prisma.DateTimeFilter<"PedidoPersonalizado"> | Date | string
   usuario?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>
@@ -264,6 +284,8 @@ export type PedidoPersonalizadoOrderByWithRelationInput = {
   descripcion_cliente?: Prisma.SortOrder
   referencia_img_url?: Prisma.SortOrderInput | Prisma.SortOrder
   presupuesto_estimado?: Prisma.SortOrderInput | Prisma.SortOrder
+  presupuesto_final?: Prisma.SortOrderInput | Prisma.SortOrder
+  observacion_admin?: Prisma.SortOrderInput | Prisma.SortOrder
   estado?: Prisma.SortOrder
   fecha_creacion?: Prisma.SortOrder
   usuario?: Prisma.UsuarioOrderByWithRelationInput
@@ -279,6 +301,8 @@ export type PedidoPersonalizadoWhereUniqueInput = Prisma.AtLeast<{
   descripcion_cliente?: Prisma.StringFilter<"PedidoPersonalizado"> | string
   referencia_img_url?: Prisma.StringNullableFilter<"PedidoPersonalizado"> | string | null
   presupuesto_estimado?: Prisma.IntNullableFilter<"PedidoPersonalizado"> | number | null
+  presupuesto_final?: Prisma.IntNullableFilter<"PedidoPersonalizado"> | number | null
+  observacion_admin?: Prisma.StringNullableFilter<"PedidoPersonalizado"> | string | null
   estado?: Prisma.EnumEstadoPedidoFilter<"PedidoPersonalizado"> | $Enums.EstadoPedido
   fecha_creacion?: Prisma.DateTimeFilter<"PedidoPersonalizado"> | Date | string
   usuario?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>
@@ -291,6 +315,8 @@ export type PedidoPersonalizadoOrderByWithAggregationInput = {
   descripcion_cliente?: Prisma.SortOrder
   referencia_img_url?: Prisma.SortOrderInput | Prisma.SortOrder
   presupuesto_estimado?: Prisma.SortOrderInput | Prisma.SortOrder
+  presupuesto_final?: Prisma.SortOrderInput | Prisma.SortOrder
+  observacion_admin?: Prisma.SortOrderInput | Prisma.SortOrder
   estado?: Prisma.SortOrder
   fecha_creacion?: Prisma.SortOrder
   _count?: Prisma.PedidoPersonalizadoCountOrderByAggregateInput
@@ -310,6 +336,8 @@ export type PedidoPersonalizadoScalarWhereWithAggregatesInput = {
   descripcion_cliente?: Prisma.StringWithAggregatesFilter<"PedidoPersonalizado"> | string
   referencia_img_url?: Prisma.StringNullableWithAggregatesFilter<"PedidoPersonalizado"> | string | null
   presupuesto_estimado?: Prisma.IntNullableWithAggregatesFilter<"PedidoPersonalizado"> | number | null
+  presupuesto_final?: Prisma.IntNullableWithAggregatesFilter<"PedidoPersonalizado"> | number | null
+  observacion_admin?: Prisma.StringNullableWithAggregatesFilter<"PedidoPersonalizado"> | string | null
   estado?: Prisma.EnumEstadoPedidoWithAggregatesFilter<"PedidoPersonalizado"> | $Enums.EstadoPedido
   fecha_creacion?: Prisma.DateTimeWithAggregatesFilter<"PedidoPersonalizado"> | Date | string
 }
@@ -319,6 +347,8 @@ export type PedidoPersonalizadoCreateInput = {
   descripcion_cliente: string
   referencia_img_url?: string | null
   presupuesto_estimado?: number | null
+  presupuesto_final?: number | null
+  observacion_admin?: string | null
   estado?: $Enums.EstadoPedido
   fecha_creacion?: Date | string
   usuario: Prisma.UsuarioCreateNestedOneWithoutPedidos_personalizadosInput
@@ -331,6 +361,8 @@ export type PedidoPersonalizadoUncheckedCreateInput = {
   descripcion_cliente: string
   referencia_img_url?: string | null
   presupuesto_estimado?: number | null
+  presupuesto_final?: number | null
+  observacion_admin?: string | null
   estado?: $Enums.EstadoPedido
   fecha_creacion?: Date | string
 }
@@ -340,6 +372,8 @@ export type PedidoPersonalizadoUpdateInput = {
   descripcion_cliente?: Prisma.StringFieldUpdateOperationsInput | string
   referencia_img_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   presupuesto_estimado?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  presupuesto_final?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  observacion_admin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estado?: Prisma.EnumEstadoPedidoFieldUpdateOperationsInput | $Enums.EstadoPedido
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   usuario?: Prisma.UsuarioUpdateOneRequiredWithoutPedidos_personalizadosNestedInput
@@ -352,6 +386,8 @@ export type PedidoPersonalizadoUncheckedUpdateInput = {
   descripcion_cliente?: Prisma.StringFieldUpdateOperationsInput | string
   referencia_img_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   presupuesto_estimado?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  presupuesto_final?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  observacion_admin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estado?: Prisma.EnumEstadoPedidoFieldUpdateOperationsInput | $Enums.EstadoPedido
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -363,6 +399,8 @@ export type PedidoPersonalizadoCreateManyInput = {
   descripcion_cliente: string
   referencia_img_url?: string | null
   presupuesto_estimado?: number | null
+  presupuesto_final?: number | null
+  observacion_admin?: string | null
   estado?: $Enums.EstadoPedido
   fecha_creacion?: Date | string
 }
@@ -372,6 +410,8 @@ export type PedidoPersonalizadoUpdateManyMutationInput = {
   descripcion_cliente?: Prisma.StringFieldUpdateOperationsInput | string
   referencia_img_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   presupuesto_estimado?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  presupuesto_final?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  observacion_admin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estado?: Prisma.EnumEstadoPedidoFieldUpdateOperationsInput | $Enums.EstadoPedido
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -383,6 +423,8 @@ export type PedidoPersonalizadoUncheckedUpdateManyInput = {
   descripcion_cliente?: Prisma.StringFieldUpdateOperationsInput | string
   referencia_img_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   presupuesto_estimado?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  presupuesto_final?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  observacion_admin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estado?: Prisma.EnumEstadoPedidoFieldUpdateOperationsInput | $Enums.EstadoPedido
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -404,6 +446,8 @@ export type PedidoPersonalizadoCountOrderByAggregateInput = {
   descripcion_cliente?: Prisma.SortOrder
   referencia_img_url?: Prisma.SortOrder
   presupuesto_estimado?: Prisma.SortOrder
+  presupuesto_final?: Prisma.SortOrder
+  observacion_admin?: Prisma.SortOrder
   estado?: Prisma.SortOrder
   fecha_creacion?: Prisma.SortOrder
 }
@@ -412,6 +456,7 @@ export type PedidoPersonalizadoAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
   usuario_id?: Prisma.SortOrder
   presupuesto_estimado?: Prisma.SortOrder
+  presupuesto_final?: Prisma.SortOrder
 }
 
 export type PedidoPersonalizadoMaxOrderByAggregateInput = {
@@ -421,6 +466,8 @@ export type PedidoPersonalizadoMaxOrderByAggregateInput = {
   descripcion_cliente?: Prisma.SortOrder
   referencia_img_url?: Prisma.SortOrder
   presupuesto_estimado?: Prisma.SortOrder
+  presupuesto_final?: Prisma.SortOrder
+  observacion_admin?: Prisma.SortOrder
   estado?: Prisma.SortOrder
   fecha_creacion?: Prisma.SortOrder
 }
@@ -432,6 +479,8 @@ export type PedidoPersonalizadoMinOrderByAggregateInput = {
   descripcion_cliente?: Prisma.SortOrder
   referencia_img_url?: Prisma.SortOrder
   presupuesto_estimado?: Prisma.SortOrder
+  presupuesto_final?: Prisma.SortOrder
+  observacion_admin?: Prisma.SortOrder
   estado?: Prisma.SortOrder
   fecha_creacion?: Prisma.SortOrder
 }
@@ -440,6 +489,7 @@ export type PedidoPersonalizadoSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
   usuario_id?: Prisma.SortOrder
   presupuesto_estimado?: Prisma.SortOrder
+  presupuesto_final?: Prisma.SortOrder
 }
 
 export type PedidoPersonalizadoCreateNestedManyWithoutUsuarioInput = {
@@ -497,6 +547,8 @@ export type PedidoPersonalizadoCreateWithoutUsuarioInput = {
   descripcion_cliente: string
   referencia_img_url?: string | null
   presupuesto_estimado?: number | null
+  presupuesto_final?: number | null
+  observacion_admin?: string | null
   estado?: $Enums.EstadoPedido
   fecha_creacion?: Date | string
 }
@@ -507,6 +559,8 @@ export type PedidoPersonalizadoUncheckedCreateWithoutUsuarioInput = {
   descripcion_cliente: string
   referencia_img_url?: string | null
   presupuesto_estimado?: number | null
+  presupuesto_final?: number | null
+  observacion_admin?: string | null
   estado?: $Enums.EstadoPedido
   fecha_creacion?: Date | string
 }
@@ -547,6 +601,8 @@ export type PedidoPersonalizadoScalarWhereInput = {
   descripcion_cliente?: Prisma.StringFilter<"PedidoPersonalizado"> | string
   referencia_img_url?: Prisma.StringNullableFilter<"PedidoPersonalizado"> | string | null
   presupuesto_estimado?: Prisma.IntNullableFilter<"PedidoPersonalizado"> | number | null
+  presupuesto_final?: Prisma.IntNullableFilter<"PedidoPersonalizado"> | number | null
+  observacion_admin?: Prisma.StringNullableFilter<"PedidoPersonalizado"> | string | null
   estado?: Prisma.EnumEstadoPedidoFilter<"PedidoPersonalizado"> | $Enums.EstadoPedido
   fecha_creacion?: Prisma.DateTimeFilter<"PedidoPersonalizado"> | Date | string
 }
@@ -557,6 +613,8 @@ export type PedidoPersonalizadoCreateManyUsuarioInput = {
   descripcion_cliente: string
   referencia_img_url?: string | null
   presupuesto_estimado?: number | null
+  presupuesto_final?: number | null
+  observacion_admin?: string | null
   estado?: $Enums.EstadoPedido
   fecha_creacion?: Date | string
 }
@@ -566,6 +624,8 @@ export type PedidoPersonalizadoUpdateWithoutUsuarioInput = {
   descripcion_cliente?: Prisma.StringFieldUpdateOperationsInput | string
   referencia_img_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   presupuesto_estimado?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  presupuesto_final?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  observacion_admin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estado?: Prisma.EnumEstadoPedidoFieldUpdateOperationsInput | $Enums.EstadoPedido
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -576,6 +636,8 @@ export type PedidoPersonalizadoUncheckedUpdateWithoutUsuarioInput = {
   descripcion_cliente?: Prisma.StringFieldUpdateOperationsInput | string
   referencia_img_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   presupuesto_estimado?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  presupuesto_final?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  observacion_admin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estado?: Prisma.EnumEstadoPedidoFieldUpdateOperationsInput | $Enums.EstadoPedido
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -586,6 +648,8 @@ export type PedidoPersonalizadoUncheckedUpdateManyWithoutUsuarioInput = {
   descripcion_cliente?: Prisma.StringFieldUpdateOperationsInput | string
   referencia_img_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   presupuesto_estimado?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  presupuesto_final?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  observacion_admin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estado?: Prisma.EnumEstadoPedidoFieldUpdateOperationsInput | $Enums.EstadoPedido
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -599,6 +663,8 @@ export type PedidoPersonalizadoSelect<ExtArgs extends runtime.Types.Extensions.I
   descripcion_cliente?: boolean
   referencia_img_url?: boolean
   presupuesto_estimado?: boolean
+  presupuesto_final?: boolean
+  observacion_admin?: boolean
   estado?: boolean
   fecha_creacion?: boolean
   usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
@@ -611,6 +677,8 @@ export type PedidoPersonalizadoSelectCreateManyAndReturn<ExtArgs extends runtime
   descripcion_cliente?: boolean
   referencia_img_url?: boolean
   presupuesto_estimado?: boolean
+  presupuesto_final?: boolean
+  observacion_admin?: boolean
   estado?: boolean
   fecha_creacion?: boolean
   usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
@@ -623,6 +691,8 @@ export type PedidoPersonalizadoSelectUpdateManyAndReturn<ExtArgs extends runtime
   descripcion_cliente?: boolean
   referencia_img_url?: boolean
   presupuesto_estimado?: boolean
+  presupuesto_final?: boolean
+  observacion_admin?: boolean
   estado?: boolean
   fecha_creacion?: boolean
   usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
@@ -635,11 +705,13 @@ export type PedidoPersonalizadoSelectScalar = {
   descripcion_cliente?: boolean
   referencia_img_url?: boolean
   presupuesto_estimado?: boolean
+  presupuesto_final?: boolean
+  observacion_admin?: boolean
   estado?: boolean
   fecha_creacion?: boolean
 }
 
-export type PedidoPersonalizadoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "usuario_id" | "titulo" | "descripcion_cliente" | "referencia_img_url" | "presupuesto_estimado" | "estado" | "fecha_creacion", ExtArgs["result"]["pedidoPersonalizado"]>
+export type PedidoPersonalizadoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "usuario_id" | "titulo" | "descripcion_cliente" | "referencia_img_url" | "presupuesto_estimado" | "presupuesto_final" | "observacion_admin" | "estado" | "fecha_creacion", ExtArgs["result"]["pedidoPersonalizado"]>
 export type PedidoPersonalizadoInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
 }
@@ -662,6 +734,8 @@ export type $PedidoPersonalizadoPayload<ExtArgs extends runtime.Types.Extensions
     descripcion_cliente: string
     referencia_img_url: string | null
     presupuesto_estimado: number | null
+    presupuesto_final: number | null
+    observacion_admin: string | null
     estado: $Enums.EstadoPedido
     fecha_creacion: Date
   }, ExtArgs["result"]["pedidoPersonalizado"]>
@@ -1094,6 +1168,8 @@ export interface PedidoPersonalizadoFieldRefs {
   readonly descripcion_cliente: Prisma.FieldRef<"PedidoPersonalizado", 'String'>
   readonly referencia_img_url: Prisma.FieldRef<"PedidoPersonalizado", 'String'>
   readonly presupuesto_estimado: Prisma.FieldRef<"PedidoPersonalizado", 'Int'>
+  readonly presupuesto_final: Prisma.FieldRef<"PedidoPersonalizado", 'Int'>
+  readonly observacion_admin: Prisma.FieldRef<"PedidoPersonalizado", 'String'>
   readonly estado: Prisma.FieldRef<"PedidoPersonalizado", 'EstadoPedido'>
   readonly fecha_creacion: Prisma.FieldRef<"PedidoPersonalizado", 'DateTime'>
 }

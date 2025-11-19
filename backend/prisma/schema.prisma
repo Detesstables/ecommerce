@@ -114,7 +114,8 @@ model PedidoPersonalizado {
   descripcion_cliente  String // La descripción detallada
   referencia_img_url   String? // Imagen de referencia (opcional)
   presupuesto_estimado Int? 
-  
+  presupuesto_final    Int?        
+  observacion_admin    String?     
   // --- ¡AQUÍ ESTÁ LA CORRECCIÓN! ---
   estado              EstadoPedido @default(PENDIENTE)
 

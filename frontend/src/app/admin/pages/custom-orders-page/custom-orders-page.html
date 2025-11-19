@@ -52,3 +52,14 @@
     </div>
   }
 </div>
+
+<app-modal [isOpen]="isModalOpen" (close)="onCloseModal()">
+  @if (selectedPedido) {
+    <app-quote-form 
+      [pedidoId]="selectedPedido.id"
+      [pedidoActual]="selectedPedido"
+      (formClosed)="onCloseModal()"
+      (statusUpdated)="onStatusUpdated()"
+    />
+  }
+</app-modal>

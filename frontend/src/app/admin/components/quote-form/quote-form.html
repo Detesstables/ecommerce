@@ -1,0 +1,74 @@
+<div class="p-6">
+  <h2 class="text-2xl font-bold text-creativa-heading mb-6">Procesar Pedido Personalizado #{{ pedidoId }}</h2>
+
+  <div class="flex mb-6 bg-gray-100 p-1 rounded-lg">
+    <button 
+      (click)="isCotizando = true; updateValidators()" 
+      [ngClass]="{'bg-creativa-primary text-white shadow-md': isCotizando, 'text-gray-700': !isCotizando}"
+      class="flex-1 py-2 px-4 rounded-lg font-semibold transition-colors duration-200">
+      Cotizar Pedido
+    </button>
+    <button 
+      (click)="isCotizando = false; updateValidators()"
+      [ngClass]="{'bg-red-500 text-white shadow-md': !isCotizando, 'text-gray-700': isCotizando}"
+      class="flex-1 py-2 px-4 rounded-lg font-semibold transition-colors duration-200">
+      Rechazar Pedido
+    </button>
+  </div>
+
+  <form [formGroup]="quoteForm" (ngSubmit)="onSubmit()">
+
+    @if (isCotizando) {
+      <div class="mb-4">
+        <label for="presupuesto_final" class="block text-sm font-medium text-creativa-heading">Presupuesto Final <span class="text-creativa-primary">*</span></label>
+        <input 
+          type="number" 
+          id="presupuesto_final" 
+          formControlName="presupuesto_final"
+          placeholder="Ej: 15990"
+          class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:border-creativa-primary focus:ring focus:ring-creativa-primary/50"
+          [ngClass]="{'border-red-500': quoteForm.get('presupuesto_final')?.invalid && quoteForm.get('presupuesto_final')?.touched}"
+        >
+        @if (quoteForm.get('presupuesto_final')?.hasError('required') && quoteForm.get('presupuesto_final')?.touched) {
+          <p class="text-xs text-red-500 mt-1">El presupuesto final es obligatorio para cotizar.</p>
+        }
+        @if (quoteForm.get('presupuesto_final')?.hasError('min') && quoteForm.get('presupuesto_final')?.touched) {
+          <p class="text-xs text-red-500 mt-1">El valor debe ser positivo.</p>
+        }
+      </div>
+    }
+
+    <div class="mb-6">
+      <label for="observacion_admin" class="block text-sm font-medium text-creativa-heading">Observaciones / Motivo ({{ isCotizando ? 'Opcional' : 'Requerido' }})</label>
+      <textarea 
+        id="observacion_admin" 
+        formControlName="observacion_admin"
+        rows="4"
+        placeholder="Escribe el motivo del rechazo o detalles de la cotización."
+        class="mt-1 block w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:border-creativa-primary focus:ring focus:ring-creativa-primary/50"
+        [ngClass]="{'border-red-500': quoteForm.get('observacion_admin')?.invalid && quoteForm.get('observacion_admin')?.touched}"
+      ></textarea>
+      @if (!isCotizando && quoteForm.get('observacion_admin')?.hasError('required') && quoteForm.get('observacion_admin')?.touched) {
+          <p class="text-xs text-red-500 mt-1">Debes ingresar un motivo para rechazar el pedido.</p>
+      }
+    </div>
+
+    <div class="flex justify-end space-x-3">
+      <button 
+        type="button" 
+        (click)="formClosed.emit()" 
+        class="bg-gray-300 text-gray-700 font-semibold py-2 px-5 rounded-lg hover:bg-gray-400 transition duration-150"
+        [disabled]="isLoading">
+        Cancelar
+      </button>
+
+      <button 
+        type="submit" 
+        class="font-bold py-2 px-5 rounded-lg transition duration-150"
+        [ngClass]="{'bg-creativa-primary text-white hover:bg-opacity-90': isCotizando, 'bg-red-600 text-white hover:bg-red-700': !isCotizando, 'opacity-60': isLoading}"
+        [disabled]="isLoading || quoteForm.invalid">
+        {{ isLoading ? 'Procesando...' : (isCotizando ? 'Enviar Cotización' : 'Confirmar Rechazo') }}
+      </button>
+    </div>
+  </form>
+</div>
