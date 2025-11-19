@@ -5,6 +5,8 @@ import { CategoryPage } from './pages/category-page/category-page';
 import { AboutPage } from './pages/about-page/about-page';
 import { CartPage } from './pages/cart-page/cart-page';
 import { CustomRequestPage } from './pages/custom-request-page/custom-request-page';
+import { QuotationViewPage } from './pages/quotation-view-page/quotation-view-page';
+import { authGuard } from '../auth/guards/auth-guard';
 
 const routes: Routes = [
   {
@@ -26,6 +28,11 @@ const routes: Routes = [
   {
     path: 'pesonalizado/solicitar',
     component: CustomRequestPage
+  },
+  {
+    path: 'cotizacion/:id', 
+    component: QuotationViewPage,
+    canActivate: [authGuard] 
   }
   
 ];

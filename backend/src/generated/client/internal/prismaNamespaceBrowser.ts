@@ -153,6 +153,7 @@ export const PedidoPersonalizadoScalarFieldEnum = {
   presupuesto_final: 'presupuesto_final',
   observacion_admin: 'observacion_admin',
   estado: 'estado',
+  producto_id: 'producto_id',
   fecha_creacion: 'fecha_creacion'
 } as const
 

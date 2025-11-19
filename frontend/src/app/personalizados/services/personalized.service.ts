@@ -11,6 +11,15 @@ interface UpdatePersonalizadoDto {
   observacion_admin?: string;
 }
 
+interface PedidoPersonalizadoResponse {
+    id: number;
+    titulo: string;
+    presupuesto_final: number;
+    producto_id: number; // El FK al producto temporal
+    estado: string;
+    observacion_admin: string | null;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -53,4 +62,23 @@ export class PersonalizedService {
       // Llama al endpoint PATCH /personalizados/admin/:id
       return this.http.patch(`${API_URL}/personalizados/admin/${id}`, dto, { headers });
     }
+
+    getQuotationDetails(requestId: number): Observable<PedidoPersonalizadoResponse> {
+        const token = this.authService.getToken();
+        const headers = { 'Authorization': `Bearer ${token}` };
+
+        // Llama al endpoint GET para obtener un solo registro
+        return this.http.get<PedidoPersonalizadoResponse>(
+            `${API_URL}/personalizados/${requestId}`, 
+            { headers: headers }
+        );
+    }
+
+comprarPedido(id: number) {
+  const token = this.authService.getToken();
+  const headers = { 'Authorization': `Bearer ${token}` };
+
+  return this.http.post(`${API_URL}/personalizados/comprar/${id}`, {}, { headers });
+}
+
 }

@@ -14,13 +14,14 @@ import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model PedidoPersonalizado
- * enum EstadoPersonalizado {
- *   PENDIENTE   
- *   REVISION    
- *   APROBADO   
- *   RECHAZADO
- *   COMPLETADO
- * }
+ * *
+ *  * enum EstadoPersonalizado {
+ *  * PENDIENTE
+ *  * REVISION
+ *  * APROBADO
+ *  * RECHAZADO
+ *  * COMPLETADO
+ *  * }
  */
 export type PedidoPersonalizadoModel = runtime.Types.Result.DefaultSelection<Prisma.$PedidoPersonalizadoPayload>
 
@@ -37,6 +38,7 @@ export type PedidoPersonalizadoAvgAggregateOutputType = {
   usuario_id: number | null
   presupuesto_estimado: number | null
   presupuesto_final: number | null
+  producto_id: number | null
 }
 
 export type PedidoPersonalizadoSumAggregateOutputType = {
@@ -44,6 +46,7 @@ export type PedidoPersonalizadoSumAggregateOutputType = {
   usuario_id: number | null
   presupuesto_estimado: number | null
   presupuesto_final: number | null
+  producto_id: number | null
 }
 
 export type PedidoPersonalizadoMinAggregateOutputType = {
@@ -56,6 +59,7 @@ export type PedidoPersonalizadoMinAggregateOutputType = {
   presupuesto_final: number | null
   observacion_admin: string | null
   estado: $Enums.EstadoPedido | null
+  producto_id: number | null
   fecha_creacion: Date | null
 }
 
@@ -69,6 +73,7 @@ export type PedidoPersonalizadoMaxAggregateOutputType = {
   presupuesto_final: number | null
   observacion_admin: string | null
   estado: $Enums.EstadoPedido | null
+  producto_id: number | null
   fecha_creacion: Date | null
 }
 
@@ -82,6 +87,7 @@ export type PedidoPersonalizadoCountAggregateOutputType = {
   presupuesto_final: number
   observacion_admin: number
   estado: number
+  producto_id: number
   fecha_creacion: number
   _all: number
 }
@@ -92,6 +98,7 @@ export type PedidoPersonalizadoAvgAggregateInputType = {
   usuario_id?: true
   presupuesto_estimado?: true
   presupuesto_final?: true
+  producto_id?: true
 }
 
 export type PedidoPersonalizadoSumAggregateInputType = {
@@ -99,6 +106,7 @@ export type PedidoPersonalizadoSumAggregateInputType = {
   usuario_id?: true
   presupuesto_estimado?: true
   presupuesto_final?: true
+  producto_id?: true
 }
 
 export type PedidoPersonalizadoMinAggregateInputType = {
@@ -111,6 +119,7 @@ export type PedidoPersonalizadoMinAggregateInputType = {
   presupuesto_final?: true
   observacion_admin?: true
   estado?: true
+  producto_id?: true
   fecha_creacion?: true
 }
 
@@ -124,6 +133,7 @@ export type PedidoPersonalizadoMaxAggregateInputType = {
   presupuesto_final?: true
   observacion_admin?: true
   estado?: true
+  producto_id?: true
   fecha_creacion?: true
 }
 
@@ -137,6 +147,7 @@ export type PedidoPersonalizadoCountAggregateInputType = {
   presupuesto_final?: true
   observacion_admin?: true
   estado?: true
+  producto_id?: true
   fecha_creacion?: true
   _all?: true
 }
@@ -237,6 +248,7 @@ export type PedidoPersonalizadoGroupByOutputType = {
   presupuesto_final: number | null
   observacion_admin: string | null
   estado: $Enums.EstadoPedido
+  producto_id: number | null
   fecha_creacion: Date
   _count: PedidoPersonalizadoCountAggregateOutputType | null
   _avg: PedidoPersonalizadoAvgAggregateOutputType | null
@@ -273,8 +285,10 @@ export type PedidoPersonalizadoWhereInput = {
   presupuesto_final?: Prisma.IntNullableFilter<"PedidoPersonalizado"> | number | null
   observacion_admin?: Prisma.StringNullableFilter<"PedidoPersonalizado"> | string | null
   estado?: Prisma.EnumEstadoPedidoFilter<"PedidoPersonalizado"> | $Enums.EstadoPedido
+  producto_id?: Prisma.IntNullableFilter<"PedidoPersonalizado"> | number | null
   fecha_creacion?: Prisma.DateTimeFilter<"PedidoPersonalizado"> | Date | string
   usuario?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>
+  producto?: Prisma.XOR<Prisma.ProductoNullableScalarRelationFilter, Prisma.ProductoWhereInput> | null
 }
 
 export type PedidoPersonalizadoOrderByWithRelationInput = {
@@ -287,8 +301,10 @@ export type PedidoPersonalizadoOrderByWithRelationInput = {
   presupuesto_final?: Prisma.SortOrderInput | Prisma.SortOrder
   observacion_admin?: Prisma.SortOrderInput | Prisma.SortOrder
   estado?: Prisma.SortOrder
+  producto_id?: Prisma.SortOrderInput | Prisma.SortOrder
   fecha_creacion?: Prisma.SortOrder
   usuario?: Prisma.UsuarioOrderByWithRelationInput
+  producto?: Prisma.ProductoOrderByWithRelationInput
 }
 
 export type PedidoPersonalizadoWhereUniqueInput = Prisma.AtLeast<{
@@ -304,8 +320,10 @@ export type PedidoPersonalizadoWhereUniqueInput = Prisma.AtLeast<{
   presupuesto_final?: Prisma.IntNullableFilter<"PedidoPersonalizado"> | number | null
   observacion_admin?: Prisma.StringNullableFilter<"PedidoPersonalizado"> | string | null
   estado?: Prisma.EnumEstadoPedidoFilter<"PedidoPersonalizado"> | $Enums.EstadoPedido
+  producto_id?: Prisma.IntNullableFilter<"PedidoPersonalizado"> | number | null
   fecha_creacion?: Prisma.DateTimeFilter<"PedidoPersonalizado"> | Date | string
   usuario?: Prisma.XOR<Prisma.UsuarioScalarRelationFilter, Prisma.UsuarioWhereInput>
+  producto?: Prisma.XOR<Prisma.ProductoNullableScalarRelationFilter, Prisma.ProductoWhereInput> | null
 }, "id">
 
 export type PedidoPersonalizadoOrderByWithAggregationInput = {
@@ -318,6 +336,7 @@ export type PedidoPersonalizadoOrderByWithAggregationInput = {
   presupuesto_final?: Prisma.SortOrderInput | Prisma.SortOrder
   observacion_admin?: Prisma.SortOrderInput | Prisma.SortOrder
   estado?: Prisma.SortOrder
+  producto_id?: Prisma.SortOrderInput | Prisma.SortOrder
   fecha_creacion?: Prisma.SortOrder
   _count?: Prisma.PedidoPersonalizadoCountOrderByAggregateInput
   _avg?: Prisma.PedidoPersonalizadoAvgOrderByAggregateInput
@@ -339,6 +358,7 @@ export type PedidoPersonalizadoScalarWhereWithAggregatesInput = {
   presupuesto_final?: Prisma.IntNullableWithAggregatesFilter<"PedidoPersonalizado"> | number | null
   observacion_admin?: Prisma.StringNullableWithAggregatesFilter<"PedidoPersonalizado"> | string | null
   estado?: Prisma.EnumEstadoPedidoWithAggregatesFilter<"PedidoPersonalizado"> | $Enums.EstadoPedido
+  producto_id?: Prisma.IntNullableWithAggregatesFilter<"PedidoPersonalizado"> | number | null
   fecha_creacion?: Prisma.DateTimeWithAggregatesFilter<"PedidoPersonalizado"> | Date | string
 }
 
@@ -352,6 +372,7 @@ export type PedidoPersonalizadoCreateInput = {
   estado?: $Enums.EstadoPedido
   fecha_creacion?: Date | string
   usuario: Prisma.UsuarioCreateNestedOneWithoutPedidos_personalizadosInput
+  producto?: Prisma.ProductoCreateNestedOneWithoutPedidos_personalizadosInput
 }
 
 export type PedidoPersonalizadoUncheckedCreateInput = {
@@ -364,6 +385,7 @@ export type PedidoPersonalizadoUncheckedCreateInput = {
   presupuesto_final?: number | null
   observacion_admin?: string | null
   estado?: $Enums.EstadoPedido
+  producto_id?: number | null
   fecha_creacion?: Date | string
 }
 
@@ -377,6 +399,7 @@ export type PedidoPersonalizadoUpdateInput = {
   estado?: Prisma.EnumEstadoPedidoFieldUpdateOperationsInput | $Enums.EstadoPedido
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   usuario?: Prisma.UsuarioUpdateOneRequiredWithoutPedidos_personalizadosNestedInput
+  producto?: Prisma.ProductoUpdateOneWithoutPedidos_personalizadosNestedInput
 }
 
 export type PedidoPersonalizadoUncheckedUpdateInput = {
@@ -389,6 +412,7 @@ export type PedidoPersonalizadoUncheckedUpdateInput = {
   presupuesto_final?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   observacion_admin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estado?: Prisma.EnumEstadoPedidoFieldUpdateOperationsInput | $Enums.EstadoPedido
+  producto_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -402,6 +426,7 @@ export type PedidoPersonalizadoCreateManyInput = {
   presupuesto_final?: number | null
   observacion_admin?: string | null
   estado?: $Enums.EstadoPedido
+  producto_id?: number | null
   fecha_creacion?: Date | string
 }
 
@@ -426,6 +451,7 @@ export type PedidoPersonalizadoUncheckedUpdateManyInput = {
   presupuesto_final?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   observacion_admin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estado?: Prisma.EnumEstadoPedidoFieldUpdateOperationsInput | $Enums.EstadoPedido
+  producto_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -449,6 +475,7 @@ export type PedidoPersonalizadoCountOrderByAggregateInput = {
   presupuesto_final?: Prisma.SortOrder
   observacion_admin?: Prisma.SortOrder
   estado?: Prisma.SortOrder
+  producto_id?: Prisma.SortOrder
   fecha_creacion?: Prisma.SortOrder
 }
 
@@ -457,6 +484,7 @@ export type PedidoPersonalizadoAvgOrderByAggregateInput = {
   usuario_id?: Prisma.SortOrder
   presupuesto_estimado?: Prisma.SortOrder
   presupuesto_final?: Prisma.SortOrder
+  producto_id?: Prisma.SortOrder
 }
 
 export type PedidoPersonalizadoMaxOrderByAggregateInput = {
@@ -469,6 +497,7 @@ export type PedidoPersonalizadoMaxOrderByAggregateInput = {
   presupuesto_final?: Prisma.SortOrder
   observacion_admin?: Prisma.SortOrder
   estado?: Prisma.SortOrder
+  producto_id?: Prisma.SortOrder
   fecha_creacion?: Prisma.SortOrder
 }
 
@@ -482,6 +511,7 @@ export type PedidoPersonalizadoMinOrderByAggregateInput = {
   presupuesto_final?: Prisma.SortOrder
   observacion_admin?: Prisma.SortOrder
   estado?: Prisma.SortOrder
+  producto_id?: Prisma.SortOrder
   fecha_creacion?: Prisma.SortOrder
 }
 
@@ -490,6 +520,7 @@ export type PedidoPersonalizadoSumOrderByAggregateInput = {
   usuario_id?: Prisma.SortOrder
   presupuesto_estimado?: Prisma.SortOrder
   presupuesto_final?: Prisma.SortOrder
+  producto_id?: Prisma.SortOrder
 }
 
 export type PedidoPersonalizadoCreateNestedManyWithoutUsuarioInput = {
@@ -534,6 +565,48 @@ export type PedidoPersonalizadoUncheckedUpdateManyWithoutUsuarioNestedInput = {
   deleteMany?: Prisma.PedidoPersonalizadoScalarWhereInput | Prisma.PedidoPersonalizadoScalarWhereInput[]
 }
 
+export type PedidoPersonalizadoCreateNestedManyWithoutProductoInput = {
+  create?: Prisma.XOR<Prisma.PedidoPersonalizadoCreateWithoutProductoInput, Prisma.PedidoPersonalizadoUncheckedCreateWithoutProductoInput> | Prisma.PedidoPersonalizadoCreateWithoutProductoInput[] | Prisma.PedidoPersonalizadoUncheckedCreateWithoutProductoInput[]
+  connectOrCreate?: Prisma.PedidoPersonalizadoCreateOrConnectWithoutProductoInput | Prisma.PedidoPersonalizadoCreateOrConnectWithoutProductoInput[]
+  createMany?: Prisma.PedidoPersonalizadoCreateManyProductoInputEnvelope
+  connect?: Prisma.PedidoPersonalizadoWhereUniqueInput | Prisma.PedidoPersonalizadoWhereUniqueInput[]
+}
+
+export type PedidoPersonalizadoUncheckedCreateNestedManyWithoutProductoInput = {
+  create?: Prisma.XOR<Prisma.PedidoPersonalizadoCreateWithoutProductoInput, Prisma.PedidoPersonalizadoUncheckedCreateWithoutProductoInput> | Prisma.PedidoPersonalizadoCreateWithoutProductoInput[] | Prisma.PedidoPersonalizadoUncheckedCreateWithoutProductoInput[]
+  connectOrCreate?: Prisma.PedidoPersonalizadoCreateOrConnectWithoutProductoInput | Prisma.PedidoPersonalizadoCreateOrConnectWithoutProductoInput[]
+  createMany?: Prisma.PedidoPersonalizadoCreateManyProductoInputEnvelope
+  connect?: Prisma.PedidoPersonalizadoWhereUniqueInput | Prisma.PedidoPersonalizadoWhereUniqueInput[]
+}
+
+export type PedidoPersonalizadoUpdateManyWithoutProductoNestedInput = {
+  create?: Prisma.XOR<Prisma.PedidoPersonalizadoCreateWithoutProductoInput, Prisma.PedidoPersonalizadoUncheckedCreateWithoutProductoInput> | Prisma.PedidoPersonalizadoCreateWithoutProductoInput[] | Prisma.PedidoPersonalizadoUncheckedCreateWithoutProductoInput[]
+  connectOrCreate?: Prisma.PedidoPersonalizadoCreateOrConnectWithoutProductoInput | Prisma.PedidoPersonalizadoCreateOrConnectWithoutProductoInput[]
+  upsert?: Prisma.PedidoPersonalizadoUpsertWithWhereUniqueWithoutProductoInput | Prisma.PedidoPersonalizadoUpsertWithWhereUniqueWithoutProductoInput[]
+  createMany?: Prisma.PedidoPersonalizadoCreateManyProductoInputEnvelope
+  set?: Prisma.PedidoPersonalizadoWhereUniqueInput | Prisma.PedidoPersonalizadoWhereUniqueInput[]
+  disconnect?: Prisma.PedidoPersonalizadoWhereUniqueInput | Prisma.PedidoPersonalizadoWhereUniqueInput[]
+  delete?: Prisma.PedidoPersonalizadoWhereUniqueInput | Prisma.PedidoPersonalizadoWhereUniqueInput[]
+  connect?: Prisma.PedidoPersonalizadoWhereUniqueInput | Prisma.PedidoPersonalizadoWhereUniqueInput[]
+  update?: Prisma.PedidoPersonalizadoUpdateWithWhereUniqueWithoutProductoInput | Prisma.PedidoPersonalizadoUpdateWithWhereUniqueWithoutProductoInput[]
+  updateMany?: Prisma.PedidoPersonalizadoUpdateManyWithWhereWithoutProductoInput | Prisma.PedidoPersonalizadoUpdateManyWithWhereWithoutProductoInput[]
+  deleteMany?: Prisma.PedidoPersonalizadoScalarWhereInput | Prisma.PedidoPersonalizadoScalarWhereInput[]
+}
+
+export type PedidoPersonalizadoUncheckedUpdateManyWithoutProductoNestedInput = {
+  create?: Prisma.XOR<Prisma.PedidoPersonalizadoCreateWithoutProductoInput, Prisma.PedidoPersonalizadoUncheckedCreateWithoutProductoInput> | Prisma.PedidoPersonalizadoCreateWithoutProductoInput[] | Prisma.PedidoPersonalizadoUncheckedCreateWithoutProductoInput[]
+  connectOrCreate?: Prisma.PedidoPersonalizadoCreateOrConnectWithoutProductoInput | Prisma.PedidoPersonalizadoCreateOrConnectWithoutProductoInput[]
+  upsert?: Prisma.PedidoPersonalizadoUpsertWithWhereUniqueWithoutProductoInput | Prisma.PedidoPersonalizadoUpsertWithWhereUniqueWithoutProductoInput[]
+  createMany?: Prisma.PedidoPersonalizadoCreateManyProductoInputEnvelope
+  set?: Prisma.PedidoPersonalizadoWhereUniqueInput | Prisma.PedidoPersonalizadoWhereUniqueInput[]
+  disconnect?: Prisma.PedidoPersonalizadoWhereUniqueInput | Prisma.PedidoPersonalizadoWhereUniqueInput[]
+  delete?: Prisma.PedidoPersonalizadoWhereUniqueInput | Prisma.PedidoPersonalizadoWhereUniqueInput[]
+  connect?: Prisma.PedidoPersonalizadoWhereUniqueInput | Prisma.PedidoPersonalizadoWhereUniqueInput[]
+  update?: Prisma.PedidoPersonalizadoUpdateWithWhereUniqueWithoutProductoInput | Prisma.PedidoPersonalizadoUpdateWithWhereUniqueWithoutProductoInput[]
+  updateMany?: Prisma.PedidoPersonalizadoUpdateManyWithWhereWithoutProductoInput | Prisma.PedidoPersonalizadoUpdateManyWithWhereWithoutProductoInput[]
+  deleteMany?: Prisma.PedidoPersonalizadoScalarWhereInput | Prisma.PedidoPersonalizadoScalarWhereInput[]
+}
+
 export type NullableIntFieldUpdateOperationsInput = {
   set?: number | null
   increment?: number
@@ -551,6 +624,7 @@ export type PedidoPersonalizadoCreateWithoutUsuarioInput = {
   observacion_admin?: string | null
   estado?: $Enums.EstadoPedido
   fecha_creacion?: Date | string
+  producto?: Prisma.ProductoCreateNestedOneWithoutPedidos_personalizadosInput
 }
 
 export type PedidoPersonalizadoUncheckedCreateWithoutUsuarioInput = {
@@ -562,6 +636,7 @@ export type PedidoPersonalizadoUncheckedCreateWithoutUsuarioInput = {
   presupuesto_final?: number | null
   observacion_admin?: string | null
   estado?: $Enums.EstadoPedido
+  producto_id?: number | null
   fecha_creacion?: Date | string
 }
 
@@ -604,7 +679,59 @@ export type PedidoPersonalizadoScalarWhereInput = {
   presupuesto_final?: Prisma.IntNullableFilter<"PedidoPersonalizado"> | number | null
   observacion_admin?: Prisma.StringNullableFilter<"PedidoPersonalizado"> | string | null
   estado?: Prisma.EnumEstadoPedidoFilter<"PedidoPersonalizado"> | $Enums.EstadoPedido
+  producto_id?: Prisma.IntNullableFilter<"PedidoPersonalizado"> | number | null
   fecha_creacion?: Prisma.DateTimeFilter<"PedidoPersonalizado"> | Date | string
+}
+
+export type PedidoPersonalizadoCreateWithoutProductoInput = {
+  titulo: string
+  descripcion_cliente: string
+  referencia_img_url?: string | null
+  presupuesto_estimado?: number | null
+  presupuesto_final?: number | null
+  observacion_admin?: string | null
+  estado?: $Enums.EstadoPedido
+  fecha_creacion?: Date | string
+  usuario: Prisma.UsuarioCreateNestedOneWithoutPedidos_personalizadosInput
+}
+
+export type PedidoPersonalizadoUncheckedCreateWithoutProductoInput = {
+  id?: number
+  usuario_id: number
+  titulo: string
+  descripcion_cliente: string
+  referencia_img_url?: string | null
+  presupuesto_estimado?: number | null
+  presupuesto_final?: number | null
+  observacion_admin?: string | null
+  estado?: $Enums.EstadoPedido
+  fecha_creacion?: Date | string
+}
+
+export type PedidoPersonalizadoCreateOrConnectWithoutProductoInput = {
+  where: Prisma.PedidoPersonalizadoWhereUniqueInput
+  create: Prisma.XOR<Prisma.PedidoPersonalizadoCreateWithoutProductoInput, Prisma.PedidoPersonalizadoUncheckedCreateWithoutProductoInput>
+}
+
+export type PedidoPersonalizadoCreateManyProductoInputEnvelope = {
+  data: Prisma.PedidoPersonalizadoCreateManyProductoInput | Prisma.PedidoPersonalizadoCreateManyProductoInput[]
+  skipDuplicates?: boolean
+}
+
+export type PedidoPersonalizadoUpsertWithWhereUniqueWithoutProductoInput = {
+  where: Prisma.PedidoPersonalizadoWhereUniqueInput
+  update: Prisma.XOR<Prisma.PedidoPersonalizadoUpdateWithoutProductoInput, Prisma.PedidoPersonalizadoUncheckedUpdateWithoutProductoInput>
+  create: Prisma.XOR<Prisma.PedidoPersonalizadoCreateWithoutProductoInput, Prisma.PedidoPersonalizadoUncheckedCreateWithoutProductoInput>
+}
+
+export type PedidoPersonalizadoUpdateWithWhereUniqueWithoutProductoInput = {
+  where: Prisma.PedidoPersonalizadoWhereUniqueInput
+  data: Prisma.XOR<Prisma.PedidoPersonalizadoUpdateWithoutProductoInput, Prisma.PedidoPersonalizadoUncheckedUpdateWithoutProductoInput>
+}
+
+export type PedidoPersonalizadoUpdateManyWithWhereWithoutProductoInput = {
+  where: Prisma.PedidoPersonalizadoScalarWhereInput
+  data: Prisma.XOR<Prisma.PedidoPersonalizadoUpdateManyMutationInput, Prisma.PedidoPersonalizadoUncheckedUpdateManyWithoutProductoInput>
 }
 
 export type PedidoPersonalizadoCreateManyUsuarioInput = {
@@ -616,6 +743,7 @@ export type PedidoPersonalizadoCreateManyUsuarioInput = {
   presupuesto_final?: number | null
   observacion_admin?: string | null
   estado?: $Enums.EstadoPedido
+  producto_id?: number | null
   fecha_creacion?: Date | string
 }
 
@@ -628,6 +756,7 @@ export type PedidoPersonalizadoUpdateWithoutUsuarioInput = {
   observacion_admin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estado?: Prisma.EnumEstadoPedidoFieldUpdateOperationsInput | $Enums.EstadoPedido
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  producto?: Prisma.ProductoUpdateOneWithoutPedidos_personalizadosNestedInput
 }
 
 export type PedidoPersonalizadoUncheckedUpdateWithoutUsuarioInput = {
@@ -639,11 +768,64 @@ export type PedidoPersonalizadoUncheckedUpdateWithoutUsuarioInput = {
   presupuesto_final?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   observacion_admin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   estado?: Prisma.EnumEstadoPedidoFieldUpdateOperationsInput | $Enums.EstadoPedido
+  producto_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PedidoPersonalizadoUncheckedUpdateManyWithoutUsuarioInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
+  titulo?: Prisma.StringFieldUpdateOperationsInput | string
+  descripcion_cliente?: Prisma.StringFieldUpdateOperationsInput | string
+  referencia_img_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  presupuesto_estimado?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  presupuesto_final?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  observacion_admin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estado?: Prisma.EnumEstadoPedidoFieldUpdateOperationsInput | $Enums.EstadoPedido
+  producto_id?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type PedidoPersonalizadoCreateManyProductoInput = {
+  id?: number
+  usuario_id: number
+  titulo: string
+  descripcion_cliente: string
+  referencia_img_url?: string | null
+  presupuesto_estimado?: number | null
+  presupuesto_final?: number | null
+  observacion_admin?: string | null
+  estado?: $Enums.EstadoPedido
+  fecha_creacion?: Date | string
+}
+
+export type PedidoPersonalizadoUpdateWithoutProductoInput = {
+  titulo?: Prisma.StringFieldUpdateOperationsInput | string
+  descripcion_cliente?: Prisma.StringFieldUpdateOperationsInput | string
+  referencia_img_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  presupuesto_estimado?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  presupuesto_final?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  observacion_admin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estado?: Prisma.EnumEstadoPedidoFieldUpdateOperationsInput | $Enums.EstadoPedido
+  fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  usuario?: Prisma.UsuarioUpdateOneRequiredWithoutPedidos_personalizadosNestedInput
+}
+
+export type PedidoPersonalizadoUncheckedUpdateWithoutProductoInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  usuario_id?: Prisma.IntFieldUpdateOperationsInput | number
+  titulo?: Prisma.StringFieldUpdateOperationsInput | string
+  descripcion_cliente?: Prisma.StringFieldUpdateOperationsInput | string
+  referencia_img_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  presupuesto_estimado?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  presupuesto_final?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  observacion_admin?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  estado?: Prisma.EnumEstadoPedidoFieldUpdateOperationsInput | $Enums.EstadoPedido
+  fecha_creacion?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type PedidoPersonalizadoUncheckedUpdateManyWithoutProductoInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  usuario_id?: Prisma.IntFieldUpdateOperationsInput | number
   titulo?: Prisma.StringFieldUpdateOperationsInput | string
   descripcion_cliente?: Prisma.StringFieldUpdateOperationsInput | string
   referencia_img_url?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -666,8 +848,10 @@ export type PedidoPersonalizadoSelect<ExtArgs extends runtime.Types.Extensions.I
   presupuesto_final?: boolean
   observacion_admin?: boolean
   estado?: boolean
+  producto_id?: boolean
   fecha_creacion?: boolean
   usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
+  producto?: boolean | Prisma.PedidoPersonalizado$productoArgs<ExtArgs>
 }, ExtArgs["result"]["pedidoPersonalizado"]>
 
 export type PedidoPersonalizadoSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -680,8 +864,10 @@ export type PedidoPersonalizadoSelectCreateManyAndReturn<ExtArgs extends runtime
   presupuesto_final?: boolean
   observacion_admin?: boolean
   estado?: boolean
+  producto_id?: boolean
   fecha_creacion?: boolean
   usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
+  producto?: boolean | Prisma.PedidoPersonalizado$productoArgs<ExtArgs>
 }, ExtArgs["result"]["pedidoPersonalizado"]>
 
 export type PedidoPersonalizadoSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -694,8 +880,10 @@ export type PedidoPersonalizadoSelectUpdateManyAndReturn<ExtArgs extends runtime
   presupuesto_final?: boolean
   observacion_admin?: boolean
   estado?: boolean
+  producto_id?: boolean
   fecha_creacion?: boolean
   usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
+  producto?: boolean | Prisma.PedidoPersonalizado$productoArgs<ExtArgs>
 }, ExtArgs["result"]["pedidoPersonalizado"]>
 
 export type PedidoPersonalizadoSelectScalar = {
@@ -708,24 +896,29 @@ export type PedidoPersonalizadoSelectScalar = {
   presupuesto_final?: boolean
   observacion_admin?: boolean
   estado?: boolean
+  producto_id?: boolean
   fecha_creacion?: boolean
 }
 
-export type PedidoPersonalizadoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "usuario_id" | "titulo" | "descripcion_cliente" | "referencia_img_url" | "presupuesto_estimado" | "presupuesto_final" | "observacion_admin" | "estado" | "fecha_creacion", ExtArgs["result"]["pedidoPersonalizado"]>
+export type PedidoPersonalizadoOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "usuario_id" | "titulo" | "descripcion_cliente" | "referencia_img_url" | "presupuesto_estimado" | "presupuesto_final" | "observacion_admin" | "estado" | "producto_id" | "fecha_creacion", ExtArgs["result"]["pedidoPersonalizado"]>
 export type PedidoPersonalizadoInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
+  producto?: boolean | Prisma.PedidoPersonalizado$productoArgs<ExtArgs>
 }
 export type PedidoPersonalizadoIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
+  producto?: boolean | Prisma.PedidoPersonalizado$productoArgs<ExtArgs>
 }
 export type PedidoPersonalizadoIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   usuario?: boolean | Prisma.UsuarioDefaultArgs<ExtArgs>
+  producto?: boolean | Prisma.PedidoPersonalizado$productoArgs<ExtArgs>
 }
 
 export type $PedidoPersonalizadoPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "PedidoPersonalizado"
   objects: {
     usuario: Prisma.$UsuarioPayload<ExtArgs>
+    producto: Prisma.$ProductoPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -737,6 +930,7 @@ export type $PedidoPersonalizadoPayload<ExtArgs extends runtime.Types.Extensions
     presupuesto_final: number | null
     observacion_admin: string | null
     estado: $Enums.EstadoPedido
+    producto_id: number | null
     fecha_creacion: Date
   }, ExtArgs["result"]["pedidoPersonalizado"]>
   composites: {}
@@ -1133,6 +1327,7 @@ readonly fields: PedidoPersonalizadoFieldRefs;
 export interface Prisma__PedidoPersonalizadoClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   usuario<T extends Prisma.UsuarioDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UsuarioDefaultArgs<ExtArgs>>): Prisma.Prisma__UsuarioClient<runtime.Types.Result.GetResult<Prisma.$UsuarioPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  producto<T extends Prisma.PedidoPersonalizado$productoArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.PedidoPersonalizado$productoArgs<ExtArgs>>): Prisma.Prisma__ProductoClient<runtime.Types.Result.GetResult<Prisma.$ProductoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1171,6 +1366,7 @@ export interface PedidoPersonalizadoFieldRefs {
   readonly presupuesto_final: Prisma.FieldRef<"PedidoPersonalizado", 'Int'>
   readonly observacion_admin: Prisma.FieldRef<"PedidoPersonalizado", 'String'>
   readonly estado: Prisma.FieldRef<"PedidoPersonalizado", 'EstadoPedido'>
+  readonly producto_id: Prisma.FieldRef<"PedidoPersonalizado", 'Int'>
   readonly fecha_creacion: Prisma.FieldRef<"PedidoPersonalizado", 'DateTime'>
 }
     
@@ -1565,6 +1761,25 @@ export type PedidoPersonalizadoDeleteManyArgs<ExtArgs extends runtime.Types.Exte
    * Limit how many PedidoPersonalizados to delete.
    */
   limit?: number
+}
+
+/**
+ * PedidoPersonalizado.producto
+ */
+export type PedidoPersonalizado$productoArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Producto
+   */
+  select?: Prisma.ProductoSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Producto
+   */
+  omit?: Prisma.ProductoOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProductoInclude<ExtArgs> | null
+  where?: Prisma.ProductoWhereInput
 }
 
 /**

@@ -125,4 +125,5 @@ export class CategoryPage implements OnInit {
     this.cartService.addItem(producto);
     this.toastr.success(`¡"${producto.nombre}" añadido al carrito!`, 'Producto Añadido');
   }
+  
 }

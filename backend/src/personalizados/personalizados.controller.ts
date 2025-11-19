@@ -87,4 +87,15 @@ export class PersonalizadosController {
     // LLAMA A LA FUNCIÓN DML UPDATE EN EL SERVICIO
     return this.personalizadosService.updateStatus(id, updatePersonalizadoDto);
   }
+
+  @Get(':id')
+  async getQuotationDetails(@Param('id', ParseIntPipe) id: number) {
+      return this.personalizadosService.getQuotationDetails(id);
+  }
+
+  @Post('comprar/:id')
+async comprar(@Param('id', ParseIntPipe) id: number) {
+  return this.personalizadosService.comprarProductoPersonalizado(id);
+}
+
 }

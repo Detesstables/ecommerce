@@ -74,12 +74,13 @@ export type ItemPedido = Prisma.ItemPedidoModel
 export type Region = Prisma.RegionModel
 /**
  * Model PedidoPersonalizado
- * enum EstadoPersonalizado {
- *   PENDIENTE   
- *   REVISION    
- *   APROBADO   
- *   RECHAZADO
- *   COMPLETADO
- * }
+ * *
+ *  * enum EstadoPersonalizado {
+ *  * PENDIENTE
+ *  * REVISION
+ *  * APROBADO
+ *  * RECHAZADO
+ *  * COMPLETADO
+ *  * }
  */
 export type PedidoPersonalizado = Prisma.PedidoPersonalizadoModel

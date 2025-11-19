@@ -1,0 +1,54 @@
+<div class="p-6 md:p-10 max-w-4xl mx-auto">
+
+  <a routerLink="/" class="text-sm text-creativa-text hover:text-creativa-primary transition-colors">&larr; Volver a Home</a>
+
+  <div class="mt-8 bg-creativa-card shadow-xl rounded-xl p-8 md:p-12">
+
+    @if (isLoading) {
+      <p class="text-creativa-text text-center">Cargando cotización...</p>
+    } 
+
+    @if (errorMessage) {
+      <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-md">
+        <p>{{ errorMessage }}</p>
+      </div>
+    }
+
+    @if (quotation && !isLoading) {
+
+      <h1 class="text-4xl font-bold text-creativa-heading mb-4">
+        Cotización Lista: {{ quotation.titulo }}
+      </h1>
+      <p class="text-lg text-creativa-text mb-6">
+        El administrador ha finalizado la revisión de tu solicitud.
+      </p>
+
+      <div class="space-y-4 border-y border-gray-200 py-6 mb-6">
+        <div class="flex justify-between text-lg text-creativa-text">
+          <span>Solicitado por:</span>
+          <span class="font-medium">{{ quotation.usuario.nombre }}</span>
+        </div>
+        <div class="flex justify-between text-lg text-creativa-text">
+          <span>Observaciones del Admin:</span>
+          <span class="font-medium text-right">{{ quotation.observacion_admin || 'Sin observaciones.' }}</span>
+        </div>
+      </div>
+
+      <div class="flex justify-between items-center bg-creativa-secondary p-4 rounded-lg">
+        <h3 class="text-2xl font-bold text-creativa-heading">Precio Final a Pagar:</h3>
+        <span class="text-3xl font-extrabold text-creativa-primary">
+          {{ quotation.presupuesto_final }} CLP
+        </span>
+      </div>
+
+      <div class="mt-8">
+        <button 
+          (click)="onFinalPayment()"
+          class="w-full bg-creativa-accent hover:bg-opacity-90 text-creativa-heading font-bold py-4 rounded-md text-xl shadow-lg transition duration-300 transform hover:scale-105">
+          Pagar Ahora y Confirmar Pedido
+        </button>
+      </div>
+
+    }
+  </div>
+</div>

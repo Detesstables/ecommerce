@@ -14,22 +14,22 @@ enum Role {
 }
 
 model Usuario {
-  id              Int      @id @default(autoincrement())
-  nombre          String
-  email           String   @unique
+  id               Int    @id @default(autoincrement())
+  nombre           String
+  email            String @unique
   contraseña_hash String
-  rol             Role     @default(CLIENTE)
-  numero          String
+  rol              Role   @default(CLIENTE)
+  numero           String
 
   // --- ¡CAMPOS DE DIRECCIÓN ACTUALIZADOS! ---
   direccion_detalle String
-  region_id       Int
-  region          Region   @relation(fields: [region_id], references: [id])
+  region_id         Int
+  region            Region @relation(fields: [region_id], references: [id])
 
   fecha_creacion DateTime @default(now())
 
-  pedidos                  Pedido[]
-  pedidos_personalizados   PedidoPersonalizado[]
+  pedidos                Pedido[]
+  pedidos_personalizados PedidoPersonalizado[]
 }
 
 // --- PRODUCTOS ---
@@ -51,21 +51,23 @@ model Producto {
   fecha_actualizacion DateTime @updatedAt
   imagenUrl           String?
 
-  items        ItemPedido[]
-  categoria_id Int
-  categoria    Categoria    @relation(fields: [categoria_id], references: [id])
+  items                  ItemPedido[]
+  categoria_id           Int
+  categoria              Categoria             @relation(fields: [categoria_id], references: [id])
+  pedidos_personalizados PedidoPersonalizado[]
 }
 
 // --- PEDIDOS ---
 enum EstadoPedido {
-  PENDIENTE        // Pago no confirmado (para el flujo Transbank)
-  PAGO_APROBADO    // Pago confirmado (para pedidos normales)
-  EN_PREPARACION   // El pedido está siendo empacado
-  ENVIADO          // El pedido salió a reparto
-  ENTREGADO        // El pedido fue recibido (reemplaza 'COMPLETADO')
-  RECHAZADO        // Pedido rechazado/cancelado
-  COTIZADO 
-  CANCELADO 
+  PENDIENTE // Pago no confirmado (para el flujo Transbank)
+  PAGO_APROBADO // Pago confirmado (para pedidos normales)
+  EN_PREPARACION // El pedido está siendo empacado
+  ENVIADO // El pedido salió a reparto
+  ENTREGADO // El pedido fue recibido (reemplaza 'COMPLETADO')
+  RECHAZADO // Pedido rechazado/cancelado
+  COTIZADO
+  CANCELADO
+  CONVERTIDO_A_VENTA
 }
 
 model Pedido {
@@ -97,27 +99,30 @@ model Region {
 }
 
 // Enum para el estado de los pedidos personalizados
-/* enum EstadoPersonalizado {
-  PENDIENTE   
-  REVISION    
-  APROBADO   
-  RECHAZADO
-  COMPLETADO
-}
+/**
+ * enum EstadoPersonalizado {
+ * PENDIENTE
+ * REVISION
+ * APROBADO
+ * RECHAZADO
+ * COMPLETADO
+ * }
  */
 model PedidoPersonalizado {
-  id                   Int       @id @default(autoincrement())
-  usuario_id           Int
-  usuario              Usuario   @relation(fields: [usuario_id], references: [id])
-  
+  id         Int     @id @default(autoincrement())
+  usuario_id Int
+  usuario    Usuario @relation(fields: [usuario_id], references: [id])
+
   titulo               String // Breve resumen de la solicitud
   descripcion_cliente  String // La descripción detallada
   referencia_img_url   String? // Imagen de referencia (opcional)
-  presupuesto_estimado Int? 
-  presupuesto_final    Int?        
-  observacion_admin    String?     
+  presupuesto_estimado Int?
+  presupuesto_final    Int?
+  observacion_admin    String?
   // --- ¡AQUÍ ESTÁ LA CORRECCIÓN! ---
-  estado              EstadoPedido @default(PENDIENTE)
+  estado               EstadoPedido @default(PENDIENTE)
+  producto_id          Int?
+  producto             Producto?    @relation(fields: [producto_id], references: [id])
 
-  fecha_creacion       DateTime @default(now())
+  fecha_creacion DateTime @default(now())
 }
