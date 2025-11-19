@@ -1,10 +1,6 @@
-// backend/src/personalizados/personalizados.service.ts
-
 import { Injectable, NotFoundException, ConflictException, InternalServerErrorException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreatePersonalizadoDto } from './dto/create-personalizado.dto';
-
-// Importamos el enum unificado y la clase de error para el manejo robusto de excepciones
 import { EstadoPedido } from 'src/generated/client/enums'; 
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'; 
 import { Prisma } from '@prisma/client'; 
@@ -20,12 +16,8 @@ export class PersonalizadosService {
    * @param referenciaImgUrl Ruta donde Multer guardó la imagen.
    */
   async createRequest(userId: number, dto: CreatePersonalizadoDto, referenciaImgUrl: string | null) {
-    
-    // FIX: Solo enviamos el presupuesto si es un valor válido (> 0), 
-    // de lo contrario, usamos 'undefined' para que Prisma ignore el campo.
-    const presupuestoFinal = dto.presupuesto_estimado && dto.presupuesto_estimado > 0 
-        ? dto.presupuesto_estimado 
-        : undefined;
+
+    const presupuesto = dto.presupuesto_estimado;
 
     try {
         return this.prisma.pedidoPersonalizado.create({
@@ -34,12 +26,12 @@ export class PersonalizadosService {
             titulo: dto.titulo,
             descripcion_cliente: dto.descripcion_cliente,
             referencia_img_url: referenciaImgUrl,
-            presupuesto_estimado: presupuestoFinal, 
-            
-            // Asignamos el estado inicial PENDIENTE, usando el Enum correcto
+            presupuesto_estimado: presupuesto, 
             estado: EstadoPedido.PENDIENTE, 
           },
-        });
+        }
+      )
+      ;
     } catch (error) {
         // Manejamos errores únicos o de integridad (ej. si el título fuera unique)
         if (error instanceof PrismaClientKnownRequestError && error.code === 'P2002') {

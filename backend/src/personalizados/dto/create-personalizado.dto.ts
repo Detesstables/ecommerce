@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import { IsNotEmpty, IsString, IsOptional, Min, IsInt } from 'class-validator';
 
 export class CreatePersonalizadoDto {
@@ -14,7 +15,8 @@ export class CreatePersonalizadoDto {
   referencia_img_url?: string;
 
   @IsInt()
-  @Min(1000) // Presupuesto mínimo de 1000 CLP (o el valor que decidas)
+  @Min(1000) 
   @IsOptional()
+  @Type(() => Number)
   presupuesto_estimado?: number;
 }
